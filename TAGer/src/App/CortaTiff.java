@@ -2,6 +2,7 @@ package App;
 
 import ij.IJ;
 import ij.ImagePlus;
+import ij.plugin.CanvasResizer;
 import ij.process.ImageProcessor;
 
 import java.awt.image.BufferedImage;
@@ -25,26 +26,19 @@ private String P1x1;
 private String P1y1;
 private String P1x2;
 private String P1y2;
-private String P2x1;
-private String P2y1;
-private String P2x2;
-private String P2y2;
+
 private int imagenSalida;
 
 
 
-public CortaTiff(String RutaOrigen, String nombreimagenIN,String P1x1, String P1y1, String P1x2, String P1y2,
-				String P2x1, String P2y1, String P2x2, String P2y2, int imagenSalida){
+public CortaTiff(String RutaOrigen, String nombreimagenIN,String P1x1, String P1y1, String P1x2, String P1y2, int imagenSalida){
 	
 this.RutaOrigen = RutaOrigen;
 this.P1x1 = P1x1;
 this.P1y1 = P1y1;
 this.P1x2 = P1x2;
 this.P1y2 = P1y2;
-this.P2x1 = P2x1;
-this.P2y1 = P2y1;
-this.P2x2 = P2x2;
-this.P2y2 = P2y2;
+
 this.imagenSalida = imagenSalida;
 this.nombreimagenIN = nombreimagenIN;
 	
@@ -63,12 +57,18 @@ private void cortatiff(File f) throws IOException, Exception{
 
 	ip.setRoi(Integer.parseInt(P1x1),Integer.parseInt(P1y1),Integer.parseInt(P1x2),Integer.parseInt(P1y2));
 	ip = ip.crop();
+	CanvasResizer cr = new CanvasResizer();
+	
+	
+	
 	
 	int width = ip.getWidth();
 	int heigth = ip.getHeight();
 	
 	System.out.println("El ancho es:" + width);
 	BufferedImage croppedimage = ip.getBufferedImage();
+	
+	
 	
 	System.out.println("CORTATIFF RutaOrigen: " + RutaOrigen + "\n");
 	System.out.println("CORTATIFF nombreimagenIN: " + nombreimagenIN + "\n");
