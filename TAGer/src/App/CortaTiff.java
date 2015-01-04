@@ -136,7 +136,6 @@ protected Void doInBackground() throws Exception {
 	
 
 	cortatiff(new File(RutaOrigen));
-	notify();
 	System.out.println("Proceso TERMINADO");
 	return null;
 	
