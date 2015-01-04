@@ -358,7 +358,6 @@ public class MainWindow extends JFrame {
 		
 		JTextFieldInputWCB = new JTextField();
 		JTextFieldInputWCB.setHorizontalAlignment(SwingConstants.LEFT);
-		JTextFieldInputWCB.setText("D:\\PRUEBA\\wcb\\");
 		JTextFieldInputWCB.setBounds(10, 31, 407, 20);
 		JTextFieldInputWCB.setForeground(Color.BLACK);
 		JTextFieldInputWCB.setFont(new Font("Tahoma", Font.BOLD, 11));
