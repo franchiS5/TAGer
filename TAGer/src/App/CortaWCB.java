@@ -35,14 +35,9 @@ public class CortaWCB extends SwingWorker<Void, Void> {
 		this.totalimagewcb=totalimagewcb;
 		this.valormarco=valormarco;
 		
-
 	}
 
-	
-	
-	
-	
-	private void recorreYcorta(File f) throws IOException, Exception {
+private void recorreYcorta(File f) throws IOException, Exception {
 
 		
 		File[] ficheros = f.listFiles();
@@ -64,66 +59,54 @@ public class CortaWCB extends SwingWorker<Void, Void> {
 
 							while ((linea = br.readLine()) != null) {			// Leemos linea a linea hasta el final del fichero
 
-								String[] coordenadas = linea.split("\t");
-								String nombreimagenIN = coordenadas[0];
-								String P1x1 = (coordenadas[1]);
-								String P1y1 = (coordenadas[2]);
-								String P1x2 = (coordenadas[3]);
-								String P1y2 = (coordenadas[4]);
-								String P2x1 = (coordenadas[5]);
-								String P2y1 = (coordenadas[6]);
-								String P2x2 = (coordenadas[7]);
-								String P2y2 = (coordenadas[8]);
-								RutaOrigen = (coordenadas[9]).replace("\\", "/");
+							String[] coordenadas = linea.split("\t");
+							String nombreimagenIN = coordenadas[0];
+							String P1x1 = (coordenadas[1]);
+							String P1y1 = (coordenadas[2]);
+							String P1x2 = (coordenadas[3]);
+							String P1y2 = (coordenadas[4]);
+							String P2x1 = (coordenadas[5]);
+							String P2y1 = (coordenadas[6]);
+							String P2x2 = (coordenadas[7]);
+							String P2y2 = (coordenadas[8]);
+							RutaOrigen = (coordenadas[9]).replace("\\", "/");
 								
 								
-								etiqueta.append(coordenadas[9] + nombreimagenIN + "\n");
-								etiqueta.append(P1x1 + "\n");
-								etiqueta.append(P1y1 + "\n");
-								etiqueta.append(P1x2 + "\n");
-								etiqueta.append(P1y2 + "\n");
-								etiqueta.append(P2x1 + "\n");
-								etiqueta.append(P2y1 + "\n");
-								etiqueta.append(P2x2 + "\n");
-								etiqueta.append(P2y2 + "\n");
-								etiqueta.append("Procesando imagen" + "\n");
+							etiqueta.append(coordenadas[9] + nombreimagenIN + "\n");
+							etiqueta.append(P1x1 + "\n");
+							etiqueta.append(P1y1 + "\n");
+							etiqueta.append(P1x2 + "\n");
+							etiqueta.append(P1y2 + "\n");
+							etiqueta.append(P2x1 + "\n");
+							etiqueta.append(P2y1 + "\n");
+							etiqueta.append(P2x2 + "\n");
+							etiqueta.append(P2y2 + "\n");
+							etiqueta.append("Procesando imagen" + "\n");
 								
-								System.out.println("WCB RutaOrigen: " + RutaOrigen + "\n");
-								System.out.println("WCB nombreimagenIN: " + nombreimagenIN + "\n");
-								System.out.println("WCB: " + P1x1 + "\n");
-								System.out.println("WCB: " + P1y1 + "\n");
-								System.out.println("WCB: " + P1x2 + "\n");
-								System.out.println("WCB: " + P1y2 + "\n");
-								System.out.println("WCB imagenSalida: " + imagenSalida + "\n");
+							System.out.println("WCB RutaOrigen: " + RutaOrigen + "\n");
+							System.out.println("WCB nombreimagenIN: " + nombreimagenIN + "\n");
+							System.out.println("WCB imagenSalida: " + imagenSalida + "\n");
 								
 								
 								
 								
-								if (Integer.parseInt(P2x1) == 0 || Integer.parseInt(P2y1) == 0 || Integer.parseInt(P2x2) == 0 || Integer.parseInt(P2y2) == 0) {
+							if (Integer.parseInt(P2x1) == 0 || Integer.parseInt(P2y1) == 0 || Integer.parseInt(P2x2) == 0 || Integer.parseInt(P2y2) == 0) {
 									
-									CortaTiff croptiff = new CortaTiff(RutaOrigen, nombreimagenIN, P1x1, P1y1, P1x2, P1y2, imagenSalida );
-									croptiff.doInBackground();
-									imagenSalida++;
-								}
-								
-								
-								
-								contador++;
-								porcent=new Double(contador * 100 / totalimagewcb).intValue();
-		                        progreso.setValue(porcent);
-								
-								
-
+							CortaTiff croptiff = new CortaTiff(RutaOrigen, nombreimagenIN, P1x1, P1y1, P1x2, P1y2, imagenSalida );
+							croptiff.doInBackground();
+							imagenSalida++;
 							}
+								
+							contador++;
+							porcent=new Double(contador * 100 / totalimagewcb).intValue();
+	                        progreso.setValue(porcent);
+							}
+							
 							br.close();
 							fr.close();
 							
-							
-							
-
 						} catch (Exception e) {
-							System.out.println("Excepcion leyendo fichero "
-									+ fichero + ": " + e);
+							System.out.println("Excepcion leyendo fichero "	+ fichero + ": " + e);
 						}
 
 					} catch (Exception e) {
@@ -136,9 +119,7 @@ public class CortaWCB extends SwingWorker<Void, Void> {
 				recorreYcorta(fichero);
 			}
 		}
-		
 	
-		
 		System.out.println("Images a tratar en los WCB: " + totalimagewcb);
 	}
 

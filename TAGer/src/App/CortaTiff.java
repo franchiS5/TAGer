@@ -26,7 +26,6 @@ private String P1x1;
 private String P1y1;
 private String P1x2;
 private String P1y2;
-
 private int imagenSalida;
 
 
@@ -44,23 +43,15 @@ this.nombreimagenIN = nombreimagenIN;
 	
 }
 
-
 private void cortatiff(File f) throws IOException, Exception{
 	
 	try{
 		
-		
-	
 	ImagePlus imp = IJ.openImage(RutaOrigen + nombreimagenIN);
 	ImageProcessor ip = imp.getProcessor();
 	
-
 	ip.setRoi(Integer.parseInt(P1x1),Integer.parseInt(P1y1),Integer.parseInt(P1x2),Integer.parseInt(P1y2));
 	ip = ip.crop();
-	CanvasResizer cr = new CanvasResizer();
-	
-	
-	
 	
 	int width = ip.getWidth();
 	int heigth = ip.getHeight();
@@ -68,14 +59,8 @@ private void cortatiff(File f) throws IOException, Exception{
 	System.out.println("El ancho es:" + width);
 	BufferedImage croppedimage = ip.getBufferedImage();
 	
-	
-	
 	System.out.println("CORTATIFF RutaOrigen: " + RutaOrigen + "\n");
 	System.out.println("CORTATIFF nombreimagenIN: " + nombreimagenIN + "\n");
-	System.out.println("CORTATIFF: " + P1x1 + "\n");
-	System.out.println("CORTATIFF: " + P1y1 + "\n");
-	System.out.println("CORTATIFF: " + P1x2 + "\n");
-	System.out.println("CORTATIFF: " + P1y2 + "\n");
 	System.out.println("CORTATIFF imagenSalida: " + imagenSalida + "\n");
 	
 	TIFFEncodeParam param = new TIFFEncodeParam();
@@ -92,7 +77,6 @@ private void cortatiff(File f) throws IOException, Exception{
     
     // Componemos la cabecera  usando los TAGS definidos en las variables anteriores
     
-    
     param.setCompression(TIFFEncodeParam.COMPRESSION_NONE);
     TIFFField xRes = new TIFFField(XRES_TAG, TIFFField.TIFF_RATIONAL, 1, new long[][]{{ (long)300, 1 }});
 	TIFFField yRes = new TIFFField(YRES_TAG, TIFFField.TIFF_RATIONAL, 1, new long[][]{{ (long)300, 1 }});
@@ -106,31 +90,18 @@ private void cortatiff(File f) throws IOException, Exception{
     
     param.setExtraFields(new TIFFField [] {xRes,yRes,unit_Inch,copyright,imagewidth,imagelength,subfiletype,fillorder,orientation});
     
-    
-    
-    	
-    	// Creamos la imagen de salida
+    // Creamos la imagen de salida
 		
-		FileOutputStream tiffsalida = new FileOutputStream(RutaOrigen + Integer.toString(imagenSalida) + ".tif");
-		ImageEncoder encoder = ImageCodec.createImageEncoder("TIFF", tiffsalida, param);
-		encoder.encode(croppedimage);
-        tiffsalida.close();
+	FileOutputStream tiffsalida = new FileOutputStream(RutaOrigen + Integer.toString(imagenSalida) + ".tif");
+	ImageEncoder encoder = ImageCodec.createImageEncoder("TIFF", tiffsalida, param);
+	encoder.encode(croppedimage);
+    tiffsalida.close();
         
-        
-        
-        
-        
-        
-        	
-	
-	
-	
+    
 	}catch (Exception e){
 		System.out.println(e);
-		
 	}
 }
-
 
 protected Void doInBackground() throws Exception {
 	
@@ -140,7 +111,4 @@ protected Void doInBackground() throws Exception {
 	return null;
 	
 	}
-
 }
-
-
