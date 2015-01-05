@@ -90,12 +90,12 @@ private void recorreYcorta(File f) throws IOException, Exception {
 								
 								
 								
-							if (Integer.parseInt(P2x1) == 0 || Integer.parseInt(P2y1) == 0 || Integer.parseInt(P2x2) == 0 || Integer.parseInt(P2y2) == 0) {
+							//if (Integer.parseInt(P2x1) == 0 || Integer.parseInt(P2y1) == 0 || Integer.parseInt(P2x2) == 0 || Integer.parseInt(P2y2) == 0) {
 									
 							CortaTiff croptiff = new CortaTiff(RutaOrigen, nombreimagenIN, P1x1, P1y1, P1x2, P1y2, imagenSalida );
 							croptiff.doInBackground();
 							imagenSalida++;
-							}
+							//}
 								
 							contador++;
 							porcent=new Double(contador * 100 / totalimagewcb).intValue();
