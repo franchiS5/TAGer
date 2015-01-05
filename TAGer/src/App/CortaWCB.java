@@ -70,26 +70,13 @@ private void recorreYcorta(File f) throws IOException, Exception {
 							String P2x2 = (coordenadas[7]);
 							String P2y2 = (coordenadas[8]);
 							RutaOrigen = (coordenadas[9]).replace("\\", "/");
+							
 								
 								
-							etiqueta.append(coordenadas[9] + nombreimagenIN + "\n");
-							etiqueta.append(P1x1 + "\n");
-							etiqueta.append(P1y1 + "\n");
-							etiqueta.append(P1x2 + "\n");
-							etiqueta.append(P1y2 + "\n");
-							etiqueta.append(P2x1 + "\n");
-							etiqueta.append(P2y1 + "\n");
-							etiqueta.append(P2x2 + "\n");
-							etiqueta.append(P2y2 + "\n");
-							etiqueta.append("Procesando imagen" + "\n");
+							etiqueta.append("Procesando imagen" +coordenadas[9] + nombreimagenIN + "\n");
+							
 								
-							System.out.println("WCB RutaOrigen: " + RutaOrigen + "\n");
-							System.out.println("WCB nombreimagenIN: " + nombreimagenIN + "\n");
-							System.out.println("WCB imagenSalida: " + imagenSalida + "\n");
-								
-								
-								
-								
+							
 							//if (Integer.parseInt(P2x1) == 0 || Integer.parseInt(P2y1) == 0 || Integer.parseInt(P2x2) == 0 || Integer.parseInt(P2y2) == 0) {
 									
 							CortaTiff croptiff = new CortaTiff(RutaOrigen, nombreimagenIN, P1x1, P1y1, P1x2, P1y2, imagenSalida );
@@ -121,13 +108,14 @@ private void recorreYcorta(File f) throws IOException, Exception {
 		}
 	
 		System.out.println("Images a tratar en los WCB: " + totalimagewcb);
+		etiqueta.append("Imágenes procesadas: " + totalimagewcb + "\n");
 	}
 
 	@Override
 	protected Void doInBackground() throws Exception {
 
 		recorreYcorta(new File(RutaOrigen));
-		etiqueta.append("Proceso Terminado\n");
+		etiqueta.append("PROCESO TERMINADO\n");
 		return null;
 	}
 
