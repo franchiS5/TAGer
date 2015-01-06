@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.RandomAccessFile;
 import java.util.Locale;
 
 import javax.imageio.IIOImage;
@@ -20,7 +21,9 @@ import com.sun.media.imageio.plugins.tiff.TIFFImageWriteParam;
 import com.sun.media.imageioimpl.plugins.tiff.TIFFImageWriter;
 import com.sun.media.imageioimpl.plugins.tiff.TIFFImageWriterSpi;
 import com.sun.media.imageioimpl.plugins.tiff.TIFFT6Compressor;
+import com.sun.media.jai.codec.ImageCodec;
 import com.sun.media.jai.codec.ImageEncoder;
+import com.sun.media.jai.codec.SeekableOutputStream;
 import com.sun.media.jai.codec.TIFFEncodeParam;
 import com.sun.media.jai.codec.TIFFField;
 
@@ -54,7 +57,9 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 
 			BufferedImage buffimage = ImageIO.read(f);
 			final BufferedImage croppedimage = buffimage.getSubimage(Integer.parseInt(P1x1), Integer.parseInt(P1y1),Integer.parseInt(P1x2), Integer.parseInt(P1y2));
-
+			
+			
+			
 			int width = croppedimage.getWidth();
 			int heigth = croppedimage.getHeight();
 
@@ -88,7 +93,7 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 
 			param.setExtraFields(new TIFFField[] { xRes, yRes, unit_Inch,copyright, imagewidth, imagelength, subfiletype, fillorder,orientation, planarconfiguration });
 
-			// Creamos la imagen de salida
+			
 
 			
 			/*ImageWriter tiffWriter = (ImageWriter) ImageIO.getImageWritersByMIMEType("image/tiff").next();
@@ -118,19 +123,36 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 			File fOutputFile = new File(RutaOrigen + imagenSalida + ".tif");
 			OutputStream fos = new BufferedOutputStream(new FileOutputStream(fOutputFile));
 			ImageOutputStream ios = ImageIO.createImageOutputStream(fos);
-
+			
 			writer.setOutput(ios);
+			
 			writer.write(null, new IIOImage(croppedimage, null, null), tifparam);
 
 			ios.flush();
 			writer.dispose();
 			ios.close();
 
+			
+			File finishFile = new File(RutaOrigen + imagenSalida + ".tif");
+			OutputStream out = null;
+			out = new SeekableOutputStream(new RandomAccessFile(finishFile, "rw"));
+			BufferedImage iim = ImageIO.read(new File(RutaOrigen + imagenSalida + ".tif"));
+			ImageEncoder encoder = ImageCodec.createImageEncoder("tiff", out, param);
+			encoder.encode(iim);
+			out.flush();
+			out.close(); // for security reasons null the output stream and call the garbage // collector; otherwise the JVM could still hold some open file locks
+			out = null;
+			System.gc();
+			
+			
+			
+			
+			// Creamos la imagen de salida
 			/*
-			 * tiffsalida = new FileOutputStream(RutaOrigen +
-			 * Integer.toString(imagenSalida) + ".tif"); encoder =
-			 * ImageCodec.createImageEncoder("TIFF", tiffsalida, param);
-			 * encoder.encode(croppedimage); tiffsalida.flush();
+			 * tiffsalida = new FileOutputStream(RutaOrigen + Integer.toString(imagenSalida) + ".tif");
+			 * encoder = ImageCodec.createImageEncoder("TIFF", tiffsalida, param);
+			 * encoder.encode(croppedimage);
+			 * tiffsalida.flush();
 			 */
 
 		} catch (Exception e) {
