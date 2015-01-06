@@ -1,12 +1,16 @@
 package App;
 
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import javax.imageio.IIOImage;
@@ -55,13 +59,35 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 
 		try {
 
+			//Falta depurar si el fichero de entrada es TIFF o JPEG
+			//Falta depurar si el fichero tiene que ser cortado como P1 y P2 o solamente P1
+			//Falta crear the method para recorrer Directory y extraer los metadatos al vuelo para optimizar rendimiento
+			
+			
 			BufferedImage buffimage = ImageIO.read(f);
 			final BufferedImage croppedimage = buffimage.getSubimage(Integer.parseInt(P1x1), Integer.parseInt(P1y1),Integer.parseInt(P1x2), Integer.parseInt(P1y2));
 			
 			
-			
+			//Obtenemos las dimensiones X e Y de la imagen
 			int width = croppedimage.getWidth();
 			int heigth = croppedimage.getHeight();
+			
+			//Falta obtener el COLOR SPACE de la imagen de entrada
+			
+			//Obtenemos la fecha de creacion de la imagen de entrada
+			long fechams = f.lastModified();
+			Date d = new Date(fechams);
+			Calendar c = new GregorianCalendar(); 
+			c.setTime(d);
+			String dia = Integer.toString(c.get(Calendar.DATE));
+			String mes = Integer.toString(c.get(Calendar.MONTH));
+			String annio = Integer.toString(c.get(Calendar.YEAR));
+			String hora = Integer.toString(c.get(Calendar.HOUR_OF_DAY));
+			String minuto = Integer.toString(c.get(Calendar.MINUTE));
+			String segundo = Integer.toString(c.get(Calendar.SECOND));
+			
+			String fechacreacion = (annio + ":" + mes + ":" + dia + " " + hora + ":" + minuto + ":" + segundo);
+			
 
 			TIFFEncodeParam param = new TIFFEncodeParam();
 
@@ -75,23 +101,38 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 			final int FILLORDER_TAG = 266;
 			final int ORIENTATION_TAG = 274;
 			final int PLANARCONFIGURATION = 284;
+			final int IMAGE_DESCRIPTION = 270;
+			final int MAKE = 271;
+			final int MODEL = 272;
+			final int SOFTWARE = 305;
+			final int FECHACREACION = 306;
+			final int ARTIST = 315;
+			
 
 			// Componemos la cabecera usando los TAGS definidos en las variables
 			// anteriores
 
 			param.setCompression(TIFFEncodeParam.COMPRESSION_NONE);
+			TIFFField subfiletype = new TIFFField(NEWSUBFILETYPE_TAG,TIFFField.TIFF_SHORT, 1, (Object) new char[] { 0 });
 			TIFFField xRes = new TIFFField(XRES_TAG, TIFFField.TIFF_RATIONAL,1, new long[][] { { (long) 300, 1 } });
 			TIFFField yRes = new TIFFField(YRES_TAG, TIFFField.TIFF_RATIONAL,1, new long[][] { { (long) 300, 1 } });
 			TIFFField unit_Inch = new TIFFField(INCH_TAG, TIFFField.TIFF_SHORT,1, (Object) new char[] { 2 });
 			TIFFField copyright = new TIFFField(COPYRIGHT_TAG,TIFFField.TIFF_ASCII, 1,(Object) new String[] { "copyright" });
+			TIFFField image_description = new TIFFField(IMAGE_DESCRIPTION,TIFFField.TIFF_ASCII,1,(Object) new String[] {"Description"});
+			TIFFField make = new TIFFField(MAKE,TIFFField.TIFF_ASCII,1,(Object) new String[]{"Fabricante"});
+			TIFFField model = new TIFFField(MODEL,TIFFField.TIFF_ASCII,1,(Object) new String[]{"Modelo"});
 			TIFFField imagewidth = new TIFFField(IMAGEWIDTH_TAG,TIFFField.TIFF_LONG, 1, (Object) new long[] { width });
 			TIFFField imagelength = new TIFFField(IMAGELENGTH_TAG,TIFFField.TIFF_LONG, 1, (Object) new long[] { heigth });
-			TIFFField subfiletype = new TIFFField(NEWSUBFILETYPE_TAG,TIFFField.TIFF_SHORT, 1, (Object) new char[] { 0 });
 			TIFFField fillorder = new TIFFField(FILLORDER_TAG,TIFFField.TIFF_SHORT, 1, (Object) new char[] { 1 });
 			TIFFField orientation = new TIFFField(ORIENTATION_TAG,TIFFField.TIFF_SHORT, 1, (Object) new char[] { 1 });
 			TIFFField planarconfiguration = new TIFFField(PLANARCONFIGURATION,TIFFField.TIFF_SHORT, 1, (Object) new char[] { 1 });
-
-			param.setExtraFields(new TIFFField[] { xRes, yRes, unit_Inch,copyright, imagewidth, imagelength, subfiletype, fillorder,orientation, planarconfiguration });
+			TIFFField software = new TIFFField(SOFTWARE,TIFFField.TIFF_ASCII,1,(Object) new String[]{"Software"});
+			TIFFField fecha = new TIFFField(FECHACREACION, TIFFField.TIFF_ASCII,1,(Object) new String [] {fechacreacion});
+			TIFFField artist = new TIFFField(ARTIST,TIFFField.TIFF_ASCII,1,(Object) new String []{"Artist"});
+			
+			
+			param.setExtraFields(new TIFFField[] { xRes, yRes, unit_Inch,copyright, imagewidth, imagelength, subfiletype, fillorder,orientation, planarconfiguration, image_description, make
+													,model, software, fecha, artist});
 
 			
 
