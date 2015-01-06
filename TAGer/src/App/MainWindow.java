@@ -367,7 +367,7 @@ public class MainWindow extends JFrame {
 		panel_1.add(JTextFieldInputWCB);
 		
 		JButton JbuttonSeleccionarWCB = new JButton("Seleccionar");
-		JbuttonSeleccionarWCB.setBounds(440, 29, 89, 25);
+		JbuttonSeleccionarWCB.setBounds(440, 29, 116, 25);
 		panel_1.add(JbuttonSeleccionarWCB);
 		
 		JLabel JLabeldestinoWCB = new JLabel("Seleccionar carpeta destino");
@@ -382,7 +382,7 @@ public class MainWindow extends JFrame {
 		JTextFieldOutputWCB.setColumns(10);
 		
 		JButton JbuttonSeleccionarWCB2 = new JButton("Seleccionar");
-		JbuttonSeleccionarWCB2.setBounds(440, 86, 89, 23);
+		JbuttonSeleccionarWCB2.setBounds(440, 86, 116, 23);
 		panel_1.add(JbuttonSeleccionarWCB2);
 		
 		final JSpinner spinner = new JSpinner();
@@ -393,7 +393,7 @@ public class MainWindow extends JFrame {
 		panel_1.add(spinner);
 		
 		final JCheckBox ChkboxMarcoWCB = new JCheckBox("Marco");
-		ChkboxMarcoWCB.setBounds(815, 31, 65, 23);
+		ChkboxMarcoWCB.setBounds(800, 31, 80, 23);
 		ChkboxMarcoWCB.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
 				if (ChkboxMarcoWCB.isSelected()){
