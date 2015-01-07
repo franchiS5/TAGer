@@ -1,7 +1,6 @@
 package App;
 
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -15,8 +14,6 @@ import java.util.Locale;
 
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
-import javax.imageio.ImageWriter;
-import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.spi.ImageWriterSpi;
 import javax.imageio.stream.ImageOutputStream;
 import javax.swing.SwingWorker;
@@ -24,7 +21,6 @@ import javax.swing.SwingWorker;
 import com.sun.media.imageio.plugins.tiff.TIFFImageWriteParam;
 import com.sun.media.imageioimpl.plugins.tiff.TIFFImageWriter;
 import com.sun.media.imageioimpl.plugins.tiff.TIFFImageWriterSpi;
-import com.sun.media.imageioimpl.plugins.tiff.TIFFT6Compressor;
 import com.sun.media.jai.codec.ImageCodec;
 import com.sun.media.jai.codec.ImageEncoder;
 import com.sun.media.jai.codec.SeekableOutputStream;
@@ -86,7 +82,8 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 			String minuto = Integer.toString(c.get(Calendar.MINUTE));
 			String segundo = Integer.toString(c.get(Calendar.SECOND));
 			
-			String fechacreacion = (annio + ":" + mes + ":" + dia + " " + hora + ":" + minuto + ":" + segundo);
+			String fechacreacion = (annio + ":" + mes + ":" + dia + " "
+							+ "" + hora + ":" + minuto + ":" + segundo);
 			
 
 			TIFFEncodeParam param = new TIFFEncodeParam();
@@ -160,6 +157,38 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 
 			TIFFImageWriteParam tifparam = new TIFFImageWriteParam(Locale.US);
 			tifparam.setCompressionMode(1);
+	
+			
+			
+			
+			
+			/*PRUEBA LECTURA DE CABECERA
+			
+			ImageInputStream inputFile = ImageIO.createImageInputStream(new File(RutaOrigen + nombreimagenIN));
+			
+			ImageReadParam readParam =null;
+
+			//ImageReader tiffReader = null;
+			//ImageReader tiffReader = new ImageReader;
+			
+
+			// Read primary image and IFD.
+			BufferedImage image = tiffReader.read(0, readParam);
+			IIOMetadata primaryIFD = tiffReader.getImageMetadata(0);
+			System.out.println(primaryIFD.getExtraMetadataFormatNames());
+			
+			// Read thumbnail and IFD if present.
+			BufferedImage thumbnail = null;
+			IIOMetadata thumbnailIFD = null;
+			if(tiffReader.getNumImages(true) > 1) {
+			    thumbnail = tiffReader.read(1, readParam);
+			    thumbnailIFD = tiffReader.getImageMetadata(1);
+			}
+			
+			
+			
+			*/
+			
 
 			File fOutputFile = new File(RutaOrigen + imagenSalida + ".tif");
 			OutputStream fos = new BufferedOutputStream(new FileOutputStream(fOutputFile));
@@ -188,7 +217,7 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 			
 			
 			
-			// Creamos la imagen de salida
+			// Creamos la imagen de salida. Metodo antiguo.
 			/*
 			 * tiffsalida = new FileOutputStream(RutaOrigen + Integer.toString(imagenSalida) + ".tif");
 			 * encoder = ImageCodec.createImageEncoder("TIFF", tiffsalida, param);
