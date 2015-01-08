@@ -1,5 +1,6 @@
 package App;
 
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -82,54 +83,94 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 			String minuto = Integer.toString(c.get(Calendar.MINUTE));
 			String segundo = Integer.toString(c.get(Calendar.SECOND));
 			
-			String fechacreacion = (annio + ":" + mes + ":" + dia + " "
-							+ "" + hora + ":" + minuto + ":" + segundo);
+			// Corregimos los valores que no tengan dos digitos
+			
+			if (dia.length()<2){
+				dia = "0"+dia;
+			}
+			
+			if (mes.length()<2){
+				mes = "0"+mes;
+			}
+			
+			if (hora.length()<2){
+				hora = "0"+hora;
+			}
+			
+			if (minuto.length()<2){
+				minuto = "0"+minuto;
+			}
+			
+			if (segundo.length()<2){
+				segundo = "0"+segundo;
+			}
+			String fechacreacion = (annio + ":" + mes + ":" + dia + " " + hora + ":" + minuto + ":" + segundo);
 			
 
 			TIFFEncodeParam param = new TIFFEncodeParam();
-
-			final int XRES_TAG = 282;
-			final int YRES_TAG = 283;
-			final int INCH_TAG = 296;
-			final int COPYRIGHT_TAG = 33432;
+			
+			final int NEWSUBFILETYPE_TAG = 254;
 			final int IMAGEWIDTH_TAG = 256;
 			final int IMAGELENGTH_TAG = 257;
-			final int NEWSUBFILETYPE_TAG = 254;
 			final int FILLORDER_TAG = 266;
-			final int ORIENTATION_TAG = 274;
-			final int PLANARCONFIGURATION = 284;
 			final int IMAGE_DESCRIPTION = 270;
 			final int MAKE = 271;
 			final int MODEL = 272;
+			final int STRIPOFFSETS = 273;
+			final int ORIENTATION_TAG = 274;
+			final int ROWSPERSTRIP = 278;
+			final int STRIPSBYTECOUNTS = 279;
+			final int XRES_TAG = 282;
+			final int YRES_TAG = 283;
+			final int PLANARCONFIGURATION = 284;
+			final int INCH_TAG = 296;
 			final int SOFTWARE = 305;
 			final int FECHACREACION = 306;
 			final int ARTIST = 315;
+			final int COPYRIGHT_TAG = 33432;
 			
-
+			
+			Object ARRAY1[] = new String[]{"DESCRIPTION"};
+			
+			System.out.println(ARRAY1);
+			System.out.println(TEST.length());
+			
+			
+			
 			// Componemos la cabecera usando los TAGS definidos en las variables
 			// anteriores
-
+			
+		
+			
 			param.setCompression(TIFFEncodeParam.COMPRESSION_NONE);
-			TIFFField subfiletype = new TIFFField(NEWSUBFILETYPE_TAG,TIFFField.TIFF_SHORT, 1, (Object) new char[] { 0 });
-			TIFFField xRes = new TIFFField(XRES_TAG, TIFFField.TIFF_RATIONAL,1, new long[][] { { (long) 300, 1 } });
-			TIFFField yRes = new TIFFField(YRES_TAG, TIFFField.TIFF_RATIONAL,1, new long[][] { { (long) 300, 1 } });
-			TIFFField unit_Inch = new TIFFField(INCH_TAG, TIFFField.TIFF_SHORT,1, (Object) new char[] { 2 });
-			TIFFField copyright = new TIFFField(COPYRIGHT_TAG,TIFFField.TIFF_ASCII, 1,(Object) new String[] { "copyright" });
-			TIFFField image_description = new TIFFField(IMAGE_DESCRIPTION,TIFFField.TIFF_ASCII,1,(Object) new String[] {"Description"});
-			TIFFField make = new TIFFField(MAKE,TIFFField.TIFF_ASCII,1,(Object) new String[]{"Fabricante"});
-			TIFFField model = new TIFFField(MODEL,TIFFField.TIFF_ASCII,1,(Object) new String[]{"Modelo"});
+			param.setLittleEndian(true);
+			param.setWriteTiled(false);
+			param.setTileSize(0, 0);
+			
+			
+			TIFFField newsubfiletype = new TIFFField(NEWSUBFILETYPE_TAG,TIFFField.TIFF_LONG, 1, (Object) new long[] { 0 });
 			TIFFField imagewidth = new TIFFField(IMAGEWIDTH_TAG,TIFFField.TIFF_LONG, 1, (Object) new long[] { width });
 			TIFFField imagelength = new TIFFField(IMAGELENGTH_TAG,TIFFField.TIFF_LONG, 1, (Object) new long[] { heigth });
 			TIFFField fillorder = new TIFFField(FILLORDER_TAG,TIFFField.TIFF_SHORT, 1, (Object) new char[] { 1 });
+			TIFFField image_description = new TIFFField(IMAGE_DESCRIPTION,TIFFField.TIFF_ASCII, TEST.length(),(Object) TEST);
+			//TIFFField make = new TIFFField(MAKE,TIFFField.TIFF_ASCII,MAKEVALUE.length, MAKEVALUE);
+			//TIFFField model = new TIFFField(MODEL,TIFFField.TIFF_ASCII,1, (Object) new String[] {MODELVALUE.toString()});
+			TIFFField stripoffsets = new TIFFField(STRIPOFFSETS, TIFFField.TIFF_LONG, 1, (Object) new long[] {});
 			TIFFField orientation = new TIFFField(ORIENTATION_TAG,TIFFField.TIFF_SHORT, 1, (Object) new char[] { 1 });
+			TIFFField rowsperstrip = new TIFFField(ROWSPERSTRIP, TIFFField.TIFF_LONG,1,(Object) new long[]{});
+			TIFFField stripsbytecounts = new TIFFField(STRIPSBYTECOUNTS, TIFFField.TIFF_LONG,1,(Object) new long[] {});
+			TIFFField xRes = new TIFFField(XRES_TAG, TIFFField.TIFF_RATIONAL,1, new long[][] { { (long) 300, 1 } });
+			TIFFField yRes = new TIFFField(YRES_TAG, TIFFField.TIFF_RATIONAL,1, new long[][] { { (long) 300, 1 } });
 			TIFFField planarconfiguration = new TIFFField(PLANARCONFIGURATION,TIFFField.TIFF_SHORT, 1, (Object) new char[] { 1 });
-			TIFFField software = new TIFFField(SOFTWARE,TIFFField.TIFF_ASCII,1,(Object) new String[]{"Software"});
-			TIFFField fecha = new TIFFField(FECHACREACION, TIFFField.TIFF_ASCII,1,(Object) new String [] {fechacreacion});
-			TIFFField artist = new TIFFField(ARTIST,TIFFField.TIFF_ASCII,1,(Object) new String []{"Artist"});
+			TIFFField unit_Inch = new TIFFField(INCH_TAG, TIFFField.TIFF_SHORT,1, (Object) new char[] { 2 });
+			TIFFField software = new TIFFField(SOFTWARE,TIFFField.TIFF_ASCII,1, (Object) new String[] {"D"});
+			TIFFField fecha = new TIFFField(FECHACREACION, TIFFField.TIFF_ASCII,1, (Object) new String[] {"D"});
+			TIFFField artist = new TIFFField(ARTIST,TIFFField.TIFF_ASCII,1, (Object) new String[] {"D"});
+			TIFFField copyright = new TIFFField(COPYRIGHT_TAG,TIFFField.TIFF_ASCII,1, (Object) new String[] {"D"});
 			
 			
-			param.setExtraFields(new TIFFField[] { xRes, yRes, unit_Inch,copyright, imagewidth, imagelength, subfiletype, fillorder,orientation, planarconfiguration, image_description, make
-													,model, software, fecha, artist});
+			param.setExtraFields(new TIFFField[] { newsubfiletype, imagewidth, imagelength, fillorder, image_description, stripoffsets, orientation,
+					  rowsperstrip, stripsbytecounts, xRes, yRes,  planarconfiguration, unit_Inch, software});
 
 			
 
@@ -157,6 +198,7 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 
 			TIFFImageWriteParam tifparam = new TIFFImageWriteParam(Locale.US);
 			tifparam.setCompressionMode(1);
+			
 	
 			
 			
@@ -193,21 +235,20 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 			File fOutputFile = new File(RutaOrigen + imagenSalida + ".tif");
 			OutputStream fos = new BufferedOutputStream(new FileOutputStream(fOutputFile));
 			ImageOutputStream ios = ImageIO.createImageOutputStream(fos);
-			
 			writer.setOutput(ios);
-			
 			writer.write(null, new IIOImage(croppedimage, null, null), tifparam);
 
 			ios.flush();
 			writer.dispose();
 			ios.close();
 
-			
+			//
 			File finishFile = new File(RutaOrigen + imagenSalida + ".tif");
 			OutputStream out = null;
 			out = new SeekableOutputStream(new RandomAccessFile(finishFile, "rw"));
 			BufferedImage iim = ImageIO.read(new File(RutaOrigen + imagenSalida + ".tif"));
 			ImageEncoder encoder = ImageCodec.createImageEncoder("tiff", out, param);
+			
 			encoder.encode(iim);
 			out.flush();
 			out.close(); // for security reasons null the output stream and call the garbage // collector; otherwise the JVM could still hold some open file locks

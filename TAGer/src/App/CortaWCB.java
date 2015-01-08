@@ -73,7 +73,7 @@ private void recorreYcorta(File f) throws IOException, Exception {
 							
 								
 								
-							etiqueta.append("Procesando imagen" +coordenadas[9] + nombreimagenIN + "\n");
+							etiqueta.append("Procesando imagen: " +coordenadas[9] + nombreimagenIN + "\n");
 							
 								
 							
