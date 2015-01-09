@@ -104,7 +104,7 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 			if (segundo.length()<2){
 				segundo = "0"+segundo;
 			}
-			String fechacreacion = (annio + ":" + mes + ":" + dia + " " + hora + ":" + minuto + ":" + segundo);
+			String FECHACREACION_VAR = (annio + ":" + mes + ":" + dia + " " + hora + ":" + minuto + ":" + segundo);
 			
 
 			TIFFEncodeParam param = new TIFFEncodeParam();
@@ -128,20 +128,18 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 			final int FECHACREACION = 306;
 			final int ARTIST = 315;
 			final int COPYRIGHT_TAG = 33432;
-			
-			
-			Object ARRAY1[] = new String[]{"DESCRIPTION"};
-			
-			System.out.println(ARRAY1);
-			System.out.println(TEST.length());
-			
+			String DESCRIPTION_VAR = "Descripcion de la imagen tal cual aparece";
+			String MAKE_VAR = "Zeutschel";
+			String MODEL_VAR = "Desconocido";
+			String SOFTWARE_VAR = "5.1.3";
+			String ARTIST_VAR = "Tu si que eres un artista";
+			String COPYRIGHT_VAR = "Pues es mio";
 			
 			
 			// Componemos la cabecera usando los TAGS definidos en las variables
 			// anteriores
 			
 		
-			
 			param.setCompression(TIFFEncodeParam.COMPRESSION_NONE);
 			param.setLittleEndian(true);
 			param.setWriteTiled(false);
@@ -152,9 +150,9 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 			TIFFField imagewidth = new TIFFField(IMAGEWIDTH_TAG,TIFFField.TIFF_LONG, 1, (Object) new long[] { width });
 			TIFFField imagelength = new TIFFField(IMAGELENGTH_TAG,TIFFField.TIFF_LONG, 1, (Object) new long[] { heigth });
 			TIFFField fillorder = new TIFFField(FILLORDER_TAG,TIFFField.TIFF_SHORT, 1, (Object) new char[] { 1 });
-			TIFFField image_description = new TIFFField(IMAGE_DESCRIPTION,TIFFField.TIFF_ASCII, TEST.length(),(Object) TEST);
-			//TIFFField make = new TIFFField(MAKE,TIFFField.TIFF_ASCII,MAKEVALUE.length, MAKEVALUE);
-			//TIFFField model = new TIFFField(MODEL,TIFFField.TIFF_ASCII,1, (Object) new String[] {MODELVALUE.toString()});
+			TIFFField image_description = new TIFFField(IMAGE_DESCRIPTION,TIFFField.TIFF_ASCII, 1, (Object) new String[] {DESCRIPTION_VAR});
+			TIFFField make = new TIFFField(MAKE,TIFFField.TIFF_ASCII, 1, (Object) new String[] {MAKE_VAR});
+			TIFFField model = new TIFFField(MODEL,TIFFField.TIFF_ASCII, 1, (Object) new String[] {MODEL_VAR});
 			TIFFField stripoffsets = new TIFFField(STRIPOFFSETS, TIFFField.TIFF_LONG, 1, (Object) new long[] {});
 			TIFFField orientation = new TIFFField(ORIENTATION_TAG,TIFFField.TIFF_SHORT, 1, (Object) new char[] { 1 });
 			TIFFField rowsperstrip = new TIFFField(ROWSPERSTRIP, TIFFField.TIFF_LONG,1,(Object) new long[]{});
@@ -163,14 +161,14 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 			TIFFField yRes = new TIFFField(YRES_TAG, TIFFField.TIFF_RATIONAL,1, new long[][] { { (long) 300, 1 } });
 			TIFFField planarconfiguration = new TIFFField(PLANARCONFIGURATION,TIFFField.TIFF_SHORT, 1, (Object) new char[] { 1 });
 			TIFFField unit_Inch = new TIFFField(INCH_TAG, TIFFField.TIFF_SHORT,1, (Object) new char[] { 2 });
-			TIFFField software = new TIFFField(SOFTWARE,TIFFField.TIFF_ASCII,1, (Object) new String[] {"D"});
-			TIFFField fecha = new TIFFField(FECHACREACION, TIFFField.TIFF_ASCII,1, (Object) new String[] {"D"});
-			TIFFField artist = new TIFFField(ARTIST,TIFFField.TIFF_ASCII,1, (Object) new String[] {"D"});
-			TIFFField copyright = new TIFFField(COPYRIGHT_TAG,TIFFField.TIFF_ASCII,1, (Object) new String[] {"D"});
+			TIFFField software = new TIFFField(SOFTWARE,TIFFField.TIFF_ASCII, 1, (Object) new String[] {MODEL_VAR});
+			TIFFField fecha = new TIFFField(FECHACREACION, TIFFField.TIFF_ASCII, 1, (Object) new String[] {FECHACREACION_VAR});
+			TIFFField artist = new TIFFField(ARTIST,TIFFField.TIFF_ASCII, 1, (Object) new String[] {ARTIST_VAR});
+			TIFFField copyright = new TIFFField(COPYRIGHT_TAG,TIFFField.TIFF_ASCII, 1, (Object) new String[] {COPYRIGHT_VAR});
 			
 			
-			param.setExtraFields(new TIFFField[] { newsubfiletype, imagewidth, imagelength, fillorder, image_description, stripoffsets, orientation,
-					  rowsperstrip, stripsbytecounts, xRes, yRes,  planarconfiguration, unit_Inch, software});
+			param.setExtraFields(new TIFFField[] { newsubfiletype, imagewidth, imagelength, fillorder, image_description, make, model, stripoffsets, orientation,
+					  rowsperstrip, stripsbytecounts, xRes, yRes,  planarconfiguration, unit_Inch, software, fecha, artist, copyright});
 
 			
 
