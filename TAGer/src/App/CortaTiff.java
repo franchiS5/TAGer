@@ -109,6 +109,8 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 
 			TIFFEncodeParam param = new TIFFEncodeParam();
 			
+			TiffMetadataRead readermeta = new TiffMetadataRead();
+			
 			final int NEWSUBFILETYPE_TAG = 254;
 			final int IMAGEWIDTH_TAG = 256;
 			final int IMAGELENGTH_TAG = 257;
@@ -129,11 +131,25 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 			final int ARTIST = 315;
 			final int COPYRIGHT_TAG = 33432;
 			String DESCRIPTION_VAR = "Descripcion de la imagen tal cual aparece";
-			String MAKE_VAR = "Zeutschel";
-			String MODEL_VAR = "Desconocido";
-			String SOFTWARE_VAR = "5.1.3";
+			String MAKE_VAR = "Descripcion de la imagen tal cual aparece";
+			String MODEL_VAR = "Descripcion de la imagen tal cual aparece";
+			String SOFTWARE_VAR = "Descripcion de la imagen tal cual aparece";
+			
+			/*
+			 * 
+			 * String MAKE_VAR = readermeta.LeerExif(f.getAbsolutePath().toString(), "0x010f");
+			 * String MODEL_VAR = readermeta.LeerExif(f.getAbsolutePath().toString(), "0x0110");
+			 * String SOFTWARE_VAR = readermeta.LeerExif(f.getAbsolutePath().toString(), "0x0131");
+			 * 
+			 * 
+			 * 
+			 * 
+			 * 
+			 */
 			String ARTIST_VAR = "Tu si que eres un artista";
 			String COPYRIGHT_VAR = "Pues es mio";
+			
+			
 			
 			
 			// Componemos la cabecera usando los TAGS definidos en las variables
@@ -161,7 +177,7 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 			TIFFField yRes = new TIFFField(YRES_TAG, TIFFField.TIFF_RATIONAL,1, new long[][] { { (long) 300, 1 } });
 			TIFFField planarconfiguration = new TIFFField(PLANARCONFIGURATION,TIFFField.TIFF_SHORT, 1, (Object) new char[] { 1 });
 			TIFFField unit_Inch = new TIFFField(INCH_TAG, TIFFField.TIFF_SHORT,1, (Object) new char[] { 2 });
-			TIFFField software = new TIFFField(SOFTWARE,TIFFField.TIFF_ASCII, 1, (Object) new String[] {MODEL_VAR});
+			TIFFField software = new TIFFField(SOFTWARE,TIFFField.TIFF_ASCII, 1, (Object) new String[] {SOFTWARE_VAR});
 			TIFFField fecha = new TIFFField(FECHACREACION, TIFFField.TIFF_ASCII, 1, (Object) new String[] {FECHACREACION_VAR});
 			TIFFField artist = new TIFFField(ARTIST,TIFFField.TIFF_ASCII, 1, (Object) new String[] {ARTIST_VAR});
 			TIFFField copyright = new TIFFField(COPYRIGHT_TAG,TIFFField.TIFF_ASCII, 1, (Object) new String[] {COPYRIGHT_VAR});
