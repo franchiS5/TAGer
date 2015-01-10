@@ -1,6 +1,5 @@
 package App;
 
-import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -41,15 +40,13 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 	public CortaTiff(String RutaOrigen, String nombreimagenIN, String P1x1,
 			String P1y1, String P1x2, String P1y2, int imagenSalida) {
 
-		this.RutaOrigen = RutaOrigen;
-		this.P1x1 = P1x1;
-		this.P1y1 = P1y1;
-		this.P1x2 = P1x2;
-		this.P1y2 = P1y2;
-
-		this.imagenSalida = imagenSalida;
-		this.nombreimagenIN = nombreimagenIN;
-
+	this.RutaOrigen = RutaOrigen;
+	this.P1x1 = P1x1;
+	this.P1y1 = P1y1;
+	this.P1x2 = P1x2;
+	this.P1y2 = P1y2;
+	this.imagenSalida = imagenSalida;
+	this.nombreimagenIN = nombreimagenIN;
 	}
 
 	private void cortatiff(File f) throws IOException, Exception {
@@ -88,29 +85,21 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 			if (dia.length()<2){
 				dia = "0"+dia;
 			}
-			
 			if (mes.length()<2){
 				mes = "0"+mes;
 			}
-			
 			if (hora.length()<2){
 				hora = "0"+hora;
 			}
-			
 			if (minuto.length()<2){
 				minuto = "0"+minuto;
 			}
-			
 			if (segundo.length()<2){
 				segundo = "0"+segundo;
 			}
 			String FECHACREACION_VAR = (annio + ":" + mes + ":" + dia + " " + hora + ":" + minuto + ":" + segundo);
 			
-
 			TIFFEncodeParam param = new TIFFEncodeParam();
-			
-			TiffMetadataRead readermeta = new TiffMetadataRead();
-			
 			final int NEWSUBFILETYPE_TAG = 254;
 			final int IMAGEWIDTH_TAG = 256;
 			final int IMAGELENGTH_TAG = 257;
@@ -134,33 +123,16 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 			String MAKE_VAR = "Descripcion de la imagen tal cual aparece";
 			String MODEL_VAR = "Descripcion de la imagen tal cual aparece";
 			String SOFTWARE_VAR = "Descripcion de la imagen tal cual aparece";
-			
-			/*
-			 * 
-			 * String MAKE_VAR = readermeta.LeerExif(f.getAbsolutePath().toString(), "0x010f");
-			 * String MODEL_VAR = readermeta.LeerExif(f.getAbsolutePath().toString(), "0x0110");
-			 * String SOFTWARE_VAR = readermeta.LeerExif(f.getAbsolutePath().toString(), "0x0131");
-			 * 
-			 * 
-			 * 
-			 * 
-			 * 
-			 */
 			String ARTIST_VAR = "Tu si que eres un artista";
 			String COPYRIGHT_VAR = "Pues es mio";
-			
-			
-			
 			
 			// Componemos la cabecera usando los TAGS definidos en las variables
 			// anteriores
 			
-		
 			param.setCompression(TIFFEncodeParam.COMPRESSION_NONE);
 			param.setLittleEndian(true);
 			param.setWriteTiled(false);
 			param.setTileSize(0, 0);
-			
 			
 			TIFFField newsubfiletype = new TIFFField(NEWSUBFILETYPE_TAG,TIFFField.TIFF_LONG, 1, (Object) new long[] { 0 });
 			TIFFField imagewidth = new TIFFField(IMAGEWIDTH_TAG,TIFFField.TIFF_LONG, 1, (Object) new long[] { width });
@@ -186,65 +158,12 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 			param.setExtraFields(new TIFFField[] { newsubfiletype, imagewidth, imagelength, fillorder, image_description, make, model, stripoffsets, orientation,
 					  rowsperstrip, stripsbytecounts, xRes, yRes,  planarconfiguration, unit_Inch, software, fecha, artist, copyright});
 
-			
-
-			
-			/*ImageWriter tiffWriter = (ImageWriter) ImageIO.getImageWritersByMIMEType("image/tiff").next();
-			TIFFImageWriteParam writeParam = (TIFFImageWriteParam)tiffWriter.getDefaultWriteParam();
-			TIFFT6Compressor compressor = new TIFFT6Compressor();
-            writeParam.setCompressionMode(TIFFImageWriteParam.MODE_EXPLICIT);
-            writeParam.setCompressionType(compressor.getCompressionType());
-            writeParam.setTIFFCompressor(compressor);
-            writeParam.setCompressionQuality(Float.parseFloat("1"));
-            
-         // get the metaData
-            IIOMetadata imageMetadata = null;
-            IIOImage testImage = null;
-
-            
-            */
-            
-            
-            
             
 			ImageWriterSpi tiffspi = new TIFFImageWriterSpi();
 			TIFFImageWriter writer = (TIFFImageWriter) tiffspi.createWriterInstance();
 
 			TIFFImageWriteParam tifparam = new TIFFImageWriteParam(Locale.US);
 			tifparam.setCompressionMode(1);
-			
-	
-			
-			
-			
-			
-			/*PRUEBA LECTURA DE CABECERA
-			
-			ImageInputStream inputFile = ImageIO.createImageInputStream(new File(RutaOrigen + nombreimagenIN));
-			
-			ImageReadParam readParam =null;
-
-			//ImageReader tiffReader = null;
-			//ImageReader tiffReader = new ImageReader;
-			
-
-			// Read primary image and IFD.
-			BufferedImage image = tiffReader.read(0, readParam);
-			IIOMetadata primaryIFD = tiffReader.getImageMetadata(0);
-			System.out.println(primaryIFD.getExtraMetadataFormatNames());
-			
-			// Read thumbnail and IFD if present.
-			BufferedImage thumbnail = null;
-			IIOMetadata thumbnailIFD = null;
-			if(tiffReader.getNumImages(true) > 1) {
-			    thumbnail = tiffReader.read(1, readParam);
-			    thumbnailIFD = tiffReader.getImageMetadata(1);
-			}
-			
-			
-			
-			*/
-			
 
 			File fOutputFile = new File(RutaOrigen + imagenSalida + ".tif");
 			OutputStream fos = new BufferedOutputStream(new FileOutputStream(fOutputFile));
@@ -256,7 +175,6 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 			writer.dispose();
 			ios.close();
 
-			//
 			File finishFile = new File(RutaOrigen + imagenSalida + ".tif");
 			OutputStream out = null;
 			out = new SeekableOutputStream(new RandomAccessFile(finishFile, "rw"));
@@ -268,17 +186,6 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 			out.close(); // for security reasons null the output stream and call the garbage // collector; otherwise the JVM could still hold some open file locks
 			out = null;
 			System.gc();
-			
-			
-			
-			
-			// Creamos la imagen de salida. Metodo antiguo.
-			/*
-			 * tiffsalida = new FileOutputStream(RutaOrigen + Integer.toString(imagenSalida) + ".tif");
-			 * encoder = ImageCodec.createImageEncoder("TIFF", tiffsalida, param);
-			 * encoder.encode(croppedimage);
-			 * tiffsalida.flush();
-			 */
 
 		} catch (Exception e) {
 			System.out.println(e);
@@ -290,7 +197,7 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 	protected Void doInBackground() throws Exception {
 
 		cortatiff(new File(RutaOrigen + nombreimagenIN));
-		System.out.println("Proceso TERMINADO");
+		//System.out.println("Proceso TERMINADO");
 		return null;
 
 	}

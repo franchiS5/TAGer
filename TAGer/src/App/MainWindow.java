@@ -357,7 +357,6 @@ public class MainWindow extends JFrame {
 		panel_1.add(JLabelseleccionarWCB);
 		
 		JTextFieldInputWCB = new JTextField();
-		JTextFieldInputWCB.setText("/Users/Luis/Documents/PRUEBA/wcb");
 		JTextFieldInputWCB.setHorizontalAlignment(SwingConstants.LEFT);
 		JTextFieldInputWCB.setBounds(10, 31, 407, 20);
 		JTextFieldInputWCB.setForeground(Color.BLACK);
