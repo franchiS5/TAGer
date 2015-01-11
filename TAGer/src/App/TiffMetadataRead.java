@@ -11,7 +11,7 @@ import com.drew.metadata.Tag;
 import com.drew.metadata.exif.ExifIFD0Directory;
 
 
-//Esta clase nos tiene que devolver un objeto HasMap con los Exif del fichero que le pasemos
+																									//Esta clase nos tiene que devolver un objeto HasMap con los Exif del fichero que le pasemos
 
 public class TiffMetadataRead {
 	static String etiqueta;
@@ -26,21 +26,14 @@ public String LeerExif (String filewcb, String tagsolicitado) throws IOException
 		
 	}
 
-	static String getExifFile (File ficheroTiffWCB) throws IOException
+static String getExifFile (File ficheroTiffWCB) throws IOException
+{
+Metadata tiffMetadata = TiffMetadataReader.readMetadata(ficheroTiffWCB);							//Creamos objeto Metadata del fichero ficheroTiffWCB	
+	if (ficheroTiffWCB.toString().endsWith(".tif"))													//Comprobamos que es un .tif
 	{
-		Metadata tiffMetadata = TiffMetadataReader.readMetadata(ficheroTiffWCB);
-		//System.out.println(tagsolicitado);
-		
-		//Creamos objeto Metadata del fichero ficheroTiffWCB	
-		
-		if (ficheroTiffWCB.toString().endsWith(".tif"))												//Comprobamos que es un .tif
-		 {
-			ExifIFD0Directory exifdirectory = tiffMetadata.getDirectory(ExifIFD0Directory.class);	//Creamos el objeto exifdirectory del objeto tiffMetadata
-		 
+		ExifIFD0Directory exifdirectory = tiffMetadata.getDirectory(ExifIFD0Directory.class);		//Creamos el objeto exifdirectory del objeto tiffMetadata
 			if( exifdirectory != null )																//Comprobamos que no sea null
 			{
-				//System.out.println( "Tags EXIF" );
-                            
 				for(Iterator<Tag> i = exifdirectory.getTags().iterator(); i.hasNext(); )			//Iteramos exifdirectory
 				{
 				HashMap<String,String> hmtiff = new HashMap<String, String>();
@@ -48,22 +41,17 @@ public String LeerExif (String filewcb, String tagsolicitado) throws IOException
             	//System.out.println( "\t" + tag.getTagTypeHex() + " = " + tag.getDescription());
             	hmtiff.put(tag.getTagTypeHex(),tag.getDescription());								//Vamos llenando el HashMap con el contenido de exifdirectory
             		if (hmtiff.get(tagsolicitado) != null){
-            		
             		etiqueta = hmtiff.get(tagsolicitado);
-            	
             		}
             	}
 			}
 			else
 			{
-            //System.out.println( "El fichero " + ficheroTiffWCB + " no contiene datos Exif" );		//Si estaba null avisamos
+			System.out.println( "El fichero " + ficheroTiffWCB + " no contiene datos Exif" );		//Si estaba null avisamos
 			}
-    
-		 //System.out.println("Valor Exif:  " + etiqueta);
-		 
-		}else{
-		//System.out.println("El fichero "+ ficheroTiffWCB + " no es del tipo TIFF");					//Si no era .tif avisamos
+	}else{
+		System.out.println("El fichero "+ ficheroTiffWCB + " no es del tipo TIFF");					//Si no era .tif avisamos
 		}
 		return etiqueta;
-	}
+}
 }

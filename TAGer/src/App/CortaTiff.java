@@ -37,8 +37,7 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 	private String P1y2;
 	private int imagenSalida;
 
-	public CortaTiff(String RutaOrigen, String nombreimagenIN, String P1x1,
-			String P1y1, String P1x2, String P1y2, int imagenSalida) {
+public CortaTiff(String RutaOrigen, String nombreimagenIN, String P1x1,String P1y1, String P1x2, String P1y2, int imagenSalida){
 
 	this.RutaOrigen = RutaOrigen;
 	this.P1x1 = P1x1;
@@ -47,9 +46,9 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 	this.P1y2 = P1y2;
 	this.imagenSalida = imagenSalida;
 	this.nombreimagenIN = nombreimagenIN;
-	}
+}
 
-	private void cortatiff(File f) throws IOException, Exception {
+private void cortatiff(File f) throws IOException, Exception {
 
 		try {
 
@@ -61,15 +60,12 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 			BufferedImage buffimage = ImageIO.read(f);
 			final BufferedImage croppedimage = buffimage.getSubimage(Integer.parseInt(P1x1), Integer.parseInt(P1y1),Integer.parseInt(P1x2), Integer.parseInt(P1y2));
 			
-			
-			//Obtenemos las dimensiones X e Y de la imagen
-			int width = croppedimage.getWidth();
+			int width = croppedimage.getWidth();											//Obtenemos las dimensiones X e Y de la imagen
 			int heigth = croppedimage.getHeight();
 			
 			//Falta obtener el COLOR SPACE de la imagen de entrada
 			
-			//Obtenemos la fecha de creacion de la imagen de entrada
-			long fechams = f.lastModified();
+			long fechams = f.lastModified();												//Obtenemos la fecha de creacion de la imagen de entrada
 			Date d = new Date(fechams);
 			Calendar c = new GregorianCalendar(); 
 			c.setTime(d);
@@ -80,9 +76,7 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 			String minuto = Integer.toString(c.get(Calendar.MINUTE));
 			String segundo = Integer.toString(c.get(Calendar.SECOND));
 			
-			// Corregimos los valores que no tengan dos digitos
-			
-			if (dia.length()<2){
+			if (dia.length()<2){															// Corregimos los valores que no tengan dos digitos
 				dia = "0"+dia;
 			}
 			if (mes.length()<2){
@@ -126,14 +120,10 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 			String ARTIST_VAR = "Tu si que eres un artista";
 			String COPYRIGHT_VAR = "Pues es mio";
 			
-			// Componemos la cabecera usando los TAGS definidos en las variables
-			// anteriores
-			
-			param.setCompression(TIFFEncodeParam.COMPRESSION_NONE);
+			param.setCompression(TIFFEncodeParam.COMPRESSION_NONE);						// Componemos la cabecera usando los TAGS definidos en las variables anteriores
 			param.setLittleEndian(true);
 			param.setWriteTiled(false);
 			param.setTileSize(0, 0);
-			
 			TIFFField newsubfiletype = new TIFFField(NEWSUBFILETYPE_TAG,TIFFField.TIFF_LONG, 1, (Object) new long[] { 0 });
 			TIFFField imagewidth = new TIFFField(IMAGEWIDTH_TAG,TIFFField.TIFF_LONG, 1, (Object) new long[] { width });
 			TIFFField imagelength = new TIFFField(IMAGELENGTH_TAG,TIFFField.TIFF_LONG, 1, (Object) new long[] { heigth });
@@ -154,12 +144,10 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 			TIFFField artist = new TIFFField(ARTIST,TIFFField.TIFF_ASCII, 1, (Object) new String[] {ARTIST_VAR});
 			TIFFField copyright = new TIFFField(COPYRIGHT_TAG,TIFFField.TIFF_ASCII, 1, (Object) new String[] {COPYRIGHT_VAR});
 			
-			
 			param.setExtraFields(new TIFFField[] { newsubfiletype, imagewidth, imagelength, fillorder, image_description, make, model, stripoffsets, orientation,
 					  rowsperstrip, stripsbytecounts, xRes, yRes,  planarconfiguration, unit_Inch, software, fecha, artist, copyright});
 
-            
-			ImageWriterSpi tiffspi = new TIFFImageWriterSpi();
+            ImageWriterSpi tiffspi = new TIFFImageWriterSpi();							// Comenzamos a crear el fichero de salida
 			TIFFImageWriter writer = (TIFFImageWriter) tiffspi.createWriterInstance();
 
 			TIFFImageWriteParam tifparam = new TIFFImageWriteParam(Locale.US);
@@ -170,12 +158,11 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 			ImageOutputStream ios = ImageIO.createImageOutputStream(fos);
 			writer.setOutput(ios);
 			writer.write(null, new IIOImage(croppedimage, null, null), tifparam);
-
 			ios.flush();
 			writer.dispose();
 			ios.close();
 
-			File finishFile = new File(RutaOrigen + imagenSalida + ".tif");
+			File finishFile = new File(RutaOrigen + imagenSalida + ".tif");				// Escribimos la cabecera del TIFF con los EXIF creados anteriormente
 			OutputStream out = null;
 			out = new SeekableOutputStream(new RandomAccessFile(finishFile, "rw"));
 			BufferedImage iim = ImageIO.read(new File(RutaOrigen + imagenSalida + ".tif"));
@@ -183,22 +170,22 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 			
 			encoder.encode(iim);
 			out.flush();
-			out.close(); // for security reasons null the output stream and call the garbage // collector; otherwise the JVM could still hold some open file locks
+			out.close();																// for security reasons null the output stream and call the garbage // collector; otherwise the JVM could still hold some open file locks
 			out = null;
 			System.gc();
 
-		} catch (Exception e) {
-			System.out.println(e);
-		} finally {
+			} catch (Exception e) {
+				System.out.println(e);
+			} finally {
 
-		}
-	}
+			}
+}
 
-	protected Void doInBackground() throws Exception {
+protected Void doInBackground() throws Exception {
 
-		cortatiff(new File(RutaOrigen + nombreimagenIN));
-		//System.out.println("Proceso TERMINADO");
-		return null;
+	cortatiff(new File(RutaOrigen + nombreimagenIN));
+	//System.out.println("Proceso TERMINADO");
+	return null;
 
-	}
+}
 }
