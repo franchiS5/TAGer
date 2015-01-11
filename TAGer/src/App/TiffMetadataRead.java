@@ -14,21 +14,22 @@ import com.drew.metadata.exif.ExifIFD0Directory;
 																									//Esta clase nos tiene que devolver un objeto HasMap con los Exif del fichero que le pasemos
 
 public class TiffMetadataRead {
-	static String etiqueta;
-	private static String tagsolicitado;
+	static HashMap<String, String> etiqueta;
 	
-public String LeerExif (String filewcb, String tagsolicitado) throws IOException{
+	
+	
+public static HashMap <String, String> LeerExif (String filewcb) throws IOException{
 		
 		etiqueta=null;
-		TiffMetadataRead.tagsolicitado = tagsolicitado;
 		getExifFile(new File(filewcb));
 		return etiqueta;
 		
 	}
 
-static String getExifFile (File ficheroTiffWCB) throws IOException
+static HashMap <String, String> getExifFile (File ficheroTiffWCB) throws IOException
 {
-Metadata tiffMetadata = TiffMetadataReader.readMetadata(ficheroTiffWCB);							//Creamos objeto Metadata del fichero ficheroTiffWCB	
+	HashMap<String,String> hmtiff = new HashMap<String, String>();
+	Metadata tiffMetadata = TiffMetadataReader.readMetadata(ficheroTiffWCB);							//Creamos objeto Metadata del fichero ficheroTiffWCB	
 	if (ficheroTiffWCB.toString().endsWith(".tif"))													//Comprobamos que es un .tif
 	{
 		ExifIFD0Directory exifdirectory = tiffMetadata.getDirectory(ExifIFD0Directory.class);		//Creamos el objeto exifdirectory del objeto tiffMetadata
@@ -36,13 +37,9 @@ Metadata tiffMetadata = TiffMetadataReader.readMetadata(ficheroTiffWCB);							/
 			{
 				for(Iterator<Tag> i = exifdirectory.getTags().iterator(); i.hasNext(); )			//Iteramos exifdirectory
 				{
-				HashMap<String,String> hmtiff = new HashMap<String, String>();
 				Tag tag = ( Tag )i.next();
             	//System.out.println( "\t" + tag.getTagTypeHex() + " = " + tag.getDescription());
             	hmtiff.put(tag.getTagTypeHex(),tag.getDescription());								//Vamos llenando el HashMap con el contenido de exifdirectory
-            		if (hmtiff.get(tagsolicitado) != null){
-            		etiqueta = hmtiff.get(tagsolicitado);
-            		}
             	}
 			}
 			else
@@ -52,6 +49,7 @@ Metadata tiffMetadata = TiffMetadataReader.readMetadata(ficheroTiffWCB);							/
 	}else{
 		System.out.println("El fichero "+ ficheroTiffWCB + " no es del tipo TIFF");					//Si no era .tif avisamos
 		}
+		etiqueta = new HashMap<String, String> (hmtiff);
 		return etiqueta;
 }
 }

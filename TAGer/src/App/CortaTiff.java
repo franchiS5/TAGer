@@ -10,6 +10,7 @@ import java.io.RandomAccessFile;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.Locale;
 
 import javax.imageio.IIOImage;
@@ -113,9 +114,15 @@ private void cortatiff(File f) throws IOException, Exception {
 			final int FECHACREACION = 306;
 			final int ARTIST = 315;
 			final int COPYRIGHT_TAG = 33432;
+			
+			
+			// PRUEBAS LEER METADATOS EXIF DEL FICHERO DE ENTRADA USANDO LA CLASE TIFFMETADATAREAD.JAVA DEBERÍA DEVOLVERNOS UN HASHMAP
+			
+			HashMap <String, String> hashmeta = TiffMetadataRead.LeerExif(f.getAbsolutePath().toString());
+
 			String DESCRIPTION_VAR = "Descripcion de la imagen tal cual aparece";
 			String MAKE_VAR = "Descripcion de la imagen tal cual aparece";
-			String MODEL_VAR = "Descripcion de la imagen tal cual aparece";
+			String MODEL_VAR = "Pues es mio";
 			String SOFTWARE_VAR = "Descripcion de la imagen tal cual aparece";
 			String ARTIST_VAR = "Tu si que eres un artista";
 			String COPYRIGHT_VAR = "Pues es mio";

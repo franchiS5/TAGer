@@ -55,7 +55,7 @@ public class MainWindow extends JFrame {
 	
 	
 	/**
-	 * Ejecuta la Aplicaci�n
+	 * Ejecuta la App
 	 */
 	
 	public static void main(String[] args) {
