@@ -2,9 +2,9 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/Users/Luis/git/TAGer/lib/metadata-extractor-2.7.0/metadata-extractor-2.7.0.jar"/>
-	<classpathentry kind="lib" path="/Users/Luis/git/TAGer/lib/jai-1_1_3-lib/jai-1_1_3/lib/jai_codec.jar"/>
-	<classpathentry kind="lib" path="/Users/Luis/git/TAGer/lib/jai-1_1_3-lib/jai-1_1_3/lib/jai_core.jar"/>
-	<classpathentry kind="lib" path="/Users/Luis/git/TAGer/lib/jai-1_1_3-lib/jai-1_1_3/lib/jai_imageio.jar"/>
+	<classpathentry kind="lib" path="C:/Users/franchi.VINFRA/git/TAGer/lib/metadata-extractor-2.7.0/metadata-extractor-2.7.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/franchi.VINFRA/git/TAGer/lib/jai-1_1_3-lib/jai-1_1_3/lib/jai_codec.jar"/>
+	<classpathentry kind="lib" path="C:/Users/franchi.VINFRA/git/TAGer/lib/jai-1_1_3-lib/jai-1_1_3/lib/jai_core.jar"/>
+	<classpathentry kind="lib" path="C:/Users/franchi.VINFRA/git/TAGer/lib/jai-1_1_3-lib/jai-1_1_3/lib/jai_imageio.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

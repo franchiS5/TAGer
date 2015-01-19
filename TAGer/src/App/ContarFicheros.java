@@ -19,13 +19,13 @@ static void recorrer(File fichero, boolean tif, boolean jpeg, boolean pdf) {
 			if (!(f.isFile())) {
 				recorrer(f, tif, jpeg, pdf);
 			} else {
-					if (tif == true && f.toString().endsWith(".tif")) {
+					if (tif == true && f.toString().toLowerCase().endsWith(".tif")) {
 						total++;
 					}
-					if (jpeg == true && f.toString().endsWith(".jpg")) {
+					if (jpeg == true && f.toString().toLowerCase().endsWith(".jpg")) {
 							total++;
 					}
-					if (pdf == true && f.toString().endsWith(".pdf")) {
+					if (pdf == true && f.toString().toLowerCase().endsWith(".pdf")) {
 					total++;
 					}
 			}

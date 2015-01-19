@@ -3,6 +3,10 @@ package App;
 import java.io.File;
 
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
@@ -22,13 +26,13 @@ public class Recorre extends SwingWorker<Void, Void>{
 	private int total;
 	private int porcent;
 	
-	private Boolean ch4;
+	private Boolean ch4, ch5;
 	private int inicio;
 	private int longitudtotal;
 	
 public Recorre(Boolean ch1, Boolean ch2, Boolean ch3,String copyright, String software, String fabricante,
 		String modelo, String iptcCop, String iptcTit, String iptcAutor, String iptcAsunto, String ruta,
-		JTextArea etiqueta, JProgressBar progreso, int total, Boolean ch4){
+		JTextArea etiqueta, JProgressBar progreso, int total, Boolean ch4, Boolean ch5){
 	
 	this.ch1=ch1;
 	this.ch2=ch2;
@@ -46,6 +50,7 @@ public Recorre(Boolean ch1, Boolean ch2, Boolean ch3,String copyright, String so
 	this.progreso=progreso;
 	this.total=total;
 	this.ch4=ch4;
+	this.ch5=ch5;
 	contador=0;
 	inicio=0;
 	longitudtotal=0;
@@ -98,6 +103,14 @@ private void recorrer(File f){
             							if (!(exifmodelo.isEmpty())){
             								cmd2 += " -M\"" + "set Exif.Image.Model " + exifmodelo +"\"";
             							}
+            							if (ch5){
+            								DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            								Date date = new Date();
+            								String fechaSistema = dateFormat.format(date).toString();
+            								fechaSistema = fechaSistema.replace("/", ":");
+            								cmd2 += " -M\"" + "set Exif.Image.DateTime " + fechaSistema +"\"";
+            							}
+            							
             						cmd2 += " \"" + fichero.toString() + "\"";	
   
             						etiqueta.append(fichero.toString() + "\n");
@@ -120,7 +133,7 @@ private void recorrer(File f){
             				}
             	}
         }else{
-        	JOptionPane.showMessageDialog(null,"Debe seleccionar al menos una opci�n");
+        	JOptionPane.showMessageDialog(null,"Debe seleccionar al menos una opcion");
         }
 }
 	

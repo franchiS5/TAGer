@@ -16,6 +16,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
@@ -76,7 +77,7 @@ public class MainWindow extends JFrame {
 	 */
 	public MainWindow() {
 		
-		setTitle("TAGerExiv2 v. 1.2");
+		setTitle("TAGer v. 1.3 (Vinfra S.A. All rights reserved)");
 		setResizable(false);
 		setMaximumSize(new Dimension(800, 600));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -121,12 +122,12 @@ public class MainWindow extends JFrame {
 		
 		
 		final JCheckBox chckbxTiff = new JCheckBox("TIFF");
-		chckbxTiff.setBounds(780, 405, 58, 23);
+		chckbxTiff.setBounds(770, 454, 58, 23);
 		panel.add(chckbxTiff);
 		chckbxTiff.setForeground(Color.BLUE);
 		
 		final JCheckBox chckbxPdf = new JCheckBox("PDF");
-		chckbxPdf.setBounds(907, 405, 67, 23);
+		chckbxPdf.setBounds(897, 454, 67, 23);
 		panel.add(chckbxPdf);
 		chckbxPdf.setForeground(Color.RED);
 		
@@ -137,8 +138,14 @@ public class MainWindow extends JFrame {
 		chkboxSignatura.setHorizontalTextPosition(SwingConstants.RIGHT);
 		panel.add(chkboxSignatura);
 		
+		final JCheckBox chckbxFechaSistema = new JCheckBox("Aplicar Fecha del Sistema");
+		chckbxFechaSistema.setForeground(Color.DARK_GRAY);
+		chckbxFechaSistema.setFont(new Font("Tahoma", Font.BOLD, 11));
+		chckbxFechaSistema.setBounds(755, 389, 181, 23);
+		panel.add(chckbxFechaSistema);
+		
 		final JCheckBox chckbxJpeg = new JCheckBox("JPEG");
-		chckbxJpeg.setBounds(840, 405, 65, 23);
+		chckbxJpeg.setBounds(830, 454, 65, 23);
 		panel.add(chckbxJpeg);
 		chckbxJpeg.setForeground(new Color(210, 105, 30));
 		
@@ -295,11 +302,11 @@ public class MainWindow extends JFrame {
 		JTextField10.setColumns(10);
 		
 		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(625, 388, 362, 2);
+		separator_1.setBounds(625, 445, 362, 2);
 		panel.add(separator_1);
 		
 		JLabel lblTiposDeFichero = new JLabel("Tipos de Fichero:");
-		lblTiposDeFichero.setBounds(644, 409, 94, 14);
+		lblTiposDeFichero.setBounds(625, 458, 94, 14);
 		panel.add(lblTiposDeFichero);
 		lblTiposDeFichero.setForeground(Color.DARK_GRAY);
 		lblTiposDeFichero.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -331,18 +338,34 @@ public class MainWindow extends JFrame {
 		JButton5.setBounds(829, 546, 89, 25);
 		panel.add(JButton5);
 		
+		JLabel lblNewLabel_1 = new JLabel("(Corrige Ficheros Mekel)");
+		lblNewLabel_1.setForeground(Color.DARK_GRAY);
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblNewLabel_1.setBounds(770, 420, 194, 14);
+		panel.add(lblNewLabel_1);
+		
 		JButton5.addActionListener(new ActionListener() {
+		
 			public void actionPerformed(ActionEvent arg0) {
 				
 				
-					
+				String controlruta = jTextRuta.getText();
 				
-				Recorre h=new Recorre(chckbxTiff.isSelected(), chckbxJpeg.isSelected(), chckbxPdf.isSelected(), JTextField7.getText(), JTextField8.getText(),
-						JTextField9.getText(), JTextField10.getText(), JTextField6.getText(), JTextField3.getText(),JTextField4.getText(),JTextField5.getText(),
-						jTextRuta.getText(),JTextArea1,JprogressBar, ContarFicheros.contar(jTextRuta.getText(), chckbxTiff.isSelected(), chckbxJpeg.isSelected(), 
-						chckbxPdf.isSelected()), chkboxSignatura.isSelected());
-		        
-		        h.execute();
+				if  (controlruta.length() != 0){
+					Recorre h=new Recorre(chckbxTiff.isSelected(), chckbxJpeg.isSelected(), chckbxPdf.isSelected(), JTextField7.getText(), JTextField8.getText(),
+							JTextField9.getText(), JTextField10.getText(), JTextField6.getText(), JTextField3.getText(),JTextField4.getText(),JTextField5.getText(),
+							jTextRuta.getText(),JTextArea1,JprogressBar, ContarFicheros.contar(jTextRuta.getText(), chckbxTiff.isSelected(), chckbxJpeg.isSelected(), 
+							chckbxPdf.isSelected()), chkboxSignatura.isSelected(), chckbxFechaSistema.isSelected());
+			        
+			        h.execute();
+					
+				}else{
+					
+					JOptionPane.showMessageDialog(null,"Debe seleccionar la ruta a los ficheros");
+					
+				}
+				
+				
 				
 				
 			}
@@ -357,7 +380,7 @@ public class MainWindow extends JFrame {
 		panel_1.add(JLabelseleccionarWCB);
 		
 		JTextFieldInputWCB = new JTextField();
-		JTextFieldInputWCB.setText("/Users/Luis/Documents/PRUEBA/wcb");
+		JTextFieldInputWCB.setText("D:\\PRUEBA\\wcb");
 		JTextFieldInputWCB.setHorizontalAlignment(SwingConstants.LEFT);
 		JTextFieldInputWCB.setBounds(10, 31, 407, 20);
 		JTextFieldInputWCB.setForeground(Color.BLACK);
