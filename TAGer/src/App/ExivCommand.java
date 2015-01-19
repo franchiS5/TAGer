@@ -142,6 +142,7 @@ protected Void doInBackground() throws Exception{
 		
 		recorrer(new File(rutaInicial));
 		etiqueta.append("Proceso Terminado\n");
+		
 		return null;
 }
 }

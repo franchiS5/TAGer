@@ -33,6 +33,9 @@ import javax.swing.SpinnerNumberModel;
 
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.ImageIcon;
 
 
 
@@ -152,6 +155,7 @@ public class MainWindow extends JFrame {
 		
 		
 		JButton jButtRuta = new JButton("Seleccionar");
+		jButtRuta.setIcon(new ImageIcon(MainWindow.class.getResource("/javax/swing/plaf/metal/icons/ocean/directory.gif")));
 		jButtRuta.setBounds(440, 29, 118, 25);
 		panel.add(jButtRuta);
 		
@@ -196,6 +200,7 @@ public class MainWindow extends JFrame {
 		lblIptc.setFont(new Font("Tahoma", Font.BOLD, 11));
 		
 		JLabel lblTtulo = new JLabel("T\u00EDtulo:");
+		lblTtulo.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTtulo.setBounds(701, 70, 45, 19);
 		panel.add(lblTtulo);
 		lblTtulo.setForeground(Color.DARK_GRAY);
@@ -208,6 +213,7 @@ public class MainWindow extends JFrame {
 		JTextField3.setColumns(10);
 		
 		JLabel lblAutor = new JLabel("Autor:");
+		lblAutor.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblAutor.setBounds(701, 99, 45, 19);
 		panel.add(lblAutor);
 		lblAutor.setForeground(Color.DARK_GRAY);
@@ -226,13 +232,15 @@ public class MainWindow extends JFrame {
 		JTextField5.setColumns(10);
 		
 		JLabel lblAsunto = new JLabel("Asunto / Signatura:");
+		lblAsunto.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblAsunto.setBounds(625, 132, 120, 19);
 		panel.add(lblAsunto);
 		lblAsunto.setForeground(Color.DARK_GRAY);
 		lblAsunto.setFont(new Font("Tahoma", Font.BOLD, 11));
 		
 		JLabel lblCopyright = new JLabel("Copyright:");
-		lblCopyright.setBounds(673, 194, 65, 19);
+		lblCopyright.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblCopyright.setBounds(681, 194, 65, 19);
 		panel.add(lblCopyright);
 		lblCopyright.setForeground(Color.DARK_GRAY);
 		lblCopyright.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -254,6 +262,7 @@ public class MainWindow extends JFrame {
 		lblExif.setFont(new Font("Tahoma", Font.BOLD, 11));
 		
 		JLabel lblCopyright_1 = new JLabel("Copyright:");
+		lblCopyright_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblCopyright_1.setBounds(681, 264, 65, 19);
 		panel.add(lblCopyright_1);
 		lblCopyright_1.setForeground(Color.DARK_GRAY);
@@ -266,7 +275,8 @@ public class MainWindow extends JFrame {
 		JTextField7.setColumns(10);
 		
 		JLabel lblSoftware = new JLabel("Software:");
-		lblSoftware.setBounds(684, 296, 54, 19);
+		lblSoftware.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblSoftware.setBounds(681, 295, 65, 19);
 		panel.add(lblSoftware);
 		lblSoftware.setForeground(Color.DARK_GRAY);
 		lblSoftware.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -278,7 +288,8 @@ public class MainWindow extends JFrame {
 		JTextField8.setColumns(10);
 		
 		JLabel lblFabricante = new JLabel("Fabricante:");
-		lblFabricante.setBounds(673, 328, 65, 19);
+		lblFabricante.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblFabricante.setBounds(681, 328, 65, 19);
 		panel.add(lblFabricante);
 		lblFabricante.setForeground(Color.DARK_GRAY);
 		lblFabricante.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -290,7 +301,8 @@ public class MainWindow extends JFrame {
 		JTextField9.setColumns(10);
 		
 		JLabel lblModelo = new JLabel("Modelo:");
-		lblModelo.setBounds(693, 358, 45, 19);
+		lblModelo.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblModelo.setBounds(689, 358, 57, 19);
 		panel.add(lblModelo);
 		lblModelo.setForeground(Color.DARK_GRAY);
 		lblModelo.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -306,7 +318,7 @@ public class MainWindow extends JFrame {
 		panel.add(separator_1);
 		
 		JLabel lblTiposDeFichero = new JLabel("Tipos de Fichero:");
-		lblTiposDeFichero.setBounds(625, 458, 94, 14);
+		lblTiposDeFichero.setBounds(625, 458, 113, 14);
 		panel.add(lblTiposDeFichero);
 		lblTiposDeFichero.setForeground(Color.DARK_GRAY);
 		lblTiposDeFichero.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -321,6 +333,7 @@ public class MainWindow extends JFrame {
 		
 		
 		JButton JButton1 = new JButton("Salir");
+		JButton1.setIcon(new ImageIcon(MainWindow.class.getResource("/javax/swing/plaf/metal/icons/ocean/close.gif")));
 		JButton1.setBounds(928, 546, 89, 25);
 		panel.add(JButton1);
 		JButton1.addMouseListener(new MouseAdapter() {
@@ -334,20 +347,22 @@ public class MainWindow extends JFrame {
 			}
 		});
 		
-		JButton JButton5 = new JButton("Ejecutar");
-		JButton5.setBounds(829, 546, 89, 25);
-		panel.add(JButton5);
-		
 		JLabel lblNewLabel_1 = new JLabel("(Corrige Ficheros Mekel)");
 		lblNewLabel_1.setForeground(Color.DARK_GRAY);
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblNewLabel_1.setBounds(770, 420, 194, 14);
 		panel.add(lblNewLabel_1);
 		
+		
+		
+		JButton JButton5 = new JButton("Ejecutar");
+		JButton5.setIcon(new ImageIcon(MainWindow.class.getResource("/com/sun/javafx/webkit/prism/resources/mediaPlayDisabled.png")));
+		JButton5.setBounds(829, 546, 89, 25);
+		panel.add(JButton5);
+		
 		JButton5.addActionListener(new ActionListener() {
 		
 			public void actionPerformed(ActionEvent arg0) {
-				
 				
 				String controlruta = jTextRuta.getText();
 				
@@ -356,13 +371,11 @@ public class MainWindow extends JFrame {
 							JTextField9.getText(), JTextField10.getText(), JTextField6.getText(), JTextField3.getText(),JTextField4.getText(),JTextField5.getText(),
 							jTextRuta.getText(),JTextArea1,JprogressBar, DirectoryFilesCalculate.contar(jTextRuta.getText(), chckbxTiff.isSelected(), chckbxJpeg.isSelected(), 
 							chckbxPdf.isSelected()), chkboxSignatura.isSelected(), chckbxFechaSistema.isSelected());
-			        
-			        h.execute();
-					
+			        JButton5.setEnabled(false);
+					h.execute();
+				
 				}else{
-					
 					JOptionPane.showMessageDialog(null,"Debe seleccionar la ruta a los ficheros");
-					
 				}
 				
 				
@@ -380,7 +393,7 @@ public class MainWindow extends JFrame {
 		panel_1.add(JLabelseleccionarWCB);
 		
 		JTextFieldInputWCB = new JTextField();
-		JTextFieldInputWCB.setText("D:\\PRUEBA\\wcb");
+		JTextFieldInputWCB.setText("/Users/Luis/Documents/PRUEBA/wcb");
 		JTextFieldInputWCB.setHorizontalAlignment(SwingConstants.LEFT);
 		JTextFieldInputWCB.setBounds(10, 31, 407, 20);
 		JTextFieldInputWCB.setForeground(Color.BLACK);
@@ -390,6 +403,7 @@ public class MainWindow extends JFrame {
 		panel_1.add(JTextFieldInputWCB);
 		
 		JButton JbuttonSeleccionarWCB = new JButton("Seleccionar");
+		JbuttonSeleccionarWCB.setIcon(new ImageIcon(MainWindow.class.getResource("/javax/swing/plaf/metal/icons/ocean/directory.gif")));
 		JbuttonSeleccionarWCB.setBounds(440, 29, 116, 25);
 		panel_1.add(JbuttonSeleccionarWCB);
 		
@@ -405,7 +419,8 @@ public class MainWindow extends JFrame {
 		JTextFieldOutputWCB.setColumns(10);
 		
 		JButton JbuttonSeleccionarWCB2 = new JButton("Seleccionar");
-		JbuttonSeleccionarWCB2.setBounds(440, 86, 116, 23);
+		JbuttonSeleccionarWCB2.setIcon(new ImageIcon(MainWindow.class.getResource("/javax/swing/plaf/metal/icons/ocean/directory.gif")));
+		JbuttonSeleccionarWCB2.setBounds(440, 86, 116, 25);
 		panel_1.add(JbuttonSeleccionarWCB2);
 		
 		final JSpinner spinner = new JSpinner();
@@ -416,7 +431,7 @@ public class MainWindow extends JFrame {
 		panel_1.add(spinner);
 		
 		final JCheckBox ChkboxMarcoWCB = new JCheckBox("Marco");
-		ChkboxMarcoWCB.setBounds(800, 31, 80, 23);
+		ChkboxMarcoWCB.setBounds(760, 31, 75, 23);
 		ChkboxMarcoWCB.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
 				if (ChkboxMarcoWCB.isSelected()){
@@ -436,10 +451,11 @@ public class MainWindow extends JFrame {
 		
 		
 		JLabel lblTamaoDelMarco = new JLabel("Tama\u00F1o del Marco:");
-		lblTamaoDelMarco.setBounds(883, 35, 94, 14);
+		lblTamaoDelMarco.setBounds(847, 35, 130, 14);
 		panel_1.add(lblTamaoDelMarco);
 		
 		JButton btnSalirWCB = new JButton("Salir");
+		btnSalirWCB.setIcon(new ImageIcon(MainWindow.class.getResource("/javax/swing/plaf/metal/icons/ocean/close.gif")));
 		btnSalirWCB.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -449,24 +465,34 @@ public class MainWindow extends JFrame {
 		btnSalirWCB.setBounds(928, 546, 89, 25);
 		panel_1.add(btnSalirWCB);
 		
+		
+		
 		JButton btnEjecutarWCB = new JButton("Ejecutar");
+		btnEjecutarWCB.setIcon(new ImageIcon(MainWindow.class.getResource("/com/sun/javafx/webkit/prism/resources/mediaPlayDisabled.png")));
+		btnEjecutarWCB.setBounds(829, 546, 89, 25);
+		panel_1.add(btnEjecutarWCB);
+		
+		btnEjecutarWCB.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				btnEjecutarWCB.setEnabled(false);
+			}
+		});
+		
 		btnEjecutarWCB.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
 				
 				MainWCBProcess corta = new MainWCBProcess(JTextFieldInputWCB.getText(), JTextFieldOutputWCB.getText(), progressBarWCB, JTextAreaWCB, 
 												ChkboxMarcoWCB.isSelected(),  (Double) spinner.getValue(), WCBFilesCalculate.totalimagecount(JTextFieldInputWCB.getText()));
 				
 				
-				
 				corta.execute();
+				
 			}
 		});
 		
 		
-		btnEjecutarWCB.setBounds(829, 546, 89, 25);
-		panel_1.add(btnEjecutarWCB);
+		
 		
 		
 		
