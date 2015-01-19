@@ -13,7 +13,7 @@ import com.drew.metadata.exif.ExifIFD0Directory;
 
 																									//Esta clase nos tiene que devolver un objeto HasMap con los Exif del fichero que le pasemos
 
-public class TiffMetadataRead {
+public class TIFFMetadataRead {
 	
 	static ExifIFD0Directory exifdirectory;
 	

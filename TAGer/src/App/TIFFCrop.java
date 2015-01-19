@@ -33,7 +33,7 @@ import com.sun.media.imageioimpl.plugins.tiff.TIFFImageWriterSpi;
 
 
 
-public class CortaTiff extends SwingWorker<Void, Void> {
+public class TIFFCrop extends SwingWorker<Void, Void> {
 
 	private String RutaOrigen;
 	private String nombreimagenIN;
@@ -44,7 +44,7 @@ public class CortaTiff extends SwingWorker<Void, Void> {
 	private int imagenSalida;
 	
 
-public CortaTiff(String RutaOrigen, String nombreimagenIN, String P1x1,String P1y1, String P1x2, String P1y2, int imagenSalida){
+public TIFFCrop(String RutaOrigen, String nombreimagenIN, String P1x1,String P1y1, String P1x2, String P1y2, int imagenSalida){
 
 	this.RutaOrigen = RutaOrigen;
 	this.P1x1 = P1x1;

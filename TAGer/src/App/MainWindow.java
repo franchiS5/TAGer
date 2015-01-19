@@ -352,9 +352,9 @@ public class MainWindow extends JFrame {
 				String controlruta = jTextRuta.getText();
 				
 				if  (controlruta.length() != 0){
-					Recorre h=new Recorre(chckbxTiff.isSelected(), chckbxJpeg.isSelected(), chckbxPdf.isSelected(), JTextField7.getText(), JTextField8.getText(),
+					ExivCommand h=new ExivCommand(chckbxTiff.isSelected(), chckbxJpeg.isSelected(), chckbxPdf.isSelected(), JTextField7.getText(), JTextField8.getText(),
 							JTextField9.getText(), JTextField10.getText(), JTextField6.getText(), JTextField3.getText(),JTextField4.getText(),JTextField5.getText(),
-							jTextRuta.getText(),JTextArea1,JprogressBar, ContarFicheros.contar(jTextRuta.getText(), chckbxTiff.isSelected(), chckbxJpeg.isSelected(), 
+							jTextRuta.getText(),JTextArea1,JprogressBar, DirectoryFilesCalculate.contar(jTextRuta.getText(), chckbxTiff.isSelected(), chckbxJpeg.isSelected(), 
 							chckbxPdf.isSelected()), chkboxSignatura.isSelected(), chckbxFechaSistema.isSelected());
 			        
 			        h.execute();
@@ -455,8 +455,8 @@ public class MainWindow extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				
 				
-				CortaWCB corta = new CortaWCB(JTextFieldInputWCB.getText(), JTextFieldOutputWCB.getText(), progressBarWCB, JTextAreaWCB, 
-												ChkboxMarcoWCB.isSelected(),  (Double) spinner.getValue(), ImageCountWCB.totalimagecount(JTextFieldInputWCB.getText()));
+				MainWCBProcess corta = new MainWCBProcess(JTextFieldInputWCB.getText(), JTextFieldOutputWCB.getText(), progressBarWCB, JTextAreaWCB, 
+												ChkboxMarcoWCB.isSelected(),  (Double) spinner.getValue(), WCBFilesCalculate.totalimagecount(JTextFieldInputWCB.getText()));
 				
 				
 				

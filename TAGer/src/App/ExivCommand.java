@@ -14,7 +14,7 @@ import javax.swing.SwingWorker;
 
 
 
-public class Recorre extends SwingWorker<Void, Void>{
+public class ExivCommand extends SwingWorker<Void, Void>{
 	
 	private Boolean ch1,ch2,ch3;
 	private String exifcopyright,exifsoftware,exiffabricante,exifmodelo,iptcCop,iptcTit,iptcAutor,iptcAsunto;
@@ -30,7 +30,7 @@ public class Recorre extends SwingWorker<Void, Void>{
 	private int inicio;
 	private int longitudtotal;
 	
-public Recorre(Boolean ch1, Boolean ch2, Boolean ch3,String copyright, String software, String fabricante,
+public ExivCommand(Boolean ch1, Boolean ch2, Boolean ch3,String copyright, String software, String fabricante,
 		String modelo, String iptcCop, String iptcTit, String iptcAutor, String iptcAsunto, String ruta,
 		JTextArea etiqueta, JProgressBar progreso, int total, Boolean ch4, Boolean ch5){
 	

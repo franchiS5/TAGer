@@ -10,7 +10,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
 
 
-public class CortaWCB extends SwingWorker<Void, Void> {																		// Clase para lanzar el corte de los WCB
+public class MainWCBProcess extends SwingWorker<Void, Void> {																		// Clase para lanzar el corte de los WCB
 
 	private String RutaOrigen;
 	private String RutaDestino;
@@ -23,7 +23,7 @@ public class CortaWCB extends SwingWorker<Void, Void> {																		// Clas
 	private String linea;
 	private double valormarco;
 	
-public CortaWCB(String ruta, String Destino, JProgressBar progreso, JTextArea etiqueta, boolean marco,  double valormarco, int totalimagewcb) {
+public MainWCBProcess(String ruta, String Destino, JProgressBar progreso, JTextArea etiqueta, boolean marco,  double valormarco, int totalimagewcb) {
 
 	RutaOrigen = ruta;
 	RutaDestino = Destino;
@@ -63,7 +63,7 @@ private void recorreYcorta(File f) throws IOException, Exception {
 										etiqueta.append("Procesando imagen: " +coordenadas[9] + nombreimagenIN + "\n");
 							
 										//if (Integer.parseInt(P2x1) == 0 || Integer.parseInt(P2y1) == 0 || Integer.parseInt(P2x2) == 0 || Integer.parseInt(P2y2) == 0) {
-										CortaTiff croptiff = new CortaTiff(RutaOrigen, nombreimagenIN, P1x1, P1y1, P1x2, P1y2, imagenSalida );
+										TIFFCrop croptiff = new TIFFCrop(RutaOrigen, nombreimagenIN, P1x1, P1y1, P1x2, P1y2, imagenSalida );
 										croptiff.doInBackground();
 										imagenSalida++;
 										//}
