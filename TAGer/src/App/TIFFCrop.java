@@ -23,7 +23,16 @@ import javax.imageio.spi.ImageWriterSpi;
 import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.ImageOutputStream;
 import javax.swing.SwingWorker;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import com.sun.media.imageio.plugins.tiff.TIFFImageWriteParam;
@@ -85,7 +94,7 @@ private void cortatiff(File f) throws IOException, Exception {
 	            
 	        }
 	 
-	       ImageInputStream stream = null;
+	        ImageInputStream stream = null;
 	        stream = ImageIO.createImageInputStream(f);
 	        reader.setInput(stream);
 			
@@ -95,15 +104,25 @@ private void cortatiff(File f) throws IOException, Exception {
 	        String formatonombres = imageMetadata.getNativeMetadataFormatName();
 	        IIOMetadataNode tiffRootNode = (IIOMetadataNode) imageMetadata.getAsTree(formatonombres);
 	        
-	        
-	       
-	        
+	        // AQUI DEBEMOS MODIFICAR LOS METADATOS DEL NODO QUE HEMOS EXTRAIDO DE LA IMAGEN
 	        
 	        
+			
+	        Transformer transformer = TransformerFactory.newInstance().newTransformer();
+			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+			DOMSource source = new DOMSource(tiffRootNode);
+			StreamResult console = new StreamResult(new File(RutaOrigen + imagenSalida + ".xml"));
+			transformer.transform(source, console);
+			 
+			System.out.println("\nXML DOM Created Successfully..");
+			
+			
+	        // AQUI EMPEZAMOS A GUARDAR LA IMAGEN DE SALIDA
+			
+			
 			ImageWriterSpi tiffspi = new TIFFImageWriterSpi();							
 			
 			TIFFImageWriter tiffwriter = (TIFFImageWriter) tiffspi.createWriterInstance();
-			
 			TIFFImageWriteParam tifparam = new TIFFImageWriteParam(Locale.US);
 			
 			tifparam.setCompressionMode(TIFFImageWriteParam.MODE_DISABLED);

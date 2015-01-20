@@ -392,7 +392,7 @@ public class MainWindow extends JFrame {
 		panel_1.add(JLabelseleccionarWCB);
 		
 		JTextFieldInputWCB = new JTextField();
-		JTextFieldInputWCB.setText("/Users/Luis/Documents/PRUEBA/wcb");
+		JTextFieldInputWCB.setText("D:\\PRUEBA\\wcb");
 		JTextFieldInputWCB.setHorizontalAlignment(SwingConstants.LEFT);
 		JTextFieldInputWCB.setBounds(10, 31, 391, 20);
 		JTextFieldInputWCB.setForeground(Color.BLACK);
