@@ -116,10 +116,10 @@ public class MainWindow extends JFrame {
 		
 		final JTextArea JTextAreaWCB = new JTextArea();
 		JTextAreaWCB.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 13));
-		JTextAreaWCB.setBounds(10, 118, 1007, 388);
+		JTextAreaWCB.setBounds(10, 67, 550, 410);
 		DefaultCaret caretwcb = (DefaultCaret)JTextAreaWCB.getCaret();
 		JScrollPane scrollwcb=new JScrollPane(JTextAreaWCB);
-		scrollwcb.setBounds(10,118,1007,388);
+		scrollwcb.setBounds(10, 67, 550, 410);
 		panel_1.add(scrollwcb);
 		caretwcb.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		
@@ -365,7 +365,9 @@ public class MainWindow extends JFrame {
 				
 				String controlruta = jTextRuta.getText();
 				
+				
 				if  (controlruta.length() != 0){
+					
 					ExivCommand h=new ExivCommand(chckbxTiff.isSelected(), chckbxJpeg.isSelected(), chckbxPdf.isSelected(), JTextField7.getText(), JTextField8.getText(),
 							JTextField9.getText(), JTextField10.getText(), JTextField6.getText(), JTextField3.getText(),JTextField4.getText(),JTextField5.getText(),
 							jTextRuta.getText(),JTextArea1,JprogressBar, DirectoryFilesCalculate.contar(jTextRuta.getText(), chckbxTiff.isSelected(), chckbxJpeg.isSelected(), 
@@ -392,7 +394,7 @@ public class MainWindow extends JFrame {
 		panel_1.add(JLabelseleccionarWCB);
 		
 		JTextFieldInputWCB = new JTextField();
-		JTextFieldInputWCB.setText("D:\\PRUEBA\\wcb");
+		JTextFieldInputWCB.setText("/Users/Luis/Documents/PRUEBA/wcb");
 		JTextFieldInputWCB.setHorizontalAlignment(SwingConstants.LEFT);
 		JTextFieldInputWCB.setBounds(10, 31, 391, 20);
 		JTextFieldInputWCB.setForeground(Color.BLACK);
@@ -422,26 +424,7 @@ public class MainWindow extends JFrame {
 		JbuttonSeleccionarWCB2.setBounds(413, 86, 143, 25);
 		panel_1.add(JbuttonSeleccionarWCB2);
 		
-		final JSpinner spinner = new JSpinner();
-		spinner.setBounds(974, 31, 43, 20);
-		spinner.setModel(new SpinnerNumberModel(0, 0, 4, 0.1));
-		spinner.setEnabled(false);
 		
-		panel_1.add(spinner);
-		
-		final JCheckBox ChkboxMarcoWCB = new JCheckBox("Marco");
-		ChkboxMarcoWCB.setBounds(748, 31, 75, 23);
-		ChkboxMarcoWCB.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent arg0) {
-				if (ChkboxMarcoWCB.isSelected()){
-					spinner.setEnabled(true);
-				}else{
-					spinner.setEnabled(false);
-				}
-			}
-		});
-		ChkboxMarcoWCB.setHorizontalTextPosition(SwingConstants.LEFT);
-		panel_1.add(ChkboxMarcoWCB);
 		
 		final JProgressBar progressBarWCB = new JProgressBar();
 		progressBarWCB.setStringPainted(true);
@@ -465,6 +448,28 @@ public class MainWindow extends JFrame {
 		panel_1.add(btnSalirWCB);
 		
 		
+		final JSpinner spinner = new JSpinner();
+		spinner.setBounds(958, 31, 59, 20);
+		spinner.setModel(new SpinnerNumberModel(0, 0, 4, 0.1));
+		spinner.setEnabled(false);
+		
+		panel_1.add(spinner);
+		
+		final JCheckBox ChkboxMarcoWCB = new JCheckBox("Marco");
+		ChkboxMarcoWCB.setBounds(748, 31, 75, 23);
+		ChkboxMarcoWCB.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent arg0) {
+				if (ChkboxMarcoWCB.isSelected()){
+					spinner.setEnabled(true);
+				}else{
+					spinner.setEnabled(false);
+				}
+			}
+		});
+		
+		ChkboxMarcoWCB.setHorizontalTextPosition(SwingConstants.LEFT);
+		panel_1.add(ChkboxMarcoWCB);
+		
 		
 		final JButton btnEjecutarWCB = new JButton("Ejecutar");
 		btnEjecutarWCB.setBounds(819, 546, 99, 25);
@@ -474,10 +479,15 @@ public class MainWindow extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				MainWCBProcess corta = new MainWCBProcess(JTextFieldInputWCB.getText(), JTextFieldOutputWCB.getText(), progressBarWCB, JTextAreaWCB, 
-												ChkboxMarcoWCB.isSelected(),  (Double) spinner.getValue(), WCBFilesCalculate.totalimagecount(JTextFieldInputWCB.getText()));
+				if (JTextFieldInputWCB.getText().length() != 0){
+					MainWCBProcess corta = new MainWCBProcess(JTextFieldInputWCB.getText(), JTextFieldOutputWCB.getText(), progressBarWCB, JTextAreaWCB, 
+							ChkboxMarcoWCB.isSelected(),  (Double) spinner.getValue(), WCBFilesCalculate.totalimagecount(JTextFieldInputWCB.getText()));
+
+					corta.execute();	
+				}else{
+					JOptionPane.showMessageDialog(null,"Debe seleccionar la ruta a los ficheros");
+				}
 				
-				corta.execute();
 			}
 		});
 		

@@ -6,5 +6,6 @@
 	<classpathentry kind="lib" path="lib/jai-1_1_3-lib/jai_codec.jar"/>
 	<classpathentry kind="lib" path="lib/jai-1_1_3-lib/jai_core.jar"/>
 	<classpathentry kind="lib" path="lib/jai-1_1_3-lib/jai_imageio.jar"/>
+	<classpathentry kind="lib" path="lib/ImgScalr/imgscalr-lib-4.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

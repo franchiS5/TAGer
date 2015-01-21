@@ -39,6 +39,9 @@ import com.sun.media.imageio.plugins.tiff.TIFFImageWriteParam;
 import com.sun.media.imageioimpl.plugins.tiff.TIFFImageWriter;
 import com.sun.media.imageioimpl.plugins.tiff.TIFFImageWriterSpi;
 
+import org.imgscalr.Scalr;
+import org.imgscalr.Scalr.*;
+
 
 
 
@@ -51,9 +54,12 @@ public class TIFFCrop extends SwingWorker<Void, Void> {
 	private String P1x2;
 	private String P1y2;
 	private int imagenSalida;
+	private boolean marco;
+	private double valormarco;
+	
 	
 
-public TIFFCrop(String RutaOrigen, String nombreimagenIN, String P1x1,String P1y1, String P1x2, String P1y2, int imagenSalida){
+public TIFFCrop(String RutaOrigen, String nombreimagenIN, String P1x1,String P1y1, String P1x2, String P1y2, int imagenSalida, boolean marco, double valormarco){
 
 	this.RutaOrigen = RutaOrigen;
 	this.P1x1 = P1x1;
@@ -62,26 +68,36 @@ public TIFFCrop(String RutaOrigen, String nombreimagenIN, String P1x1,String P1y
 	this.P1y2 = P1y2;
 	this.imagenSalida = imagenSalida;
 	this.nombreimagenIN = nombreimagenIN;
+	this.marco = marco;
+	this.valormarco = valormarco;
+	
 }
 
 private void cortatiff(File f) throws IOException, Exception {
 
+	 int porcentmarco = 0;
 	
 	
 	try {
 
-			//Falta depurar si el fichero de entrada es TIFF o JPEG
-			//Falta depurar si el fichero tiene que ser cortado como P1 y P2 o solamente P1
-			//Falta Iterar el DOM arbol que nos devuelve imageMetadata.getAsTree
-			
-			
 			BufferedImage buffimage = ImageIO.read(f);
 			
 			final BufferedImage croppedimage = buffimage.getSubimage(Integer.parseInt(P1x1), Integer.parseInt(P1y1),Integer.parseInt(P1x2), Integer.parseInt(P1y2));
-			
 			int width = croppedimage.getWidth();											//Obtenemos las dimensiones X e Y de la imagen
 			int heigth = croppedimage.getHeight();
+			BufferedImage croppedandborderedimage = null;
 			
+			if (marco == true){
+				if (width > heigth ){
+					porcentmarco = (int) ((width * valormarco) /100);
+					System.out.println(porcentmarco);
+					croppedandborderedimage = Scalr.pad(croppedimage, porcentmarco);
+				}else{
+					porcentmarco = (int) ((heigth * valormarco) /100);
+					System.out.println(porcentmarco);
+					croppedandborderedimage = Scalr.pad(croppedimage, porcentmarco);
+				}
+			}
 			
 			//IIORegistry registry = IIORegistry.getDefaultInstance();
 			 
@@ -139,7 +155,12 @@ private void cortatiff(File f) throws IOException, Exception {
 			
 			
 			tiffwriter.setOutput(ios);
-			tiffwriter.write(null, new IIOImage(croppedimage, null, imageMetadata), tifparam);
+			if (marco == true){
+				tiffwriter.write(null, new IIOImage(croppedandborderedimage, null, imageMetadata), tifparam);	
+			}else{
+				tiffwriter.write(null, new IIOImage(croppedimage, null, imageMetadata), tifparam);
+			}
+			
 			ios.flush();
 			tiffwriter.dispose();
 			ios.close();
