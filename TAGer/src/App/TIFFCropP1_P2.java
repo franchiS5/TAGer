@@ -122,8 +122,8 @@ private void cortatiff(File f) throws IOException, Exception {
 	        Transformer transformer = TransformerFactory.newInstance().newTransformer();
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			DOMSource source = new DOMSource(tiffRootNode);
-			StreamResult console = new StreamResult(new File(RutaOrigen + imagenSalida + ".xml"));
-			transformer.transform(source, console);
+			//StreamResult console = new StreamResult(new File(RutaOrigen + imagenSalida + ".xml"));
+			//transformer.transform(source, console);
 			 
 			System.out.println("\nXML DOM Created Successfully..");
 			
@@ -143,6 +143,7 @@ private void cortatiff(File f) throws IOException, Exception {
 			
 			
 			File fOutputFile = new File(RutaOrigen + imagenSalida + ".tif");
+			imagenSalida++;
 			OutputStream fos = new BufferedOutputStream(new FileOutputStream(fOutputFile));
 			ImageOutputStream ios = ImageIO.createImageOutputStream(fos);
 			ios.setBitOffset(0);
@@ -160,12 +161,128 @@ private void cortatiff(File f) throws IOException, Exception {
 			tiffwriter.dispose();
 			ios.close();
 			
-			
 } catch (Exception e) {
 				System.out.println(e);
 			} finally {
 
 			}
+	
+	
+	/*
+	 * 
+	 * AQUI EMPIEZA EL CORTE DE P2
+	 * 
+	 */
+
+	
+	
+	try {
+
+		BufferedImage buffimage = ImageIO.read(f);
+		
+		final BufferedImage croppedimage = buffimage.getSubimage(Integer.parseInt(P2x1), Integer.parseInt(P2y1),Integer.parseInt(P2x2), Integer.parseInt(P2y2));
+		int width = croppedimage.getWidth();											//Obtenemos las dimensiones X e Y de la imagen
+		int heigth = croppedimage.getHeight();
+		BufferedImage croppedandborderedimage = null;
+		
+		if (marco == true){
+			if (width > heigth ){
+				porcentmarco = (int) ((width * valormarco) /100);
+				System.out.println(porcentmarco);
+				croppedandborderedimage = Scalr.pad(croppedimage, porcentmarco);
+			}else{
+				porcentmarco = (int) ((heigth * valormarco) /100);
+				System.out.println(porcentmarco);
+				croppedandborderedimage = Scalr.pad(croppedimage, porcentmarco);
+			}
+		}
+		
+		//IIORegistry registry = IIORegistry.getDefaultInstance();
+		 
+        
+        Iterator<ImageReader> readers = ImageIO.getImageReadersByFormatName("tif");
+        ImageReader reader = null;
+        while (readers.hasNext())
+        {
+            reader = readers.next();
+            
+        }
+ 
+        ImageInputStream stream = null;
+        stream = ImageIO.createImageInputStream(f);
+        reader.setInput(stream);
+		
+        IIOMetadata imageMetadata = reader.getImageMetadata(0);
+        //IIOMetadata streamMetadata = reader.getStreamMetadata();
+        
+        String formatonombres = imageMetadata.getNativeMetadataFormatName();
+        IIOMetadataNode tiffRootNode = (IIOMetadataNode) imageMetadata.getAsTree(formatonombres);
+        
+        // AQUI DEBEMOS MODIFICAR LOS METADATOS DEL NODO QUE HEMOS EXTRAIDO DE LA IMAGEN
+        
+        
+		
+        Transformer transformer = TransformerFactory.newInstance().newTransformer();
+		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+		DOMSource source = new DOMSource(tiffRootNode);
+		//StreamResult console = new StreamResult(new File(RutaOrigen + imagenSalida + ".xml"));
+		//transformer.transform(source, console);
+		 
+		System.out.println("\nXML DOM Created Successfully..");
+		
+		
+        // AQUI EMPEZAMOS A GUARDAR LA IMAGEN DE SALIDA
+		
+		
+		ImageWriterSpi tiffspi = new TIFFImageWriterSpi();							
+		
+		TIFFImageWriter tiffwriter = (TIFFImageWriter) tiffspi.createWriterInstance();
+		TIFFImageWriteParam tifparam = new TIFFImageWriteParam(Locale.US);
+		
+		tifparam.setCompressionMode(TIFFImageWriteParam.MODE_DISABLED);
+		tifparam.setDestinationOffset((new Point(0, 0)) );
+		tifparam.setTilingMode(TIFFImageWriteParam.MODE_DISABLED);
+		tifparam.setSourceSubsampling(1, 1, 0, 0);
+		
+		
+		File fOutputFile = new File(RutaOrigen + imagenSalida + ".tif");
+		OutputStream fos = new BufferedOutputStream(new FileOutputStream(fOutputFile));
+		ImageOutputStream ios = ImageIO.createImageOutputStream(fos);
+		ios.setBitOffset(0);
+		ios.setByteOrder(ByteOrder.LITTLE_ENDIAN);
+		
+		
+		tiffwriter.setOutput(ios);
+		if (marco == true){
+			tiffwriter.write(null, new IIOImage(croppedandborderedimage, null, imageMetadata), tifparam);	
+		}else{
+			tiffwriter.write(null, new IIOImage(croppedimage, null, imageMetadata), tifparam);
+		}
+		
+		ios.flush();
+		tiffwriter.dispose();
+		ios.close();
+		
+		
+		
+		/*
+		 * 
+		 * 
+		 * 
+		 */
+		
+		
+} catch (Exception e) {
+			System.out.println(e);
+		} finally {
+
+		}
+
+
+
+
+
+
 }
 
 protected Void doInBackground() throws Exception {
