@@ -45,7 +45,7 @@ import org.imgscalr.Scalr.*;
 
 
 
-public class TIFFCrop extends SwingWorker<Void, Void> {
+public class TIFFCropP1 extends SwingWorker<Void, Void> {
 
 	private String RutaOrigen;
 	private String nombreimagenIN;
@@ -59,7 +59,7 @@ public class TIFFCrop extends SwingWorker<Void, Void> {
 	
 	
 
-public TIFFCrop(String RutaOrigen, String nombreimagenIN, String P1x1,String P1y1, String P1x2, String P1y2, int imagenSalida, boolean marco, double valormarco){
+public TIFFCropP1(String RutaOrigen, String nombreimagenIN, String P1x1,String P1y1, String P1x2, String P1y2, int imagenSalida, boolean marco, double valormarco){
 
 	this.RutaOrigen = RutaOrigen;
 	this.P1x1 = P1x1;

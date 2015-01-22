@@ -92,7 +92,7 @@ public class MainWindow extends JFrame {
 		setResizable(false);
 		setMaximumSize(new Dimension(800, 600));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1061, 655);
+		setBounds(100, 100, 1055, 655);
 		contentPane = new JPanel();
 		contentPane.setMaximumSize(new Dimension(800, 600));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -124,21 +124,23 @@ public class MainWindow extends JFrame {
 		
 		final JTextArea JTextAreaWCB = new JTextArea();
 		JTextAreaWCB.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 13));
-		JTextAreaWCB.setBounds(10, 130, 548, 438);
+		JTextAreaWCB.setBounds(10, 130, 548, 415);
 		DefaultCaret caretwcb = (DefaultCaret)JTextAreaWCB.getCaret();
 		JScrollPane scrollwcb=new JScrollPane(JTextAreaWCB);
-		scrollwcb.setBounds(10, 130, 548, 438);
+		scrollwcb.setBounds(10, 130, 548, 415);
 		panel_1.add(scrollwcb);
 		caretwcb.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		panel_1.setLayout(null);
 		
 		final JCheckBox chckbxTiff = new JCheckBox("TIFF");
-		chckbxTiff.setBounds(770, 454, 58, 23);
+		chckbxTiff.setHorizontalAlignment(SwingConstants.LEFT);
+		chckbxTiff.setBounds(760, 424, 58, 23);
 		panel.add(chckbxTiff);
 		chckbxTiff.setForeground(Color.BLUE);
 		
 		final JCheckBox chckbxPdf = new JCheckBox("PDF");
-		chckbxPdf.setBounds(897, 454, 67, 23);
+		chckbxPdf.setHorizontalAlignment(SwingConstants.LEFT);
+		chckbxPdf.setBounds(929, 424, 58, 23);
 		panel.add(chckbxPdf);
 		chckbxPdf.setForeground(Color.RED);
 		
@@ -149,14 +151,16 @@ public class MainWindow extends JFrame {
 		chkboxSignatura.setHorizontalTextPosition(SwingConstants.RIGHT);
 		panel.add(chkboxSignatura);
 		
-		final JCheckBox chckbxFechaSistema = new JCheckBox("Aplicar Fecha del Sistema");
+		final JCheckBox chckbxFechaSistema = new JCheckBox("Fecha del Sistema (TIFF Mekel)");
+		chckbxFechaSistema.setHorizontalAlignment(SwingConstants.LEFT);
 		chckbxFechaSistema.setForeground(Color.DARK_GRAY);
 		chckbxFechaSistema.setFont(new Font("Tahoma", Font.BOLD, 11));
-		chckbxFechaSistema.setBounds(755, 389, 209, 23);
+		chckbxFechaSistema.setBounds(760, 389, 223, 23);
 		panel.add(chckbxFechaSistema);
 		
 		final JCheckBox chckbxJpeg = new JCheckBox("JPEG");
-		chckbxJpeg.setBounds(830, 454, 65, 23);
+		chckbxJpeg.setHorizontalAlignment(SwingConstants.LEFT);
+		chckbxJpeg.setBounds(841, 424, 65, 23);
 		panel.add(chckbxJpeg);
 		chckbxJpeg.setForeground(new Color(210, 105, 30));
 		
@@ -297,7 +301,7 @@ public class MainWindow extends JFrame {
 		
 		JLabel lblModelo = new JLabel("Modelo:");
 		lblModelo.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblModelo.setBounds(689, 358, 57, 19);
+		lblModelo.setBounds(701, 358, 45, 19);
 		panel.add(lblModelo);
 		lblModelo.setForeground(Color.DARK_GRAY);
 		lblModelo.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -313,7 +317,8 @@ public class MainWindow extends JFrame {
 		panel.add(separator_1);
 		
 		JLabel lblTiposDeFichero = new JLabel("Tipos de Fichero:");
-		lblTiposDeFichero.setBounds(635, 459, 111, 14);
+		lblTiposDeFichero.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblTiposDeFichero.setBounds(641, 430, 105, 14);
 		panel.add(lblTiposDeFichero);
 		lblTiposDeFichero.setForeground(Color.DARK_GRAY);
 		lblTiposDeFichero.setFont(new Font("Tahoma", Font.BOLD, 11));
@@ -338,12 +343,6 @@ public class MainWindow extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		
-		JLabel lblNewLabel_1 = new JLabel("(Corrige Ficheros Mekel)");
-		lblNewLabel_1.setForeground(Color.DARK_GRAY);
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblNewLabel_1.setBounds(770, 420, 194, 14);
-		panel.add(lblNewLabel_1);
 		
 		JLabel JLabelseleccionarWCB = new JLabel("Seleccionar carpeta para procesar");
 		JLabelseleccionarWCB.setBounds(10, 11, 200, 19);
@@ -379,7 +378,8 @@ public class MainWindow extends JFrame {
 		
 		
 		JLabel lblTamaoDelMarco = new JLabel("Tama\u00F1o del Marco:");
-		lblTamaoDelMarco.setBounds(829, 35, 148, 14);
+		lblTamaoDelMarco.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblTamaoDelMarco.setBounds(835, 33, 112, 14);
 		panel_1.add(lblTamaoDelMarco);
 		
 		JButton btnSalirWCB = new JButton("Salir");
@@ -402,7 +402,8 @@ public class MainWindow extends JFrame {
 		panel_1.add(spinner);
 		
 		final JCheckBox ChkboxMarcoWCB = new JCheckBox("Marco");
-		ChkboxMarcoWCB.setBounds(748, 31, 75, 23);
+		ChkboxMarcoWCB.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		ChkboxMarcoWCB.setBounds(759, 28, 67, 23);
 		ChkboxMarcoWCB.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
 				if (ChkboxMarcoWCB.isSelected()){
@@ -535,7 +536,32 @@ public class MainWindow extends JFrame {
 		JTextFieldInputWCB.setColumns(10);
 		panel_1.add(JTextFieldInputWCB);
 		
-		// COMPROBAMOS EL CONTENIDO DEL CAMPO DE LA RUTA Y SI CONTIENE ALGO HABILITAMOS EL BOTÓN EJECUTAR
+		JLabel lblTotalFicherosWCB = new JLabel("Total Ficheros WCB:");
+		lblTotalFicherosWCB.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblTotalFicherosWCB.setHorizontalAlignment(SwingConstants.LEFT);
+		lblTotalFicherosWCB.setBounds(10, 553, 105, 16);
+		panel_1.add(lblTotalFicherosWCB);
+		
+		JLabel label = new JLabel("0");
+		label.setFont(new Font("Tahoma", Font.BOLD, 12));
+		label.setForeground(new Color(70, 130, 180));
+		label.setBounds(116, 553, 37, 16);
+		panel_1.add(label);
+		
+		JLabel lblNewLabel_1 = new JLabel("Total de ImÃ¡genes:");
+		lblNewLabel_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		lblNewLabel_1.setBounds(160, 553, 105, 16);
+		panel_1.add(lblNewLabel_1);
+		
+		JLabel label_1 = new JLabel("0");
+		label_1.setFont(new Font("Tahoma", Font.BOLD, 12));
+		label_1.setForeground(new Color(70, 130, 180));
+		label_1.setHorizontalAlignment(SwingConstants.LEFT);
+		label_1.setBounds(263, 553, 79, 16);
+		panel_1.add(label_1);
+		
+		// COMPROBAMOS EL CONTENIDO DEL CAMPO DE LA RUTA Y SI CONTIENE ALGO HABILITAMOS EL BOTï¿½N EJECUTAR
 		JTextFieldInputWCB.getDocument().addDocumentListener(new DocumentListener() {
 			  public void changedUpdate(DocumentEvent e) {
 			    changed();

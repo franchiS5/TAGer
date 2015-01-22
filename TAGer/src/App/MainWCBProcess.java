@@ -62,15 +62,23 @@ private void recorreYcorta(File f) throws IOException, Exception {
 										RutaOrigen = (coordenadas[9]).replace("\\", "/");
 										etiqueta.append("Procesando imagen: " +coordenadas[9] + nombreimagenIN + "\n");
 							
-										//if (Integer.parseInt(P2x1) == 0 || Integer.parseInt(P2y1) == 0 || Integer.parseInt(P2x2) == 0 || Integer.parseInt(P2y2) == 0) {
-										TIFFCrop croptiff = new TIFFCrop(RutaOrigen, nombreimagenIN, P1x1, P1y1, P1x2, P1y2, imagenSalida, marco, valormarco );
+										if (Integer.parseInt(P2x2) == 0 && Integer.parseInt(P2y2) == 0) {
+										TIFFCropP1 croptiff = new TIFFCropP1(RutaOrigen, nombreimagenIN, P1x1, P1y1, P1x2, P1y2, imagenSalida, marco, valormarco );
 										croptiff.doInBackground();
 										imagenSalida++;
-										//}
-								
 										contador++;
 										porcent=new Double(contador * 100 / totalimagewcb).intValue();
 										progreso.setValue(porcent);
+										}else{
+											TIFFCropP1_P2 croptiff = new TIFFCropP1_P2(RutaOrigen, nombreimagenIN, P1x1, P1y1, P1x2, P1y2, P2x1, P2y1, P2x2, P2y2, imagenSalida, marco, valormarco );
+											croptiff.doInBackground();
+											imagenSalida++;
+											contador++;
+											porcent=new Double(contador * 100 / totalimagewcb).intValue();
+											progreso.setValue(porcent);	
+										}
+								
+										
 									}
 									br.close();
 									fr.close();
