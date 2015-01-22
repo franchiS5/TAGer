@@ -11,6 +11,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+
+
+
+
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
@@ -25,6 +29,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.text.DefaultCaret;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
@@ -33,9 +39,11 @@ import javax.swing.SpinnerNumberModel;
 
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
+
 import javax.swing.ImageIcon;
+
+import java.io.File;
+
 
 
 
@@ -107,22 +115,22 @@ public class MainWindow extends JFrame {
 		
 		final JTextArea JTextArea1 = new JTextArea();
 		JTextArea1.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 13));
-		JTextArea1.setBounds(10,67,550,410);
+		JTextArea1.setBounds(10,67,544,410);
 		DefaultCaret caret = (DefaultCaret)JTextArea1.getCaret();
 		JScrollPane scroll=new JScrollPane(JTextArea1);
-		scroll.setBounds(10,67,550,410);
+		scroll.setBounds(10,67,544,410);
 		panel.add(scroll);
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		
 		final JTextArea JTextAreaWCB = new JTextArea();
 		JTextAreaWCB.setFont(new Font("Microsoft New Tai Lue", Font.PLAIN, 13));
-		JTextAreaWCB.setBounds(10, 67, 550, 410);
+		JTextAreaWCB.setBounds(10, 130, 548, 438);
 		DefaultCaret caretwcb = (DefaultCaret)JTextAreaWCB.getCaret();
 		JScrollPane scrollwcb=new JScrollPane(JTextAreaWCB);
-		scrollwcb.setBounds(10, 67, 550, 410);
+		scrollwcb.setBounds(10, 130, 548, 438);
 		panel_1.add(scrollwcb);
 		caretwcb.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
-		
+		panel_1.setLayout(null);
 		
 		final JCheckBox chckbxTiff = new JCheckBox("TIFF");
 		chckbxTiff.setBounds(770, 454, 58, 23);
@@ -153,8 +161,7 @@ public class MainWindow extends JFrame {
 		chckbxJpeg.setForeground(new Color(210, 105, 30));
 		
 		
-		
-		JButton jButtRuta = new JButton("Seleccionar");
+		final JButton jButtRuta = new JButton("Seleccionar");
 		jButtRuta.setIcon(new ImageIcon(MainWindow.class.getResource("/javax/swing/plaf/metal/icons/ocean/directory.gif")));
 		jButtRuta.setBounds(416, 29, 142, 25);
 		panel.add(jButtRuta);
@@ -171,27 +178,15 @@ public class MainWindow extends JFrame {
 				if (status == JFileChooser.APPROVE_OPTION){
 					jTextRuta.setText( directorio.getSelectedFile().toString());	
 				}	
-				
-				
 			}
 		});
 		
 		
-		
-				
 		JLabel lblNewLabel = new JLabel("Seleccionar carpeta para procesar");
 		lblNewLabel.setBounds(10, 11, 245, 19);
 		panel.add(lblNewLabel);
 		lblNewLabel.setForeground(new Color(70, 130, 180));
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 11));
-		
-		jTextRuta = new JTextField();
-		jTextRuta.setBounds(10, 31, 394, 20);
-		panel.add(jTextRuta);
-		jTextRuta.setFont(new Font("Tahoma", Font.BOLD, 11));
-		jTextRuta.setForeground(Color.BLACK);
-		jTextRuta.setDragEnabled(true);
-		jTextRuta.setColumns(10);
 		
 		JLabel lblIptc = new JLabel("IPTC");
 		lblIptc.setBounds(953, 32, 34, 19);
@@ -329,9 +324,6 @@ public class MainWindow extends JFrame {
 		panel.add(JprogressBar);
 		JprogressBar.setStringPainted(true);
 		
-		
-		
-		
 		JButton JButton1 = new JButton("Salir");
 		JButton1.setIcon(new ImageIcon(MainWindow.class.getResource("/javax/swing/plaf/metal/icons/ocean/close.gif")));
 		JButton1.setBounds(928, 546, 105, 25);
@@ -353,55 +345,11 @@ public class MainWindow extends JFrame {
 		lblNewLabel_1.setBounds(770, 420, 194, 14);
 		panel.add(lblNewLabel_1);
 		
-		
-		
-		final JButton JButton5 = new JButton("Ejecutar");
-		JButton5.setBounds(819, 546, 99, 25);
-		panel.add(JButton5);
-		
-		JButton5.addActionListener(new ActionListener() {
-		
-			public void actionPerformed(ActionEvent arg0) {
-				
-				String controlruta = jTextRuta.getText();
-				
-				
-				if  (controlruta.length() != 0){
-					
-					ExivCommand h=new ExivCommand(chckbxTiff.isSelected(), chckbxJpeg.isSelected(), chckbxPdf.isSelected(), JTextField7.getText(), JTextField8.getText(),
-							JTextField9.getText(), JTextField10.getText(), JTextField6.getText(), JTextField3.getText(),JTextField4.getText(),JTextField5.getText(),
-							jTextRuta.getText(),JTextArea1,JprogressBar, DirectoryFilesCalculate.contar(jTextRuta.getText(), chckbxTiff.isSelected(), chckbxJpeg.isSelected(), 
-							chckbxPdf.isSelected()), chkboxSignatura.isSelected(), chckbxFechaSistema.isSelected());
-			        JButton5.setEnabled(false);
-					h.execute();
-				
-				}else{
-					JOptionPane.showMessageDialog(null,"Debe seleccionar la ruta a los ficheros");
-				}
-				
-				
-				
-				
-			}
-		});
-		panel_1.setLayout(null);
-		
-			
 		JLabel JLabelseleccionarWCB = new JLabel("Seleccionar carpeta para procesar");
 		JLabelseleccionarWCB.setBounds(10, 11, 200, 19);
 		JLabelseleccionarWCB.setForeground(new Color(70, 130, 180));
 		JLabelseleccionarWCB.setFont(new Font("Tahoma", Font.BOLD, 11));
 		panel_1.add(JLabelseleccionarWCB);
-		
-		JTextFieldInputWCB = new JTextField();
-		JTextFieldInputWCB.setText("/Users/Luis/Documents/PRUEBA/wcb");
-		JTextFieldInputWCB.setHorizontalAlignment(SwingConstants.LEFT);
-		JTextFieldInputWCB.setBounds(10, 31, 391, 20);
-		JTextFieldInputWCB.setForeground(Color.BLACK);
-		JTextFieldInputWCB.setFont(new Font("Tahoma", Font.BOLD, 11));
-		JTextFieldInputWCB.setDragEnabled(true);
-		JTextFieldInputWCB.setColumns(10);
-		panel_1.add(JTextFieldInputWCB);
 		
 		JButton JbuttonSeleccionarWCB = new JButton("Seleccionar");
 		JbuttonSeleccionarWCB.setIcon(new ImageIcon(MainWindow.class.getResource("/javax/swing/plaf/metal/icons/ocean/directory.gif")));
@@ -423,8 +371,6 @@ public class MainWindow extends JFrame {
 		JbuttonSeleccionarWCB2.setIcon(new ImageIcon(MainWindow.class.getResource("/javax/swing/plaf/metal/icons/ocean/directory.gif")));
 		JbuttonSeleccionarWCB2.setBounds(413, 86, 143, 25);
 		panel_1.add(JbuttonSeleccionarWCB2);
-		
-		
 		
 		final JProgressBar progressBarWCB = new JProgressBar();
 		progressBarWCB.setStringPainted(true);
@@ -470,24 +416,94 @@ public class MainWindow extends JFrame {
 		ChkboxMarcoWCB.setHorizontalTextPosition(SwingConstants.LEFT);
 		panel_1.add(ChkboxMarcoWCB);
 		
+		jTextRuta = new JTextField();
+		jTextRuta.setBounds(10, 31, 394, 20);
+		panel.add(jTextRuta);
+		jTextRuta.setFont(new Font("Tahoma", Font.BOLD, 11));
+		jTextRuta.setForeground(Color.BLACK);
+		jTextRuta.setDragEnabled(true);
+		jTextRuta.setColumns(10);
+		
+		final JButton JButton5 = new JButton("Ejecutar");
+		JButton5.setBounds(819, 546, 99, 25);
+		//panel.add(JButton5);
+		
+		JButton5.addActionListener(new ActionListener() {
+		
+			public void actionPerformed(ActionEvent arg0) {
+				
+				String controlruta = jTextRuta.getText();
+				
+				
+				if  (controlruta.length() != 0){
+					
+					ExivCommand h=new ExivCommand(chckbxTiff.isSelected(), chckbxJpeg.isSelected(), chckbxPdf.isSelected(), JTextField7.getText(), JTextField8.getText(),
+							JTextField9.getText(), JTextField10.getText(), JTextField6.getText(), JTextField3.getText(),JTextField4.getText(),JTextField5.getText(),
+							jTextRuta.getText(),JTextArea1,JprogressBar, DirectoryFilesCalculate.contar(jTextRuta.getText(), chckbxTiff.isSelected(), chckbxJpeg.isSelected(), 
+							chckbxPdf.isSelected()), chkboxSignatura.isSelected(), chckbxFechaSistema.isSelected());
+			        
+					h.execute();
+				
+				}else{
+					JOptionPane.showMessageDialog(null,"Debe seleccionar la ruta a los ficheros");
+				}
+			}
+		});
+		
+		jTextRuta.getDocument().addDocumentListener(new DocumentListener() {
+			  public void changedUpdate(DocumentEvent e) {
+			    changed();
+			  }
+			  public void removeUpdate(DocumentEvent e) {
+			    changed();
+			  }
+			  public void insertUpdate(DocumentEvent e) {
+			    changed();
+			  }
+
+			  public void changed() {
+			     if (jTextRuta.getText().equals("")){
+			    	 JButton5.setEnabled(false);
+			    	 panel.remove(JButton5);
+			    	 panel.repaint();
+			     }
+			     else {
+			    	 JButton5.setEnabled(true);
+			    	 panel.add(JButton5);
+			    	 panel.repaint();
+			    }
+			  }
+			});
 		
 		final JButton btnEjecutarWCB = new JButton("Ejecutar");
+		btnEjecutarWCB.setEnabled(false);
 		btnEjecutarWCB.setBounds(819, 546, 99, 25);
-		panel_1.add(btnEjecutarWCB);
+		//panel_1.add(btnEjecutarWCB);
 		
 		btnEjecutarWCB.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				if (JTextFieldInputWCB.getText().length() != 0){
+				Double checkvalor = (Double) spinner.getValue();
+				int err = 0;
+				
+				if (ChkboxMarcoWCB.isSelected()){
+					if (checkvalor == 0){
+						JOptionPane.showMessageDialog(null,"Debe seleccionar un valor distinto de 0 para el marco");
+						err = 1;
+						
+					}
+				}
+				if (!new File (JTextFieldInputWCB.getText()).exists()){
+					JOptionPane.showMessageDialog(null,"La ruta no es correcta");
+					err = 1;
+				}
+				if(err != 1){
 					MainWCBProcess corta = new MainWCBProcess(JTextFieldInputWCB.getText(), JTextFieldOutputWCB.getText(), progressBarWCB, JTextAreaWCB, 
 							ChkboxMarcoWCB.isSelected(),  (Double) spinner.getValue(), WCBFilesCalculate.totalimagecount(JTextFieldInputWCB.getText()));
 
-					corta.execute();	
-				}else{
-					JOptionPane.showMessageDialog(null,"Debe seleccionar la ruta a los ficheros");
+					corta.execute();
 				}
-				
 			}
 		});
 		
@@ -502,15 +518,48 @@ public class MainWindow extends JFrame {
 			int statusWCB = directorioWCB.showOpenDialog(null);
 				
 			// PASAMOS EL VALOR DEL DIRECTORIO SELECIONADO A jTextFieldInputWCB
-			if (statusWCB == JFileChooser.APPROVE_OPTION){
+				if (statusWCB == JFileChooser.APPROVE_OPTION){
 				JTextFieldInputWCB.setText( directorioWCB.getSelectedFile().toString());
-				btnEjecutarWCB.setEnabled(true);
-			} 
+				
+				} 
 			}
 		});
 		
 		
+		JTextFieldInputWCB = new JTextField();
+		JTextFieldInputWCB.setHorizontalAlignment(SwingConstants.LEFT);
+		JTextFieldInputWCB.setBounds(10, 31, 391, 20);
+		JTextFieldInputWCB.setForeground(Color.BLACK);
+		JTextFieldInputWCB.setFont(new Font("Tahoma", Font.BOLD, 11));
+		JTextFieldInputWCB.setDragEnabled(true);
+		JTextFieldInputWCB.setColumns(10);
+		panel_1.add(JTextFieldInputWCB);
 		
+		// COMPROBAMOS EL CONTENIDO DEL CAMPO DE LA RUTA Y SI CONTIENE ALGO HABILITAMOS EL BOTÓN EJECUTAR
+		JTextFieldInputWCB.getDocument().addDocumentListener(new DocumentListener() {
+			  public void changedUpdate(DocumentEvent e) {
+			    changed();
+			  }
+			  public void removeUpdate(DocumentEvent e) {
+			    changed();
+			  }
+			  public void insertUpdate(DocumentEvent e) {
+			    changed();
+			  }
+
+			  public void changed() {
+			     if (JTextFieldInputWCB.getText().equals("")){
+			    	 btnEjecutarWCB.setEnabled(false);
+			    	 panel_1.remove(btnEjecutarWCB);
+			    	 panel_1.repaint();
+			     }
+			     else {
+			    	 btnEjecutarWCB.setEnabled(true);
+			    	 panel_1.add(btnEjecutarWCB);
+			    	 panel_1.repaint();
+			    }
+			  }
+			});
 		
 		Dialog dialog = new Dialog((Window) null);
 		dialog.setBounds(657, 392, 200, 50);
