@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
@@ -23,8 +24,11 @@ public class MainWCBProcess extends SwingWorker<Void, Void> {																		/
 	private int porcent;
 	private String linea;
 	private double valormarco;
+	private int totficheroswcb;
+	private JLabel labelTotalWCB;
+	private JLabel labelTotalIMG;
 	
-public MainWCBProcess(String ruta, String Destino, JProgressBar progreso, JTextArea etiqueta, boolean marco,  double valormarco, int totalimagewcb) {
+public MainWCBProcess(String ruta, String Destino, JProgressBar progreso, JTextArea etiqueta, boolean marco,  double valormarco, int totalimagewcb, JLabel labelTotalWCB, JLabel labelTotalIMG) {
 
 	RutaOrigen = ruta;
 	RutaDestino = Destino;
@@ -33,13 +37,19 @@ public MainWCBProcess(String ruta, String Destino, JProgressBar progreso, JTextA
 	this.marco = marco;
 	this.totalimagewcb=totalimagewcb;
 	this.valormarco=valormarco;
+	this.labelTotalWCB = labelTotalWCB;
+	this.labelTotalIMG = labelTotalIMG;
 		
 }
 
 private void recorreYcorta(File f) throws IOException, Exception {
 
 		File[] ficheros = f.listFiles();
+			totficheroswcb = 0;
 			for (File fichero : ficheros) { 																				// Recorremos el directorio mientras hayan ficheros
+				totficheroswcb = ficheros.length;
+				labelTotalWCB.setText(Integer.toString(totficheroswcb));
+				labelTotalIMG.setText(Integer.toString(WCBFilesCalculate.totalimagecount(RutaOrigen)));
 				if (fichero.isFile()) {
 					String nombre = fichero.getName().toLowerCase();
 					if (nombre.endsWith(".wcb")) {																			// Controlamos que el fichero sea .WCB
@@ -95,8 +105,7 @@ private void recorreYcorta(File f) throws IOException, Exception {
 				recorreYcorta(fichero);
 				}
 			}
-			System.out.println("Images a tratar en los WCB: " + totalimagewcb);
-			etiqueta.append("Imágenes de entrada procesadas: " + totalimagewcb + "\n");
+			etiqueta.append("Ficheros TIFF procesados: " + totalimagewcb + "\n");
 }
 
 @Override

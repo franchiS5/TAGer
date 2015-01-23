@@ -71,11 +71,11 @@ public TIFFCropP1_P2(String RutaOrigen, String nombreimagenIN, String P1x1,Strin
 private void cortatiff(File f) throws IOException, Exception {
 
 	 int porcentmarco = 0;
-	
+	 BufferedImage buffimage = ImageIO.read(f);
 	
 	try {
 
-			BufferedImage buffimage = ImageIO.read(f);
+			
 			
 			final BufferedImage croppedimage = buffimage.getSubimage(Integer.parseInt(P1x1), Integer.parseInt(P1y1),Integer.parseInt(P1x2), Integer.parseInt(P1y2));
 			int width = croppedimage.getWidth();											//Obtenemos las dimensiones X e Y de la imagen
@@ -122,8 +122,8 @@ private void cortatiff(File f) throws IOException, Exception {
 	        Transformer transformer = TransformerFactory.newInstance().newTransformer();
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			DOMSource source = new DOMSource(tiffRootNode);
-			StreamResult console = new StreamResult(new File(RutaOrigen + imagenSalida + ".xml"));
-			transformer.transform(source, console);
+			//StreamResult console = new StreamResult(new File(RutaOrigen + imagenSalida + ".xml"));
+			//transformer.transform(source, console);
 			 
 			System.out.println("\nXML DOM Created Successfully..");
 			
@@ -178,7 +178,7 @@ private void cortatiff(File f) throws IOException, Exception {
 	
 	try {
 
-		BufferedImage buffimage = ImageIO.read(f);
+		//BufferedImage buffimage = ImageIO.read(f);
 		
 		final BufferedImage croppedimage = buffimage.getSubimage(Integer.parseInt(P2x1), Integer.parseInt(P2y1),Integer.parseInt(P2x2), Integer.parseInt(P2y2));
 		int width = croppedimage.getWidth();											//Obtenemos las dimensiones X e Y de la imagen
@@ -225,8 +225,8 @@ private void cortatiff(File f) throws IOException, Exception {
         Transformer transformer = TransformerFactory.newInstance().newTransformer();
 		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 		DOMSource source = new DOMSource(tiffRootNode);
-		StreamResult console = new StreamResult(new File(RutaOrigen + imagenSalida + ".xml"));
-		transformer.transform(source, console);
+		//StreamResult console = new StreamResult(new File(RutaOrigen + imagenSalida + ".xml"));
+		//transformer.transform(source, console);
 		 
 		System.out.println("\nXML DOM Created Successfully..");
 		
