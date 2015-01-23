@@ -2,12 +2,12 @@ package App;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
+//import java.util.HashMap;
+//import java.util.Iterator;
 
 import com.drew.imaging.tiff.TiffMetadataReader;
 import com.drew.metadata.Metadata;
-import com.drew.metadata.Tag;
+//import com.drew.metadata.Tag;
 import com.drew.metadata.exif.ExifIFD0Directory;
 
 
@@ -15,9 +15,7 @@ import com.drew.metadata.exif.ExifIFD0Directory;
 
 public class TIFFMetadataRead {
 	
-	static ExifIFD0Directory exifdirectory;
-	
-	
+static ExifIFD0Directory exifdirectory;
 	
 	
 public static ExifIFD0Directory LeerExif (String filewcb) throws IOException{
@@ -25,8 +23,6 @@ public static ExifIFD0Directory LeerExif (String filewcb) throws IOException{
 		exifdirectory=null;
 		getExifFile(new File(filewcb));
 		return exifdirectory;
-		
-		
 	}
 
 static ExifIFD0Directory getExifFile (File ficheroTiffWCB) throws IOException
@@ -40,14 +36,11 @@ static ExifIFD0Directory getExifFile (File ficheroTiffWCB) throws IOException
 			{
 				
 			} else{
-				
 				System.out.println( "El fichero " + ficheroTiffWCB + " no contiene datos Exif" );	
 			}
-			
 	}else{
 		System.out.println("El fichero "+ ficheroTiffWCB + " no es del tipo TIFF");					//Si no era .tif avisamos
 		}
-		
 	return exifdirectory;
 }
 }

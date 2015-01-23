@@ -106,10 +106,10 @@ public class MainWindow extends JFrame {
 		tabbedPane.setBounds(0, 0, 1055, 627);
 		contentPane.add(tabbedPane);
 		
-		JPanel panel = new JPanel();
+		final JPanel panel = new JPanel();
 		tabbedPane.addTab("EXIF // IPTC", null, panel, null);
 		
-		JPanel panel_1 = new JPanel();
+		final JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("Lanzar .WCB", null, panel_1, null);
 		panel.setLayout(null);
 		
@@ -345,7 +345,7 @@ public class MainWindow extends JFrame {
 		});
 		
 		JLabel JLabelseleccionarWCB = new JLabel("Seleccionar carpeta para procesar");
-		JLabelseleccionarWCB.setBounds(10, 11, 200, 19);
+		JLabelseleccionarWCB.setBounds(10, 11, 229, 19);
 		JLabelseleccionarWCB.setForeground(new Color(70, 130, 180));
 		JLabelseleccionarWCB.setFont(new Font("Tahoma", Font.BOLD, 11));
 		panel_1.add(JLabelseleccionarWCB);
@@ -528,6 +528,7 @@ public class MainWindow extends JFrame {
 		
 		
 		JTextFieldInputWCB = new JTextField();
+		JTextFieldInputWCB.setText("/home/javier/Descargas/PRUEBA/wcb");
 		JTextFieldInputWCB.setHorizontalAlignment(SwingConstants.LEFT);
 		JTextFieldInputWCB.setBounds(10, 31, 391, 20);
 		JTextFieldInputWCB.setForeground(Color.BLACK);

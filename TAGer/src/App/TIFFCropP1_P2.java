@@ -122,8 +122,8 @@ private void cortatiff(File f) throws IOException, Exception {
 	        Transformer transformer = TransformerFactory.newInstance().newTransformer();
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			DOMSource source = new DOMSource(tiffRootNode);
-			//StreamResult console = new StreamResult(new File(RutaOrigen + imagenSalida + ".xml"));
-			//transformer.transform(source, console);
+			StreamResult console = new StreamResult(new File(RutaOrigen + imagenSalida + ".xml"));
+			transformer.transform(source, console);
 			 
 			System.out.println("\nXML DOM Created Successfully..");
 			
@@ -143,7 +143,6 @@ private void cortatiff(File f) throws IOException, Exception {
 			
 			
 			File fOutputFile = new File(RutaOrigen + imagenSalida + ".tif");
-			imagenSalida++;
 			OutputStream fos = new BufferedOutputStream(new FileOutputStream(fOutputFile));
 			ImageOutputStream ios = ImageIO.createImageOutputStream(fos);
 			ios.setBitOffset(0);
@@ -160,6 +159,7 @@ private void cortatiff(File f) throws IOException, Exception {
 			ios.flush();
 			tiffwriter.dispose();
 			ios.close();
+			imagenSalida++;
 			
 } catch (Exception e) {
 				System.out.println(e);
@@ -225,8 +225,8 @@ private void cortatiff(File f) throws IOException, Exception {
         Transformer transformer = TransformerFactory.newInstance().newTransformer();
 		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 		DOMSource source = new DOMSource(tiffRootNode);
-		//StreamResult console = new StreamResult(new File(RutaOrigen + imagenSalida + ".xml"));
-		//transformer.transform(source, console);
+		StreamResult console = new StreamResult(new File(RutaOrigen + imagenSalida + ".xml"));
+		transformer.transform(source, console);
 		 
 		System.out.println("\nXML DOM Created Successfully..");
 		
@@ -277,12 +277,6 @@ private void cortatiff(File f) throws IOException, Exception {
 		} finally {
 
 		}
-
-
-
-
-
-
 }
 
 protected Void doInBackground() throws Exception {

@@ -13,6 +13,7 @@ public FileImageFormat (String ruta){
 static String getType(String ruta){
 		
 	String nombrefichero = ruta.toLowerCase();
+	@SuppressWarnings("unused")
 	String tipofichero;
 	int posicionslash = nombrefichero.lastIndexOf("\\");
 	int longitudruta = nombrefichero.length();

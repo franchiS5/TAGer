@@ -13,6 +13,7 @@ import javax.swing.SwingWorker;
 public class MainWCBProcess extends SwingWorker<Void, Void> {																		// Clase para lanzar el corte de los WCB
 
 	private String RutaOrigen;
+	@SuppressWarnings("unused")
 	private String RutaDestino;
 	private JTextArea etiqueta;
 	private JProgressBar progreso;
@@ -73,6 +74,7 @@ private void recorreYcorta(File f) throws IOException, Exception {
 											TIFFCropP1_P2 croptiff = new TIFFCropP1_P2(RutaOrigen, nombreimagenIN, P1x1, P1y1, P1x2, P1y2, P2x1, P2y1, P2x2, P2y2, imagenSalida, marco, valormarco );		//Tiene 2 PAGINAS PARA CORTAR
 											croptiff.doInBackground();
 											imagenSalida++;
+											imagenSalida++;
 											contador++;
 											porcent=new Double(contador * 100 / totalimagewcb).intValue();
 											progreso.setValue(porcent);	
@@ -94,7 +96,7 @@ private void recorreYcorta(File f) throws IOException, Exception {
 				}
 			}
 			System.out.println("Images a tratar en los WCB: " + totalimagewcb);
-			etiqueta.append("Imágenes procesadas: " + totalimagewcb + "\n");
+			etiqueta.append("Imágenes de entrada procesadas: " + totalimagewcb + "\n");
 }
 
 @Override
