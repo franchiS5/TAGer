@@ -79,18 +79,15 @@ public TIFFCrop(File f, BufferedImage buffimage, String RutaOrigen, String nombr
 	this.buffimage = buffimage;
 	this.f = f;
 	
-	
 }
 
 private void cortatiff(BufferedImage buffimage) throws IOException, Exception {
-
-	 int porcentmarco = 0;
 	
+	int porcentmarco = 0;
 	
 	try {
-			
 			final BufferedImage croppedimage = buffimage.getSubimage(Integer.parseInt(x), Integer.parseInt(y),Integer.parseInt(xsize), Integer.parseInt(ysize));
-			int width = croppedimage.getWidth();											//Obtenemos las dimensiones X e Y de la imagen
+			int width = croppedimage.getWidth();
 			int heigth = croppedimage.getHeight();
 			BufferedImage croppedandborderedimage = null;
 			
@@ -146,8 +143,8 @@ private void cortatiff(BufferedImage buffimage) throws IOException, Exception {
 	        Transformer transformer = TransformerFactory.newInstance().newTransformer();
 			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 			DOMSource source = new DOMSource(tiffRootNode);
-			//StreamResult console = new StreamResult(new File(RutaOrigen + imagenSalida + ".xml"));
-			//transformer.transform(source, console);
+			StreamResult console = new StreamResult(new File(RutaOrigen + imagenSalida + ".xml"));
+			transformer.transform(source, console);
 			 
 			System.out.println("\nXML DOM Created Successfully..");
 			
@@ -174,7 +171,7 @@ private void cortatiff(BufferedImage buffimage) throws IOException, Exception {
 			
 			
 			tiffwriter.setOutput(ios);
-			//imageMetadata.setFromTree(formatonombres, tiffRootNode);
+			imageMetadata.setFromTree(formatonombres, tiffRootNode);
 			if (marco == true){
 				tiffwriter.write(null, new IIOImage(croppedandborderedimage, null, imageMetadata), tifparam);	
 			}else{

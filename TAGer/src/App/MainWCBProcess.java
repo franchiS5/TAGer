@@ -26,9 +26,9 @@ public class MainWCBProcess extends SwingWorker<Void, Void> {																		/
 	private int porcent;
 	private String linea;
 	private double valormarco;
-	private int totficheroswcb;
 	private JLabel labelTotalWCB;
 	private JLabel labelTotalIMG;
+	private boolean contados;
 	
 public MainWCBProcess(String ruta, String Destino, JProgressBar progreso, JTextArea etiqueta, boolean marco,  double valormarco, int totalimagewcb, JLabel labelTotalWCB, JLabel labelTotalIMG) {
 
@@ -41,16 +41,22 @@ public MainWCBProcess(String ruta, String Destino, JProgressBar progreso, JTextA
 	this.valormarco=valormarco;
 	this.labelTotalWCB = labelTotalWCB;
 	this.labelTotalIMG = labelTotalIMG;
+	contados = false;
 		
 }
 
 private void recorreYcorta(File f) throws IOException, Exception {
 
 		File[] ficheros = f.listFiles();
-			totficheroswcb = 0;
+			int totficheroswcb = 0;
 			
 			for (File fichero : ficheros) { 																				// Recorremos el directorio mientras hayan ficheros
-				totficheroswcb = ficheros.length;
+				for (int i=0; i<ficheros.length && contados == false;i++){													// Contamos los ficheros WCB del directorio
+					if (ficheros[i].getName().endsWith(".wcb")){
+						totficheroswcb ++;
+					}
+				}
+				contados = true;
 				labelTotalWCB.setText(Integer.toString(totficheroswcb));
 				labelTotalIMG.setText(Integer.toString(WCBFilesCalculate.totalimagecount(RutaOrigen)));
 				if (fichero.isFile()) {

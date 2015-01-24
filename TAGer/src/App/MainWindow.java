@@ -76,6 +76,7 @@ public class MainWindow extends JFrame {
 				try {
 					MainWindow frame = new MainWindow();
 					frame.setVisible(true);
+					frame.setLocationRelativeTo(null);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -529,7 +530,7 @@ public class MainWindow extends JFrame {
 					}
 					if(err != 1){
 						MainWCBProcess corta = new MainWCBProcess(JTextFieldInputWCB.getText(), JTextFieldOutputWCB.getText(), progressBarWCB, JTextAreaWCB, 
-								ChkboxMarcoWCB.isSelected(),  (Double) spinner.getValue(), WCBFilesCalculate.totalimagecount(JTextFieldInputWCB.getText()), labelTotalWCB, labelTotalIMG);
+								ChkboxMarcoWCB.isSelected(), (Double) spinner.getValue(), WCBFilesCalculate.totalimagecount(JTextFieldInputWCB.getText()), labelTotalWCB, labelTotalIMG);
 
 						corta.execute();
 					}
@@ -549,7 +550,7 @@ public class MainWindow extends JFrame {
 				
 			// PASAMOS EL VALOR DEL DIRECTORIO SELECIONADO A jTextFieldInputWCB
 				if (statusWCB == JFileChooser.APPROVE_OPTION){
-				JTextFieldInputWCB.setText( directorioWCB.getSelectedFile().toString());
+				JTextFieldInputWCB.setText(directorioWCB.getSelectedFile().toString());
 				
 				} 
 			}
@@ -557,7 +558,7 @@ public class MainWindow extends JFrame {
 		
 		
 		JTextFieldInputWCB = new JTextField();
-		JTextFieldInputWCB.setText("D:\\PRUEBA\\wcb");
+		JTextFieldInputWCB.setText("/Users/Luis/Documents/PRUEBA/wcb");
 		JTextFieldInputWCB.setHorizontalAlignment(SwingConstants.LEFT);
 		JTextFieldInputWCB.setBounds(10, 31, 391, 20);
 		JTextFieldInputWCB.setForeground(Color.BLACK);
@@ -568,7 +569,7 @@ public class MainWindow extends JFrame {
 		
 		
 		
-		// COMPROBAMOS EL CONTENIDO DEL CAMPO DE LA RUTA Y SI CONTIENE ALGO HABILITAMOS EL BOT�N EJECUTAR
+		// COMPROBAMOS EL CONTENIDO DEL CAMPO DE LA RUTA Y SI CONTIENE ALGO HABILITAMOS EL BUTTON EJECUTAR
 		JTextFieldInputWCB.getDocument().addDocumentListener(new DocumentListener() {
 			  public void changedUpdate(DocumentEvent e) {
 			    changed();
