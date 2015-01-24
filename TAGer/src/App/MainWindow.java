@@ -514,6 +514,8 @@ public class MainWindow extends JFrame {
 				
 				Double checkvalor = (Double) spinner.getValue();
 				int err = 0;
+				JTextAreaWCB.setText("");
+				
 				if(btnEjecutarWCB.isEnabled()){
 					if (ChkboxMarcoWCB.isSelected()){
 						if (checkvalor == 0){

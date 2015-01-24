@@ -48,44 +48,48 @@ import org.w3c.dom.NodeList;
 
 
 
-public class TIFFCropP1 extends SwingWorker<Void, Void> {
+public class TIFFCrop extends SwingWorker<Void, Void> {
 
 	private String RutaOrigen;
 	private String nombreimagenIN;
-	private String P1x1;
-	private String P1y1;
-	private String P1x2;
-	private String P1y2;
+	private String x;
+	private String y;
+	private String xsize;
+	private String ysize;
 	private int imagenSalida;
 	private boolean marco;
 	private double valormarco;
+	private BufferedImage buffimage;
+	private File f;
+	
 	
 	
 
-public TIFFCropP1(String RutaOrigen, String nombreimagenIN, String P1x1,String P1y1, String P1x2, String P1y2, int imagenSalida, boolean marco, double valormarco){
+public TIFFCrop(File f, BufferedImage buffimage, String RutaOrigen, String nombreimagenIN, String x,String y, String xsize, String ysize, int imagenSalida, boolean marco, double valormarco){
 
 	this.RutaOrigen = RutaOrigen;
-	this.P1x1 = P1x1;
-	this.P1y1 = P1y1;
-	this.P1x2 = P1x2;
-	this.P1y2 = P1y2;
+	this.x = x;
+	this.y = y;
+	this.xsize = xsize;
+	this.ysize = ysize;
 	this.imagenSalida = imagenSalida;
 	this.nombreimagenIN = nombreimagenIN;
 	this.marco = marco;
 	this.valormarco = valormarco;
+	this.buffimage = buffimage;
+	this.f = f;
+	
 	
 }
 
-private void cortatiff(File f) throws IOException, Exception {
+private void cortatiff(BufferedImage buffimage) throws IOException, Exception {
 
 	 int porcentmarco = 0;
 	
 	
 	try {
-
-			BufferedImage buffimage = ImageIO.read(f);
 			
-			final BufferedImage croppedimage = buffimage.getSubimage(Integer.parseInt(P1x1), Integer.parseInt(P1y1),Integer.parseInt(P1x2), Integer.parseInt(P1y2));
+			final BufferedImage croppedimage = buffimage.getSubimage(Integer.parseInt(x), Integer.parseInt(y),Integer.parseInt(xsize), Integer.parseInt(ysize));
 			int width = croppedimage.getWidth();											//Obtenemos las dimensiones X e Y de la imagen
 			int heigth = croppedimage.getHeight();
 			BufferedImage croppedandborderedimage = null;
@@ -118,7 +122,7 @@ private void cortatiff(File f) throws IOException, Exception {
 	        reader.setInput(stream);
 			
 	        IIOMetadata imageMetadata = reader.getImageMetadata(0);
-	        //IIOMetadata streamMetadata = reader.getStreamMetadata();
+	       
 	        
 	        String formatonombres = imageMetadata.getNativeMetadataFormatName();
 	        IIOMetadataNode tiffRootNode = (IIOMetadataNode) imageMetadata.getAsTree(formatonombres);
@@ -191,7 +195,7 @@ private void cortatiff(File f) throws IOException, Exception {
 
 protected Void doInBackground() throws Exception {
 
-	cortatiff(new File(RutaOrigen + nombreimagenIN));
+	cortatiff(buffimage);
 	return null;
 
 }

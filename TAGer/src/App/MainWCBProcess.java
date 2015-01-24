@@ -1,10 +1,12 @@
 package App;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
@@ -46,6 +48,7 @@ private void recorreYcorta(File f) throws IOException, Exception {
 
 		File[] ficheros = f.listFiles();
 			totficheroswcb = 0;
+			
 			for (File fichero : ficheros) { 																				// Recorremos el directorio mientras hayan ficheros
 				totficheroswcb = ficheros.length;
 				labelTotalWCB.setText(Integer.toString(totficheroswcb));
@@ -72,26 +75,34 @@ private void recorreYcorta(File f) throws IOException, Exception {
 										String P2y2 = (coordenadas[8]);
 										RutaOrigen = (coordenadas[9]).replace("\\", "/");
 										etiqueta.append("Procesando imagen: " +coordenadas[9] + nombreimagenIN + "\n");
-							
+										
+										File fileimagen = new File(RutaOrigen + nombreimagenIN);
+										BufferedImage buffimage = ImageIO.read(fileimagen);
+										
 										if (Integer.parseInt(P2x2) == 0 && Integer.parseInt(P2y2) == 0) {					
-										TIFFCropP1 croptiff = new TIFFCropP1(RutaOrigen, nombreimagenIN, P1x1, P1y1, P1x2, P1y2, imagenSalida, marco, valormarco );		//Tiene 1 PAGINA PARA CORTAR
-										croptiff.doInBackground();
+										TIFFCrop croptiffP1 = new TIFFCrop(fileimagen, buffimage, RutaOrigen, nombreimagenIN, P1x1, P1y1, P1x2, P1y2, imagenSalida, marco, valormarco );		//CORTA PAG1
+										croptiffP1.doInBackground();
 										imagenSalida++;
 										contador++;
 										porcent=new Double(contador * 100 / totalimagewcb).intValue();
 										progreso.setValue(porcent);
 										}else{
-											TIFFCropP1_P2 croptiff = new TIFFCropP1_P2(RutaOrigen, nombreimagenIN, P1x1, P1y1, P1x2, P1y2, P2x1, P2y1, P2x2, P2y2, imagenSalida, marco, valormarco );		//Tiene 2 PAGINAS PARA CORTAR
-											croptiff.doInBackground();
-											imagenSalida++;
+											TIFFCrop croptiffP1 = new TIFFCrop(fileimagen, buffimage, RutaOrigen, nombreimagenIN, P1x1, P1y1, P1x2, P1y2, imagenSalida, marco, valormarco );		//CORTA PAG 1
+											croptiffP1.doInBackground();
 											imagenSalida++;
 											contador++;
 											porcent=new Double(contador * 100 / totalimagewcb).intValue();
-											progreso.setValue(porcent);	
+											progreso.setValue(porcent);
+											
+											TIFFCrop croptiffP2 = new TIFFCrop(fileimagen, buffimage, RutaOrigen, nombreimagenIN, P2x1, P2y1, P2x2, P2y2, imagenSalida, marco, valormarco );		//CORTA PAG2
+											croptiffP2.doInBackground();
+											imagenSalida++;
+											contador++;
+											porcent=new Double(contador * 100 / totalimagewcb).intValue();
+											progreso.setValue(porcent);
+											
 										}
-								
-										
-									}
+								}
 									br.close();
 									fr.close();
 								} catch (Exception e) {
