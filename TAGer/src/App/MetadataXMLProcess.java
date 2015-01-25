@@ -19,14 +19,14 @@ public class MetadataXMLProcess {
 
 	
 	
+public static IIOMetadata metadatachange (IIOMetadata imageMetadata){
 	
-	
-public MetadataXMLProcess(IIOMetadata imageMetadata){
-	
+	metaexif(imageMetadata);
+	return imageMetadata;
 	
 }
 
-private IIOMetadata metadatachange (IIOMetadata imageMetadata){
+static void metaexif (IIOMetadata imageMetadata){
 	
 	String formatonombres = imageMetadata.getNativeMetadataFormatName();
     IIOMetadataNode tiffRootNode = (IIOMetadataNode) imageMetadata.getAsTree(formatonombres);
@@ -69,7 +69,7 @@ private IIOMetadata metadatachange (IIOMetadata imageMetadata){
 	 
 	System.out.println("\nXML DOM Created Successfully..");
 	
-	return imageMetadata;
+	
 }
 
 

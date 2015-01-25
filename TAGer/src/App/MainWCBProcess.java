@@ -86,24 +86,23 @@ private void recorreYcorta(File f) throws IOException, Exception {
 										BufferedImage buffimage = ImageIO.read(fileimagen);
 										
 										if (Integer.parseInt(P2x2) == 0 && Integer.parseInt(P2y2) == 0) {					
-										TIFFCrop croptiffP1 = new TIFFCrop(fileimagen, buffimage, RutaOrigen, nombreimagenIN, P1x1, P1y1, P1x2, P1y2, imagenSalida, marco, valormarco );		//CORTA PAG1
+										TIFFCrop croptiffP1 = new TIFFCrop(fileimagen, buffimage, RutaOrigen, P1x1, P1y1, P1x2, P1y2, imagenSalida, marco, valormarco );		//CORTA PAG1
 										croptiffP1.doInBackground();
 										imagenSalida++;
 										contador++;
 										porcent=new Double(contador * 100 / totalimagewcb).intValue();
 										progreso.setValue(porcent);
 										}else{
-											TIFFCrop croptiffP1 = new TIFFCrop(fileimagen, buffimage, RutaOrigen, nombreimagenIN, P1x1, P1y1, P1x2, P1y2, imagenSalida, marco, valormarco );		//CORTA PAG 1
+											TIFFCrop croptiffP1 = new TIFFCrop(fileimagen, buffimage, RutaOrigen, P1x1, P1y1, P1x2, P1y2, imagenSalida, marco, valormarco );		//CORTA PAG 1
 											croptiffP1.doInBackground();
 											imagenSalida++;
-											contador++;
+											contador++;																																				//SOLO SUMAMOS UNA VEZ A CONTADOR
 											porcent=new Double(contador * 100 / totalimagewcb).intValue();
 											progreso.setValue(porcent);
 											
-											TIFFCrop croptiffP2 = new TIFFCrop(fileimagen, buffimage, RutaOrigen, nombreimagenIN, P2x1, P2y1, P2x2, P2y2, imagenSalida, marco, valormarco );		//CORTA PAG2
+											TIFFCrop croptiffP2 = new TIFFCrop(fileimagen, buffimage, RutaOrigen, P2x1, P2y1, P2x2, P2y2, imagenSalida, marco, valormarco );		//CORTA PAG2
 											croptiffP2.doInBackground();
 											imagenSalida++;
-											contador++;
 											porcent=new Double(contador * 100 / totalimagewcb).intValue();
 											progreso.setValue(porcent);
 											

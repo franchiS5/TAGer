@@ -8,9 +8,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteOrder;
-
-//import java.util.Date;
-//import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.Locale;
 
@@ -24,34 +21,17 @@ import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.ImageOutputStream;
 import javax.swing.SwingWorker;
 
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
+import org.imgscalr.Scalr;
 
-//import org.w3c.dom.Document;
-//import org.w3c.dom.Element;
-//import org.w3c.dom.Node;
-
-
-
-import com.sun.media.imageio.plugins.tiff.TIFFImageWriteParam;
 import com.sun.media.imageioimpl.plugins.tiff.TIFFImageWriter;
 import com.sun.media.imageioimpl.plugins.tiff.TIFFImageWriterSpi;
-
-import org.imgscalr.Scalr;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-
+import com.sun.media.imageio.plugins.tiff.TIFFImageWriteParam;
 
 
 
 public class TIFFCrop extends SwingWorker<Void, Void> {
 
 	private String RutaOrigen;
-	private String nombreimagenIN;
 	private String x;
 	private String y;
 	private String xsize;
@@ -65,7 +45,7 @@ public class TIFFCrop extends SwingWorker<Void, Void> {
 	
 	
 
-public TIFFCrop(File f, BufferedImage buffimage, String RutaOrigen, String nombreimagenIN, String x,String y, String xsize, String ysize, int imagenSalida, boolean marco, double valormarco){
+public TIFFCrop(File f, BufferedImage buffimage, String RutaOrigen, String x,String y, String xsize, String ysize, int imagenSalida, boolean marco, double valormarco) {
 
 	this.RutaOrigen = RutaOrigen;
 	this.x = x;
@@ -73,7 +53,6 @@ public TIFFCrop(File f, BufferedImage buffimage, String RutaOrigen, String nombr
 	this.xsize = xsize;
 	this.ysize = ysize;
 	this.imagenSalida = imagenSalida;
-	this.nombreimagenIN = nombreimagenIN;
 	this.marco = marco;
 	this.valormarco = valormarco;
 	this.buffimage = buffimage;
@@ -108,10 +87,10 @@ private void cortatiff(BufferedImage buffimage) throws IOException, Exception {
 	        
 	        Iterator<ImageReader> readers = ImageIO.getImageReadersByFormatName("tif");
 	        ImageReader reader = null;
+	        
 	        while (readers.hasNext())
 	        {
 	            reader = readers.next();
-	            
 	        }
 	 
 	        ImageInputStream stream = null;
@@ -119,59 +98,51 @@ private void cortatiff(BufferedImage buffimage) throws IOException, Exception {
 	        reader.setInput(stream);
 			
 	        IIOMetadata imageMetadata = reader.getImageMetadata(0);
-	       
-	        
 	        String formatonombres = imageMetadata.getNativeMetadataFormatName();
 	        IIOMetadataNode tiffRootNode = (IIOMetadataNode) imageMetadata.getAsTree(formatonombres);
 	        
 	        /* AQUI DEBEMOS MODIFICAR LOS METADATOS DEL NODO QUE HEMOS EXTRAIDO DE LA IMAGEN
+	         * 
+	         * NodeList miLista=tiffRootNode.getElementsByTagName("TIFFField");
+	         * for(int i=0;i<miLista.getLength();i++){	
+	         * if (miLista.item(i).getAttributes().getNamedItem("number").getNodeValue().equals("272")){
+	         * System.out.println("+" + miLista.item(i).getChildNodes().item(0).getChildNodes().item(0).getAttributes().item(0).getNodeValue());
+	         * miLista.item(i).getChildNodes().item(0).getChildNodes().item(0).getAttributes().item(0).setNodeValue("Maquinita");
+	         * System.out.println("+" + miLista.item(i).getChildNodes().item(0).getChildNodes().item(0).getAttributes().item(0).getNodeValue());
+	         * }else{
+	         * System.out.println("+++" + miLista.item(i).getAttributes().getNamedItem("number").getNodeValue());
+	         * }
+	         * }
+	         *
+	         *Transformer transformer = TransformerFactory.newInstance().newTransformer();
+	         *transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+	         *DOMSource source = new DOMSource(tiffRootNode);
+	         *StreamResult console = new StreamResult(new File(RutaOrigen + imagenSalida + ".xml"));
+	         *transformer.transform(source, console);
+	         */
 	        
-	        NodeList miLista=tiffRootNode.getElementsByTagName("TIFFField");
-	       for(int i=0;i<miLista.getLength();i++){	    	   
-	    	   if (miLista.item(i).getAttributes().getNamedItem("number").getNodeValue().equals("272")){
-	    		   //System.out.println("--------------------------------");
-	    		   //System.out.println("+" + miLista.item(i).getChildNodes().item(0).getChildNodes().item(0).getAttributes().item(0).getNodeValue());
-	    		   miLista.item(i).getChildNodes().item(0).getChildNodes().item(0).getAttributes().item(0).setNodeValue("Maquinita");
-	    		   //System.out.println("+" + miLista.item(i).getChildNodes().item(0).getChildNodes().item(0).getAttributes().item(0).getNodeValue());
-	    		   //System.out.println("--------------------------------");
-	    	   }else{
-	    		   System.out.println("+++" + miLista.item(i).getAttributes().getNamedItem("number").getNodeValue());
-	    	   }
-	       }
-	       */ 
-			
-	        Transformer transformer = TransformerFactory.newInstance().newTransformer();
-			transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-			DOMSource source = new DOMSource(tiffRootNode);
-			StreamResult console = new StreamResult(new File(RutaOrigen + imagenSalida + ".xml"));
-			transformer.transform(source, console);
-			 
-			System.out.println("\nXML DOM Created Successfully..");
-			
-			
-	        // AQUI EMPEZAMOS A GUARDAR LA IMAGEN DE SALIDA
+	           	   
+	    	 
+			// AQUI EMPEZAMOS A GUARDAR LA IMAGEN DE SALIDA
 			
 			
 			ImageWriterSpi tiffspi = new TIFFImageWriterSpi();							
 			
 			TIFFImageWriter tiffwriter = (TIFFImageWriter) tiffspi.createWriterInstance();
 			TIFFImageWriteParam tifparam = new TIFFImageWriteParam(Locale.US);
-			
 			tifparam.setCompressionMode(TIFFImageWriteParam.MODE_DISABLED);
 			tifparam.setDestinationOffset((new Point(0, 0)) );
 			tifparam.setTilingMode(TIFFImageWriteParam.MODE_DISABLED);
 			tifparam.setSourceSubsampling(1, 1, 0, 0);
-			
 			
 			File fOutputFile = new File(RutaOrigen + imagenSalida + ".tif");
 			OutputStream fos = new BufferedOutputStream(new FileOutputStream(fOutputFile));
 			ImageOutputStream ios = ImageIO.createImageOutputStream(fos);
 			ios.setBitOffset(0);
 			ios.setByteOrder(ByteOrder.LITTLE_ENDIAN);
-			
-			
 			tiffwriter.setOutput(ios);
 			imageMetadata.setFromTree(formatonombres, tiffRootNode);
+			
 			if (marco == true){
 				tiffwriter.write(null, new IIOImage(croppedandborderedimage, null, imageMetadata), tifparam);	
 			}else{
