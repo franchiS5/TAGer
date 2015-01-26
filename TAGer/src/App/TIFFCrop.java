@@ -32,6 +32,7 @@ import com.sun.media.imageio.plugins.tiff.TIFFImageWriteParam;
 public class TIFFCrop extends SwingWorker<Void, Void> {
 
 	private String RutaOrigen;
+	private String RutaDestino;
 	private String x;
 	private String y;
 	private String xsize;
@@ -45,9 +46,10 @@ public class TIFFCrop extends SwingWorker<Void, Void> {
 	
 	
 
-public TIFFCrop(File f, BufferedImage buffimage, String RutaOrigen, String x,String y, String xsize, String ysize, int imagenSalida, boolean marco, double valormarco) {
+public TIFFCrop(File f, BufferedImage buffimage, String RutaOrigen, String RutaDestino, String x,String y, String xsize, String ysize, int imagenSalida, boolean marco, double valormarco) {
 
 	this.RutaOrigen = RutaOrigen;
+	this.RutaDestino = RutaDestino;
 	this.x = x;
 	this.y = y;
 	this.xsize = xsize;
@@ -135,7 +137,7 @@ private void cortatiff(BufferedImage buffimage) throws IOException, Exception {
 			tifparam.setTilingMode(TIFFImageWriteParam.MODE_DISABLED);
 			tifparam.setSourceSubsampling(1, 1, 0, 0);
 			
-			File fOutputFile = new File(RutaOrigen + imagenSalida + ".tif");
+			File fOutputFile = new File(RutaDestino + imagenSalida + ".tif");
 			OutputStream fos = new BufferedOutputStream(new FileOutputStream(fOutputFile));
 			ImageOutputStream ios = ImageIO.createImageOutputStream(fos);
 			ios.setBitOffset(0);

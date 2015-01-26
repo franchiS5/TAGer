@@ -363,7 +363,9 @@ public class MainWindow extends JFrame {
 		panel_1.add(JLabeldestinoWCB);
 		
 		JTextFieldOutputWCB = new JTextField();
+		JTextFieldOutputWCB.setFont(new Font("Tahoma", Font.BOLD, 11));
 		JTextFieldOutputWCB.setBounds(10, 87, 391, 20);
+		JTextFieldOutputWCB.setForeground(new Color(162,3,3));
 		panel_1.add(JTextFieldOutputWCB);
 		JTextFieldOutputWCB.setColumns(10);
 		
@@ -556,12 +558,32 @@ public class MainWindow extends JFrame {
 			}
 		});
 		
+		JbuttonSeleccionarWCB2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				
+			JFileChooser directoriodestinoWCB = new JFileChooser();
+			directoriodestinoWCB.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			
+			
+			int statusWCB = directoriodestinoWCB.showOpenDialog(null);
+				
+			// PASAMOS EL VALOR DEL DIRECTORIO SELECIONADO A jTextFieldInputWCB
+				if (statusWCB == JFileChooser.APPROVE_OPTION){
+					JTextFieldOutputWCB.setText(directoriodestinoWCB.getSelectedFile().toString());
+				
+				} 
+			}
+		});
+		
+		
+		
 		
 		JTextFieldInputWCB = new JTextField();
-		JTextFieldInputWCB.setText("/Users/Luis/Documents/PRUEBA/wcb");
+		JTextFieldInputWCB.setText("D:\\PRUEBA\\wcb");
 		JTextFieldInputWCB.setHorizontalAlignment(SwingConstants.LEFT);
 		JTextFieldInputWCB.setBounds(10, 31, 391, 20);
-		JTextFieldInputWCB.setForeground(Color.BLACK);
+		JTextFieldInputWCB.setForeground(Color.DARK_GRAY);
 		JTextFieldInputWCB.setFont(new Font("Tahoma", Font.BOLD, 11));
 		JTextFieldInputWCB.setDragEnabled(true);
 		JTextFieldInputWCB.setColumns(10);
