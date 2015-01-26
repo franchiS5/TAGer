@@ -137,7 +137,14 @@ private void cortatiff(BufferedImage buffimage) throws IOException, Exception {
 			tifparam.setTilingMode(TIFFImageWriteParam.MODE_DISABLED);
 			tifparam.setSourceSubsampling(1, 1, 0, 0);
 			
-			File fOutputFile = new File(RutaDestino + imagenSalida + ".tif");
+			File fOutputFile = new File(RutaDestino); // + imagenSalida + ".tif");
+			if (!fOutputFile.exists()){
+				fOutputFile.mkdirs();
+				fOutputFile = new File (RutaDestino + imagenSalida + ".tif");
+			}else{
+				fOutputFile = new File (RutaDestino + imagenSalida + ".tif");
+			}
+			
 			OutputStream fos = new BufferedOutputStream(new FileOutputStream(fOutputFile));
 			ImageOutputStream ios = ImageIO.createImageOutputStream(fos);
 			ios.setBitOffset(0);

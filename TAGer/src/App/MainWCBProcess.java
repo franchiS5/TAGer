@@ -83,8 +83,8 @@ private void recorreYcorta(File f) throws IOException, Exception {
 										RutaDestino = RutaDestino.replace("\\", "/");
 										etiqueta.append("Procesando imagen: " +coordenadas[9] + nombreimagenIN + "\n");
 										
-										String DestinoCalculado = WCBPath.RutaDestino(RutaOrigen, RutaDestino);
-										RutaDestino = DestinoCalculado;
+										String DestinoCalculado = WCBPath.CreaRuta(RutaOrigen, RutaDestino);
+										RutaDestino = DestinoCalculado + "/";
 										
 										File fileimagen = new File(RutaOrigen + nombreimagenIN);
 										BufferedImage buffimage = ImageIO.read(fileimagen);
