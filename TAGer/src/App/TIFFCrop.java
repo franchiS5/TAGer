@@ -19,6 +19,7 @@ import javax.imageio.metadata.IIOMetadataNode;
 import javax.imageio.spi.ImageWriterSpi;
 import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.ImageOutputStream;
+import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
 import org.imgscalr.Scalr;
@@ -65,9 +66,10 @@ public TIFFCrop(File f, BufferedImage buffimage, String RutaOrigen, String RutaD
 private void cortatiff(BufferedImage buffimage) throws IOException, Exception {
 	
 	int porcentmarco = 0;
-	
+		
 	try {
-			final BufferedImage croppedimage = buffimage.getSubimage(Integer.parseInt(x), Integer.parseInt(y),Integer.parseInt(xsize), Integer.parseInt(ysize));
+		
+		final BufferedImage croppedimage = buffimage.getSubimage(Integer.parseInt(x), Integer.parseInt(y),Integer.parseInt(xsize), Integer.parseInt(ysize));
 			int width = croppedimage.getWidth();
 			int heigth = croppedimage.getHeight();
 			BufferedImage croppedandborderedimage = null;
@@ -138,11 +140,13 @@ private void cortatiff(BufferedImage buffimage) throws IOException, Exception {
 			tifparam.setSourceSubsampling(1, 1, 0, 0);
 			
 			File fOutputFile = new File(RutaDestino); // + imagenSalida + ".tif");
+			
 			if (!fOutputFile.exists()){
+				
 				fOutputFile.mkdirs();
-				fOutputFile = new File (RutaDestino + imagenSalida + ".tif");
+				fOutputFile = new File (RutaDestino + String.format("%04d", imagenSalida) + ".tif");
 			}else{
-				fOutputFile = new File (RutaDestino + imagenSalida + ".tif");
+				fOutputFile = new File (RutaDestino + String.format("%04d", imagenSalida) + ".tif");
 			}
 			
 			OutputStream fos = new BufferedOutputStream(new FileOutputStream(fOutputFile));
@@ -165,6 +169,7 @@ private void cortatiff(BufferedImage buffimage) throws IOException, Exception {
 			
 } catch (Exception e) {
 				System.out.println(e);
+				
 			} finally {
 
 			}

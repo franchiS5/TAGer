@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
@@ -29,8 +30,14 @@ public class MainWCBProcess extends SwingWorker<Void, Void> {																		/
 	private JLabel labelTotalWCB;
 	private JLabel labelTotalIMG;
 	private boolean contados;
+	private String EXIFCopyrightWCB;
+	private String EXIFSoftwareWCB;
+	private String EXIFFabricanteWCB;
+	private String EXIFModeloWCB;
 	
-public MainWCBProcess(String ruta, String Destino, JProgressBar progreso, JTextArea etiqueta, boolean marco,  double valormarco, int totalimagewcb, JLabel labelTotalWCB, JLabel labelTotalIMG) {
+	
+public MainWCBProcess(String ruta, String Destino, JProgressBar progreso, JTextArea etiqueta, boolean marco,  double valormarco, int totalimagewcb, JLabel labelTotalWCB, JLabel labelTotalIMG,
+		String EXIFCopyrightWCB, String EXIFSoftwareWCB, String EXIFFabricanteWCB, String EXIFModeloWCB) {
 
 	RutaOrigen = ruta;
 	RutaDestino = Destino;
@@ -41,6 +48,10 @@ public MainWCBProcess(String ruta, String Destino, JProgressBar progreso, JTextA
 	this.valormarco=valormarco;
 	this.labelTotalWCB = labelTotalWCB;
 	this.labelTotalIMG = labelTotalIMG;
+	this.EXIFCopyrightWCB = EXIFCopyrightWCB;
+	this.EXIFSoftwareWCB = EXIFSoftwareWCB;
+	this.EXIFFabricanteWCB = EXIFFabricanteWCB;
+	this.EXIFModeloWCB = EXIFModeloWCB;
 	contados = false;
 		
 }
@@ -67,7 +78,13 @@ private void recorreYcorta(File f) throws IOException, Exception {
 								int imagenSalida = 1;
 								FileReader fr = new FileReader(fichero);
 								BufferedReader br = new BufferedReader(fr);
-								br.readLine();																				// Saltamos la primera linea, no nos aporta nada que no haya en las siguientes
+								RutaOrigen=br.readLine();																				// Saltamos la primera linea, no nos aporta nada que no haya en las siguientes
+								RutaOrigen = RutaOrigen.replace("\\", "/");
+								RutaDestino = RutaDestino.replace("\\", "/");
+								String DestinoCalculado = WCBPath.CreaRuta(RutaOrigen, RutaDestino);
+								
+								RutaDestino = DestinoCalculado + "/";
+								
 									while ((linea = br.readLine()) != null) {												// Leemos linea a linea hasta el final del fichero
 										String[] coordenadas = linea.split("\t");
 										String nombreimagenIN = coordenadas[0];
@@ -83,15 +100,13 @@ private void recorreYcorta(File f) throws IOException, Exception {
 										RutaDestino = RutaDestino.replace("\\", "/");
 										etiqueta.append("Procesando imagen: " +coordenadas[9] + nombreimagenIN + "\n");
 										
-										String DestinoCalculado = WCBPath.CreaRuta(RutaOrigen, RutaDestino);
-										RutaDestino = DestinoCalculado + "/";
 										
 										File fileimagen = new File(RutaOrigen + nombreimagenIN);
 										BufferedImage buffimage = ImageIO.read(fileimagen);
-										
 										if (Integer.parseInt(P2x2) == 0 && Integer.parseInt(P2y2) == 0) {					
 										TIFFCrop croptiffP1 = new TIFFCrop(fileimagen, buffimage, RutaOrigen, RutaDestino, P1x1, P1y1, P1x2, P1y2, imagenSalida, marco, valormarco );		//CORTA PAG1
 										croptiffP1.doInBackground();
+										
 										imagenSalida++;
 										contador++;
 										porcent=new Double(contador * 100 / totalimagewcb).intValue();

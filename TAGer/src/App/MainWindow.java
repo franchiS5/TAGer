@@ -64,6 +64,10 @@ public class MainWindow extends JFrame {
 	private JTextField JTextField10;
 	private JTextField JTextFieldInputWCB;
 	private JTextField JTextFieldOutputWCB;
+	private JTextField JTextFieldCopyrightWCB;
+	private JTextField JTextFieldSoftwareWCB;
+	private JTextField JTextFieldFabricanteWCB;
+	private JTextField JTextFieldModeloWCB;
 	
 	
 	/**
@@ -89,7 +93,7 @@ public class MainWindow extends JFrame {
 	 */
 	public MainWindow() {
 		
-		setTitle("TAGer v. 1.3 (Vinfra S.A. All rights reserved)");
+		setTitle("TAGer v. 1.4 (Vinfra S.A. All rights reserved)");
 		setResizable(false);
 		setMaximumSize(new Dimension(800, 600));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -454,6 +458,74 @@ public class MainWindow extends JFrame {
 		labelTotalIMG.setBounds(140, 572, 79, 16);
 		panel_1.add(labelTotalIMG);
 		
+		JTextFieldInputWCB = new JTextField();
+		JTextFieldInputWCB.setHorizontalAlignment(SwingConstants.LEFT);
+		JTextFieldInputWCB.setBounds(10, 31, 391, 20);
+		JTextFieldInputWCB.setForeground(Color.DARK_GRAY);
+		JTextFieldInputWCB.setFont(new Font("Tahoma", Font.BOLD, 11));
+		JTextFieldInputWCB.setDragEnabled(true);
+		JTextFieldInputWCB.setColumns(10);
+		panel_1.add(JTextFieldInputWCB);
+		
+		JLabel labelCopyrightWCB = new JLabel("Copyright:");
+		labelCopyrightWCB.setForeground(Color.DARK_GRAY);
+		labelCopyrightWCB.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelCopyrightWCB.setFont(new Font("Tahoma", Font.BOLD, 11));
+		labelCopyrightWCB.setBounds(697, 101, 79, 14);
+		panel_1.add(labelCopyrightWCB);
+		
+		JLabel labelSoftwareWCB = new JLabel("Software:");
+		labelSoftwareWCB.setForeground(Color.DARK_GRAY);
+		labelSoftwareWCB.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelSoftwareWCB.setFont(new Font("Tahoma", Font.BOLD, 11));
+		labelSoftwareWCB.setBounds(707, 135, 67, 14);
+		panel_1.add(labelSoftwareWCB);
+		
+		JLabel labelFabricanteWCB = new JLabel("Fabricante:");
+		labelFabricanteWCB.setForeground(Color.DARK_GRAY);
+		labelFabricanteWCB.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelFabricanteWCB.setFont(new Font("Tahoma", Font.BOLD, 11));
+		labelFabricanteWCB.setBounds(707, 170, 69, 14);
+		panel_1.add(labelFabricanteWCB);
+		
+		JLabel labelModeloWCB = new JLabel("Modelo:");
+		labelModeloWCB.setForeground(Color.DARK_GRAY);
+		labelModeloWCB.setFont(new Font("Tahoma", Font.BOLD, 11));
+		labelModeloWCB.setHorizontalAlignment(SwingConstants.RIGHT);
+		labelModeloWCB.setBounds(730, 203, 46, 14);
+		panel_1.add(labelModeloWCB);
+		
+		JTextFieldCopyrightWCB = new JTextField();
+		JTextFieldCopyrightWCB.setEnabled(false);
+		JTextFieldCopyrightWCB.setBounds(786, 98, 231, 20);
+		panel_1.add(JTextFieldCopyrightWCB);
+		JTextFieldCopyrightWCB.setColumns(10);
+		
+		JTextFieldSoftwareWCB = new JTextField();
+		JTextFieldSoftwareWCB.setEnabled(false);
+		JTextFieldSoftwareWCB.setBounds(786, 132, 231, 20);
+		panel_1.add(JTextFieldSoftwareWCB);
+		JTextFieldSoftwareWCB.setColumns(10);
+		
+		JTextFieldFabricanteWCB = new JTextField();
+		JTextFieldFabricanteWCB.setEnabled(false);
+		JTextFieldFabricanteWCB.setBounds(786, 167, 231, 20);
+		panel_1.add(JTextFieldFabricanteWCB);
+		JTextFieldFabricanteWCB.setColumns(10);
+		
+		JTextFieldModeloWCB = new JTextField();
+		JTextFieldModeloWCB.setEnabled(false);
+		JTextFieldModeloWCB.setBounds(786, 200, 231, 20);
+		panel_1.add(JTextFieldModeloWCB);
+		JTextFieldModeloWCB.setColumns(10);
+		
+		JLabel lblExif_1 = new JLabel("EXIF");
+		lblExif_1.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblExif_1.setFont(new Font("Tahoma", Font.BOLD, 11));
+		lblExif_1.setForeground(new Color(70,130,180));
+		lblExif_1.setBounds(968, 67, 46, 14);
+		panel_1.add(lblExif_1);
+		
 		final JButton JButton5 = new JButton("Ejecutar");
 		JButton5.setBounds(826, 563, 99, 25);
 		panel.add(JButton5);
@@ -527,12 +599,17 @@ public class MainWindow extends JFrame {
 						}
 					}
 					if (!new File (JTextFieldInputWCB.getText()).exists()){
-						JOptionPane.showMessageDialog(null,"La ruta no es correcta");
+						JOptionPane.showMessageDialog(null,"La ruta de origen no es correcta");
 						err = 1;
+					}
+					if (!new File (JTextFieldOutputWCB.getText()).exists()){
+						JOptionPane.showMessageDialog(null,"La ruta de destino no es correcta");
+						err =1;
 					}
 					if(err != 1){
 						MainWCBProcess corta = new MainWCBProcess(JTextFieldInputWCB.getText(), JTextFieldOutputWCB.getText(), progressBarWCB, JTextAreaWCB, 
-								ChkboxMarcoWCB.isSelected(), (Double) spinner.getValue(), WCBFilesCalculate.totalimagecount(JTextFieldInputWCB.getText()), labelTotalWCB, labelTotalIMG);
+								ChkboxMarcoWCB.isSelected(), (Double) spinner.getValue(), WCBFilesCalculate.totalimagecount(JTextFieldInputWCB.getText()), labelTotalWCB, labelTotalIMG, JTextFieldCopyrightWCB.getText(),
+								JTextFieldSoftwareWCB.getText(), JTextFieldFabricanteWCB.getText(), JTextFieldModeloWCB.getText());
 
 						corta.execute();
 					}
@@ -576,18 +653,6 @@ public class MainWindow extends JFrame {
 			}
 		});
 		
-		
-		
-		
-		JTextFieldInputWCB = new JTextField();
-		JTextFieldInputWCB.setText("D:\\PRUEBA\\wcb");
-		JTextFieldInputWCB.setHorizontalAlignment(SwingConstants.LEFT);
-		JTextFieldInputWCB.setBounds(10, 31, 391, 20);
-		JTextFieldInputWCB.setForeground(Color.DARK_GRAY);
-		JTextFieldInputWCB.setFont(new Font("Tahoma", Font.BOLD, 11));
-		JTextFieldInputWCB.setDragEnabled(true);
-		JTextFieldInputWCB.setColumns(10);
-		panel_1.add(JTextFieldInputWCB);
 		
 		
 		

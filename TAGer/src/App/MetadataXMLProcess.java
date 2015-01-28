@@ -34,13 +34,12 @@ static void metaexif (IIOMetadata imageMetadata){
     // AQUI DEBEMOS MODIFICAR LOS METADATOS DEL NODO QUE HEMOS EXTRAIDO DE LA IMAGEN
     
     NodeList miLista=tiffRootNode.getElementsByTagName("TIFFField");
+    
    for(int i=0;i<miLista.getLength();i++){	    	   
 	   if (miLista.item(i).getAttributes().getNamedItem("number").getNodeValue().equals("272")){
-		   //System.out.println("--------------------------------");
-		   //System.out.println("+" + miLista.item(i).getChildNodes().item(0).getChildNodes().item(0).getAttributes().item(0).getNodeValue());
+		   
 		   miLista.item(i).getChildNodes().item(0).getChildNodes().item(0).getAttributes().item(0).setNodeValue("Maquinita");
-		   //System.out.println("+" + miLista.item(i).getChildNodes().item(0).getChildNodes().item(0).getAttributes().item(0).getNodeValue());
-		   //System.out.println("--------------------------------");
+		   
 	   }else{
 		   System.out.println("+++" + miLista.item(i).getAttributes().getNamedItem("number").getNodeValue());
 	   }
@@ -71,6 +70,4 @@ static void metaexif (IIOMetadata imageMetadata){
 	
 	
 }
-
-
 }
