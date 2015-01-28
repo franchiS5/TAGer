@@ -66,10 +66,35 @@ public TIFFCrop(File f, BufferedImage buffimage, String RutaOrigen, String RutaD
 private void cortatiff(BufferedImage buffimage) throws IOException, Exception {
 	
 	int porcentmarco = 0;
-		
+	String newXsize = null;
+	String newYsize = null;
+	
+	if(Integer.parseInt(x) < 0) {
+		x= "0";
+	}
+	if(Integer.parseInt(y) < 0){
+		y= "0";
+	}
+	if(Integer.parseInt(xsize) > buffimage.getWidth()){
+		newXsize = Integer.toString(buffimage.getWidth());
+		xsize = newXsize;
+	}
+	if(Integer.parseInt(ysize) > buffimage.getHeight()){
+		newYsize = Integer.toString(buffimage.getHeight());
+		xsize = newYsize;
+	}
+	if(Integer.parseInt(x) + Integer.parseInt(xsize) > buffimage.getWidth() ){
+		newXsize = Integer.toString(buffimage.getWidth() - Integer.parseInt(x));
+		xsize = newXsize;
+	}
+	if(Integer.parseInt(y) + Integer.parseInt(ysize) > buffimage.getHeight()){
+		newYsize = Integer.toString(buffimage.getHeight() - Integer.parseInt(y));
+		ysize = newYsize;
+	}
+	
 	try {
 		
-		final BufferedImage croppedimage = buffimage.getSubimage(Integer.parseInt(x), Integer.parseInt(y),Integer.parseInt(xsize), Integer.parseInt(ysize));
+			final BufferedImage croppedimage = buffimage.getSubimage(Integer.parseInt(x), Integer.parseInt(y),Integer.parseInt(xsize), Integer.parseInt(ysize));
 			int width = croppedimage.getWidth();
 			int heigth = croppedimage.getHeight();
 			BufferedImage croppedandborderedimage = null;
