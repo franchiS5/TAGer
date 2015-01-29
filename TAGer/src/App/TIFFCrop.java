@@ -19,7 +19,6 @@ import javax.imageio.metadata.IIOMetadataNode;
 import javax.imageio.spi.ImageWriterSpi;
 import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.ImageOutputStream;
-import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
 import org.imgscalr.Scalr;
@@ -32,7 +31,7 @@ import com.sun.media.imageio.plugins.tiff.TIFFImageWriteParam;
 
 public class TIFFCrop extends SwingWorker<Void, Void> {
 
-	private String RutaOrigen;
+	
 	private String RutaDestino;
 	private String x;
 	private String y;
@@ -47,9 +46,10 @@ public class TIFFCrop extends SwingWorker<Void, Void> {
 	
 	
 
-public TIFFCrop(File f, BufferedImage buffimage, String RutaOrigen, String RutaDestino, String x,String y, String xsize, String ysize, int imagenSalida, boolean marco, double valormarco) {
+public TIFFCrop(File f, BufferedImage buffimage, String RutaDestino, String x,String y, String xsize, String ysize, int imagenSalida,
+		boolean marco, double valormarco) {
 
-	this.RutaOrigen = RutaOrigen;
+	
 	this.RutaDestino = RutaDestino;
 	this.x = x;
 	this.y = y;

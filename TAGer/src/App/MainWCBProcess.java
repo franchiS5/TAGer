@@ -8,7 +8,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
@@ -17,7 +16,6 @@ import javax.swing.SwingWorker;
 public class MainWCBProcess extends SwingWorker<Void, Void> {																		// Clase para lanzar el corte de los WCB
 
 	private String RutaOrigen;
-	@SuppressWarnings("unused")
 	private String RutaDestino;
 	private JTextArea etiqueta;
 	private JProgressBar progreso;
@@ -83,7 +81,7 @@ private void recorreYcorta(File f) throws IOException, Exception {
 								RutaDestino = RutaDestino.replace("\\", "/");
 								String DestinoCalculado = WCBPath.CreaRuta(RutaOrigen, RutaDestino);
 								
-								RutaDestino = DestinoCalculado + "/";
+								DestinoCalculado = DestinoCalculado + "/";
 								
 									while ((linea = br.readLine()) != null) {												// Leemos linea a linea hasta el final del fichero
 										String[] coordenadas = linea.split("\t");
@@ -96,15 +94,16 @@ private void recorreYcorta(File f) throws IOException, Exception {
 										String P2y1 = (coordenadas[6]);
 										String P2x2 = (coordenadas[7]);
 										String P2y2 = (coordenadas[8]);
-										RutaOrigen = (coordenadas[9]).replace("\\", "/");
-										RutaDestino = RutaDestino.replace("\\", "/");
-										etiqueta.append("Procesando imagen: " +coordenadas[9] + nombreimagenIN + "\n");
+										//RutaOrigen = (coordenadas[9]).replace("\\", "/");
+										//RutaDestino = RutaDestino.replace("\\", "/");
+										RutaOrigen = RutaOrigen + "/";
+										etiqueta.append("Procesando imagen: " +coordenadas[9]  + nombreimagenIN + "\n");
 										
 										
 										File fileimagen = new File(RutaOrigen + nombreimagenIN);
 										BufferedImage buffimage = ImageIO.read(fileimagen);
 										if (Integer.parseInt(P2x2) == 0 && Integer.parseInt(P2y2) == 0) {					
-										TIFFCrop croptiffP1 = new TIFFCrop(fileimagen, buffimage, RutaOrigen, RutaDestino, P1x1, P1y1, P1x2, P1y2, imagenSalida, marco, valormarco );		//CORTA PAG1
+										TIFFCrop croptiffP1 = new TIFFCrop(fileimagen, buffimage, DestinoCalculado, P1x1, P1y1, P1x2, P1y2, imagenSalida, marco, valormarco );		//CORTA PAG1
 										croptiffP1.doInBackground();
 										
 										imagenSalida++;
@@ -112,14 +111,14 @@ private void recorreYcorta(File f) throws IOException, Exception {
 										porcent=new Double(contador * 100 / totalimagewcb).intValue();
 										progreso.setValue(porcent);
 										}else{
-											TIFFCrop croptiffP1 = new TIFFCrop(fileimagen, buffimage, RutaOrigen, RutaDestino, P1x1, P1y1, P1x2, P1y2, imagenSalida, marco, valormarco );		//CORTA PAG 1
+											TIFFCrop croptiffP1 = new TIFFCrop(fileimagen, buffimage, DestinoCalculado, P1x1, P1y1, P1x2, P1y2, imagenSalida, marco, valormarco );		//CORTA PAG 1
 											croptiffP1.doInBackground();
 											imagenSalida++;
 											contador++;																																				//SOLO SUMAMOS UNA VEZ A CONTADOR
 											porcent=new Double(contador * 100 / totalimagewcb).intValue();
 											progreso.setValue(porcent);
 											
-											TIFFCrop croptiffP2 = new TIFFCrop(fileimagen, buffimage, RutaOrigen, RutaDestino, P2x1, P2y1, P2x2, P2y2, imagenSalida, marco, valormarco );		//CORTA PAG2
+											TIFFCrop croptiffP2 = new TIFFCrop(fileimagen, buffimage, DestinoCalculado, P2x1, P2y1, P2x2, P2y2, imagenSalida, marco, valormarco );		//CORTA PAG2
 											croptiffP2.doInBackground();
 											imagenSalida++;
 											porcent=new Double(contador * 100 / totalimagewcb).intValue();
