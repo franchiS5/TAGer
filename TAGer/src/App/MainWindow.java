@@ -496,25 +496,21 @@ public class MainWindow extends JFrame {
 		panel_1.add(labelModeloWCB);
 		
 		JTextFieldCopyrightWCB = new JTextField();
-		JTextFieldCopyrightWCB.setEnabled(false);
 		JTextFieldCopyrightWCB.setBounds(786, 98, 231, 20);
 		panel_1.add(JTextFieldCopyrightWCB);
 		JTextFieldCopyrightWCB.setColumns(10);
 		
 		JTextFieldSoftwareWCB = new JTextField();
-		JTextFieldSoftwareWCB.setEnabled(false);
 		JTextFieldSoftwareWCB.setBounds(786, 132, 231, 20);
 		panel_1.add(JTextFieldSoftwareWCB);
 		JTextFieldSoftwareWCB.setColumns(10);
 		
 		JTextFieldFabricanteWCB = new JTextField();
-		JTextFieldFabricanteWCB.setEnabled(false);
 		JTextFieldFabricanteWCB.setBounds(786, 167, 231, 20);
 		panel_1.add(JTextFieldFabricanteWCB);
 		JTextFieldFabricanteWCB.setColumns(10);
 		
 		JTextFieldModeloWCB = new JTextField();
-		JTextFieldModeloWCB.setEnabled(false);
 		JTextFieldModeloWCB.setBounds(786, 200, 231, 20);
 		panel_1.add(JTextFieldModeloWCB);
 		JTextFieldModeloWCB.setColumns(10);

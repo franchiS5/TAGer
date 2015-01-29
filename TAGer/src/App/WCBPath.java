@@ -20,7 +20,6 @@ static String CreaRuta (String RutaOrigen, String RutaDestino){
 	for (i=1; i<arrayDestino.length; i++){
 		if (arrayOrigen[i].toString().matches(arrayDestino[i].toString())){
 			
-			System.out.println("Son iguales");
 		}else{
 			break;
 			}
