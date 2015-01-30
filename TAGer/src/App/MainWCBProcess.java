@@ -39,6 +39,7 @@ public class MainWCBProcess extends SwingWorker<Void, Void> {																		/
 	private String EXIFModeloWCB;
 	
 	
+	
 public MainWCBProcess(String ruta, String Destino, JProgressBar progreso, JTextArea etiqueta, boolean marco,  double valormarco, int totalimagewcb, JLabel labelTotalWCB, JLabel labelTotalIMG,
 		String EXIFCopyrightWCB, String EXIFSoftwareWCB, String EXIFFabricanteWCB, String EXIFModeloWCB) {
 
@@ -56,23 +57,26 @@ public MainWCBProcess(String ruta, String Destino, JProgressBar progreso, JTextA
 	this.EXIFFabricanteWCB = EXIFFabricanteWCB;
 	this.EXIFModeloWCB = EXIFModeloWCB;
 	contados = false;
+	
 		
 }
 
 private void recorreYcorta(File f) throws IOException, Exception {
-
+		
 		File[] ficheros = f.listFiles();
 			int totficheroswcb = 0;
 			
 			for (File fichero : ficheros) { 																				// Recorremos el directorio mientras hayan ficheros
+				
 				for (int i=0; i<ficheros.length && contados == false;i++){													// Contamos los ficheros WCB del directorio
 					if (ficheros[i].getName().endsWith(".wcb")){
 						totficheroswcb ++;
+						labelTotalWCB.setText(Integer.toString(totficheroswcb));
+						labelTotalIMG.setText(Integer.toString(WCBFilesCalculate.totalimagecount(RutaOrigen)));
 					}
 				}
 				contados = true;
-				labelTotalWCB.setText(Integer.toString(totficheroswcb));
-				labelTotalIMG.setText(Integer.toString(WCBFilesCalculate.totalimagecount(RutaOrigen)));
+					
 				if (fichero.isFile()) {
 					String nombre = fichero.getName().toLowerCase();
 					if (nombre.endsWith(".wcb")) {																			// Controlamos que el fichero sea .WCB
@@ -117,14 +121,14 @@ private void recorreYcorta(File f) throws IOException, Exception {
 										tablaexif.put(33432, EXIFCopyrightWCB);
 										
 										
-										IIOMetadata newIIOMetadata = MetadataXMLProcess.MetadataChange(fileimagen, tablaexif);
+										//IIOMetadata newIIOMetadata = MetadataXMLProcess.MetadataChange(fileimagen, tablaexif);
 										
 										
 										
 										
 										//TIENE SOLAMENTE P1
 										if (Integer.parseInt(P2x2) == 0 && Integer.parseInt(P2y2) == 0) {					
-										TIFFCrop croptiffP1 = new TIFFCrop(fileimagen, buffimage, DestinoCalculado, P1x1, P1y1, P1x2, P1y2, imagenSalida, marco, valormarco, newIIOMetadata );		//CORTA PAG1
+										TIFFCrop croptiffP1 = new TIFFCrop(fileimagen, buffimage, DestinoCalculado, P1x1, P1y1, P1x2, P1y2, imagenSalida, marco, valormarco);		//CORTA PAG1
 										croptiffP1.doInBackground();
 										
 										imagenSalida++;
@@ -132,14 +136,14 @@ private void recorreYcorta(File f) throws IOException, Exception {
 										porcent=new Double(contador * 100 / totalimagewcb).intValue();
 										progreso.setValue(porcent);
 										}else{ // TIENE P1 Y P2
-											TIFFCrop croptiffP1 = new TIFFCrop(fileimagen, buffimage, DestinoCalculado, P1x1, P1y1, P1x2, P1y2, imagenSalida, marco, valormarco, newIIOMetadata );		//CORTA PAG 1
+											TIFFCrop croptiffP1 = new TIFFCrop(fileimagen, buffimage, DestinoCalculado, P1x1, P1y1, P1x2, P1y2, imagenSalida, marco, valormarco);		//CORTA PAG 1
 											croptiffP1.doInBackground();
 											imagenSalida++;
 											contador++;																																				//SOLO SUMAMOS UNA VEZ A CONTADOR
 											porcent=new Double(contador * 100 / totalimagewcb).intValue();
 											progreso.setValue(porcent);
 											
-											TIFFCrop croptiffP2 = new TIFFCrop(fileimagen, buffimage, DestinoCalculado, P2x1, P2y1, P2x2, P2y2, imagenSalida, marco, valormarco, newIIOMetadata);		//CORTA PAG2
+											TIFFCrop croptiffP2 = new TIFFCrop(fileimagen, buffimage, DestinoCalculado, P2x1, P2y1, P2x2, P2y2, imagenSalida, marco, valormarco);		//CORTA PAG2
 											croptiffP2.doInBackground();
 											imagenSalida++;
 											porcent=new Double(contador * 100 / totalimagewcb).intValue();

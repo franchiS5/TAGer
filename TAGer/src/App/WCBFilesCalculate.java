@@ -8,6 +8,7 @@ public class WCBFilesCalculate {												// Esta clase nos devolvera el total
 
 static int totalimagewcb;
 
+
 public static int totalimagecount(String ruta) {
 
 		totalimagewcb = 0;

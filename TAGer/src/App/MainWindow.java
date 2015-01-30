@@ -68,6 +68,7 @@ public class MainWindow extends JFrame {
 	private JTextField JTextFieldSoftwareWCB;
 	private JTextField JTextFieldFabricanteWCB;
 	private JTextField JTextFieldModeloWCB;
+	private File lastPath;
 	
 	
 	/**
@@ -93,7 +94,7 @@ public class MainWindow extends JFrame {
 	 */
 	public MainWindow() {
 		
-		setTitle("TAGer v. 1.4 (Vinfra S.A. All rights reserved)");
+		setTitle("TAGer v. 1.5 (Vinfra S.A. All rights reserved)");
 		setResizable(false);
 		setMaximumSize(new Dimension(800, 600));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -496,21 +497,25 @@ public class MainWindow extends JFrame {
 		panel_1.add(labelModeloWCB);
 		
 		JTextFieldCopyrightWCB = new JTextField();
+		JTextFieldCopyrightWCB.setEnabled(false);
 		JTextFieldCopyrightWCB.setBounds(786, 98, 231, 20);
 		panel_1.add(JTextFieldCopyrightWCB);
 		JTextFieldCopyrightWCB.setColumns(10);
 		
 		JTextFieldSoftwareWCB = new JTextField();
+		JTextFieldSoftwareWCB.setEnabled(false);
 		JTextFieldSoftwareWCB.setBounds(786, 132, 231, 20);
 		panel_1.add(JTextFieldSoftwareWCB);
 		JTextFieldSoftwareWCB.setColumns(10);
 		
 		JTextFieldFabricanteWCB = new JTextField();
+		JTextFieldFabricanteWCB.setEnabled(false);
 		JTextFieldFabricanteWCB.setBounds(786, 167, 231, 20);
 		panel_1.add(JTextFieldFabricanteWCB);
 		JTextFieldFabricanteWCB.setColumns(10);
 		
 		JTextFieldModeloWCB = new JTextField();
+		JTextFieldModeloWCB.setEnabled(false);
 		JTextFieldModeloWCB.setBounds(786, 200, 231, 20);
 		panel_1.add(JTextFieldModeloWCB);
 		JTextFieldModeloWCB.setColumns(10);
@@ -585,9 +590,19 @@ public class MainWindow extends JFrame {
 				
 				Double checkvalor = (Double) spinner.getValue();
 				int err = 0;
+				int noborderdesire = 1;
 				JTextAreaWCB.setText("");
 				
 				if(btnEjecutarWCB.isEnabled()){
+					if (!ChkboxMarcoWCB.isSelected()){
+						int confirmado = JOptionPane.showConfirmDialog(null, "No se ha seleccionado MARCO. ¿Desea continuar?");
+
+								if (JOptionPane.OK_OPTION == confirmado)
+								   noborderdesire = 1;
+								else
+								   noborderdesire = 0;
+					}
+								
 					if (ChkboxMarcoWCB.isSelected()){
 						if (checkvalor == 0){
 							JOptionPane.showMessageDialog(null,"Debe seleccionar un valor distinto de 0 para el marco");
@@ -602,7 +617,7 @@ public class MainWindow extends JFrame {
 						JOptionPane.showMessageDialog(null,"La ruta de destino no es correcta");
 						err =1;
 					}
-					if(err != 1){
+					if(err != 1 && noborderdesire == 1){
 						MainWCBProcess corta = new MainWCBProcess(JTextFieldInputWCB.getText(), JTextFieldOutputWCB.getText(), progressBarWCB, JTextAreaWCB, 
 								ChkboxMarcoWCB.isSelected(), (Double) spinner.getValue(), WCBFilesCalculate.totalimagecount(JTextFieldInputWCB.getText()), labelTotalWCB, labelTotalIMG, JTextFieldCopyrightWCB.getText(),
 								JTextFieldSoftwareWCB.getText(), JTextFieldFabricanteWCB.getText(), JTextFieldModeloWCB.getText());
@@ -621,12 +636,13 @@ public class MainWindow extends JFrame {
 			directorioWCB.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			
 			
+			
 			int statusWCB = directorioWCB.showOpenDialog(null);
 				
 			// PASAMOS EL VALOR DEL DIRECTORIO SELECIONADO A jTextFieldInputWCB
 				if (statusWCB == JFileChooser.APPROVE_OPTION){
 				JTextFieldInputWCB.setText(directorioWCB.getSelectedFile().toString());
-				
+				lastPath = directorioWCB.getSelectedFile().getParentFile();
 				} 
 			}
 		});
@@ -635,7 +651,7 @@ public class MainWindow extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				
-			JFileChooser directoriodestinoWCB = new JFileChooser();
+			JFileChooser directoriodestinoWCB = new JFileChooser(lastPath);
 			directoriodestinoWCB.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			
 			
@@ -644,7 +660,6 @@ public class MainWindow extends JFrame {
 			// PASAMOS EL VALOR DEL DIRECTORIO SELECIONADO A jTextFieldInputWCB
 				if (statusWCB == JFileChooser.APPROVE_OPTION){
 					JTextFieldOutputWCB.setText(directoriodestinoWCB.getSelectedFile().toString());
-				
 				} 
 			}
 		});

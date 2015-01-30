@@ -42,13 +42,13 @@ public class TIFFCrop extends SwingWorker<Void, Void> {
 	private double valormarco;
 	private BufferedImage buffimage;
 	private File f;
-	private IIOMetadata imageMetadata;
+	//private IIOMetadata imageMetadata;
 	
 	
 	
 
 public TIFFCrop(File f, BufferedImage buffimage, String RutaDestino, String x,String y, String xsize, String ysize, int imagenSalida,
-		boolean marco, double valormarco, IIOMetadata imageMetadata) {
+		boolean marco, double valormarco) {
 
 	
 	this.RutaDestino = RutaDestino;
@@ -61,7 +61,7 @@ public TIFFCrop(File f, BufferedImage buffimage, String RutaDestino, String x,St
 	this.valormarco = valormarco;
 	this.buffimage = buffimage;
 	this.f = f;
-	this.imageMetadata = imageMetadata;
+	//this.imageMetadata = imageMetadata;
 	
 }
 
@@ -116,21 +116,22 @@ private void cortatiff(BufferedImage buffimage) throws IOException, Exception {
 			//IIORegistry registry = IIORegistry.getDefaultInstance();
 			 
 	        
-	        //Iterator<ImageReader> readers = ImageIO.getImageReadersByFormatName("tif");
-	        //ImageReader reader = null;
+	        Iterator<ImageReader> readers = ImageIO.getImageReadersByFormatName("tif");
+	        ImageReader reader = null;
 	        
-	        //while (readers.hasNext())
-	        //{
-	        //    reader = readers.next();
-	        //}
+	        while (readers.hasNext())
+	        {
+	            reader = readers.next();
+	        }
 	 
-	        //ImageInputStream stream = null;
-	        //stream = ImageIO.createImageInputStream(f);
-	        //reader.setInput(stream);
+	        ImageInputStream stream = null;
+	        stream = ImageIO.createImageInputStream(f);
+	        reader.setInput(stream);
 			
-	        //IIOMetadata imageMetadata = reader.getImageMetadata(0);
+	        IIOMetadata imageMetadata = reader.getImageMetadata(0);
 	        String formatonombres = imageMetadata.getNativeMetadataFormatName();
 	        IIOMetadataNode tiffRootNode = (IIOMetadataNode) imageMetadata.getAsTree(formatonombres);
+	        
 	        
 	        /* AQUI DEBEMOS MODIFICAR LOS METADATOS DEL NODO QUE HEMOS EXTRAIDO DE LA IMAGEN
 	         * 
@@ -184,14 +185,20 @@ private void cortatiff(BufferedImage buffimage) throws IOException, Exception {
 			imageMetadata.setFromTree(formatonombres, tiffRootNode);
 			
 			if (marco == true){
-				tiffwriter.write(null, new IIOImage(croppedandborderedimage, null, imageMetadata), tifparam);	
+				tiffwriter.write(null, new IIOImage(croppedandborderedimage, null, imageMetadata), tifparam);
+				croppedandborderedimage.flush();
 			}else{
 				tiffwriter.write(null, new IIOImage(croppedimage, null, imageMetadata), tifparam);
-			}
+				croppedimage.flush();
+				}
 			
 			ios.flush();
 			tiffwriter.dispose();
+			reader.dispose();
 			ios.close();
+			fos.close();
+			
+			
 			
 			
 } catch (Exception e) {
