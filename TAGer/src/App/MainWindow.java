@@ -94,7 +94,7 @@ public class MainWindow extends JFrame {
 	 */
 	public MainWindow() {
 		
-		setTitle("TAGer v. 1.6 (Vinfra S.A. All rights reserved)");
+		setTitle("TAGer v. 1.6.1 (Vinfra S.A. All rights reserved)");
 		setResizable(false);
 		setMaximumSize(new Dimension(800, 600));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
