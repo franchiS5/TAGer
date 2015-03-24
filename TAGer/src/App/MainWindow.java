@@ -94,7 +94,7 @@ public class MainWindow extends JFrame {
 	 */
 	public MainWindow() {
 		
-		setTitle("TAGer v. 1.5 (Vinfra S.A. All rights reserved)");
+		setTitle("TAGer v. 1.6 (Vinfra S.A. All rights reserved)");
 		setResizable(false);
 		setMaximumSize(new Dimension(800, 600));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -472,51 +472,51 @@ public class MainWindow extends JFrame {
 		labelCopyrightWCB.setForeground(Color.DARK_GRAY);
 		labelCopyrightWCB.setHorizontalAlignment(SwingConstants.RIGHT);
 		labelCopyrightWCB.setFont(new Font("Tahoma", Font.BOLD, 11));
-		labelCopyrightWCB.setBounds(697, 101, 79, 14);
+		labelCopyrightWCB.setBounds(697, 133, 79, 14);
 		panel_1.add(labelCopyrightWCB);
 		
 		JLabel labelSoftwareWCB = new JLabel("Software:");
 		labelSoftwareWCB.setForeground(Color.DARK_GRAY);
 		labelSoftwareWCB.setHorizontalAlignment(SwingConstants.RIGHT);
 		labelSoftwareWCB.setFont(new Font("Tahoma", Font.BOLD, 11));
-		labelSoftwareWCB.setBounds(707, 135, 67, 14);
+		labelSoftwareWCB.setBounds(707, 167, 67, 14);
 		panel_1.add(labelSoftwareWCB);
 		
 		JLabel labelFabricanteWCB = new JLabel("Fabricante:");
 		labelFabricanteWCB.setForeground(Color.DARK_GRAY);
 		labelFabricanteWCB.setHorizontalAlignment(SwingConstants.RIGHT);
 		labelFabricanteWCB.setFont(new Font("Tahoma", Font.BOLD, 11));
-		labelFabricanteWCB.setBounds(707, 170, 69, 14);
+		labelFabricanteWCB.setBounds(707, 202, 69, 14);
 		panel_1.add(labelFabricanteWCB);
 		
 		JLabel labelModeloWCB = new JLabel("Modelo:");
 		labelModeloWCB.setForeground(Color.DARK_GRAY);
 		labelModeloWCB.setFont(new Font("Tahoma", Font.BOLD, 11));
 		labelModeloWCB.setHorizontalAlignment(SwingConstants.RIGHT);
-		labelModeloWCB.setBounds(730, 203, 46, 14);
+		labelModeloWCB.setBounds(730, 235, 46, 14);
 		panel_1.add(labelModeloWCB);
 		
 		JTextFieldCopyrightWCB = new JTextField();
 		JTextFieldCopyrightWCB.setEnabled(false);
-		JTextFieldCopyrightWCB.setBounds(786, 98, 231, 20);
+		JTextFieldCopyrightWCB.setBounds(786, 130, 231, 20);
 		panel_1.add(JTextFieldCopyrightWCB);
 		JTextFieldCopyrightWCB.setColumns(10);
 		
 		JTextFieldSoftwareWCB = new JTextField();
 		JTextFieldSoftwareWCB.setEnabled(false);
-		JTextFieldSoftwareWCB.setBounds(786, 132, 231, 20);
+		JTextFieldSoftwareWCB.setBounds(786, 164, 231, 20);
 		panel_1.add(JTextFieldSoftwareWCB);
 		JTextFieldSoftwareWCB.setColumns(10);
 		
 		JTextFieldFabricanteWCB = new JTextField();
 		JTextFieldFabricanteWCB.setEnabled(false);
-		JTextFieldFabricanteWCB.setBounds(786, 167, 231, 20);
+		JTextFieldFabricanteWCB.setBounds(786, 199, 231, 20);
 		panel_1.add(JTextFieldFabricanteWCB);
 		JTextFieldFabricanteWCB.setColumns(10);
 		
 		JTextFieldModeloWCB = new JTextField();
 		JTextFieldModeloWCB.setEnabled(false);
-		JTextFieldModeloWCB.setBounds(786, 200, 231, 20);
+		JTextFieldModeloWCB.setBounds(786, 232, 231, 20);
 		panel_1.add(JTextFieldModeloWCB);
 		JTextFieldModeloWCB.setColumns(10);
 		
@@ -524,7 +524,7 @@ public class MainWindow extends JFrame {
 		lblExif_1.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblExif_1.setFont(new Font("Tahoma", Font.BOLD, 11));
 		lblExif_1.setForeground(new Color(70,130,180));
-		lblExif_1.setBounds(968, 67, 46, 14);
+		lblExif_1.setBounds(968, 105, 46, 14);
 		panel_1.add(lblExif_1);
 		
 		final JButton JButton5 = new JButton("Ejecutar");
@@ -580,9 +580,18 @@ public class MainWindow extends JFrame {
 			});
 		
 		final JButton btnEjecutarWCB = new JButton("Ejecutar");
+		btnEjecutarWCB.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
 		btnEjecutarWCB.setEnabled(false);
 		btnEjecutarWCB.setBounds(826, 563, 99, 25);
 		panel_1.add(btnEjecutarWCB);
+		
+		JCheckBox chckbxMantenerNombreImgenes = new JCheckBox("Mantener nombre im\u00E1genes");
+		chckbxMantenerNombreImgenes.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		chckbxMantenerNombreImgenes.setBounds(798, 62, 219, 19);
+		panel_1.add(chckbxMantenerNombreImgenes);
 		
 		btnEjecutarWCB.addMouseListener(new MouseAdapter() {
 			@Override

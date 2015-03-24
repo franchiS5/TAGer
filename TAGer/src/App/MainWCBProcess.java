@@ -94,6 +94,12 @@ private void recorreYcorta(File f) throws IOException, Exception {
 								
 									while ((linea = br.readLine()) != null) {												// Leemos linea a linea hasta el final del fichero
 										String[] coordenadas = linea.split("\t");
+										
+										for(int cl = 0; cl < coordenadas.length; cl++){
+										 if (coordenadas[cl].isEmpty()){
+											 coordenadas[cl] = "0";
+										 }
+										}
 										String nombreimagenIN = coordenadas[0];
 										String P1x1 = (coordenadas[1]);
 										String P1y1 = (coordenadas[2]);
@@ -103,6 +109,8 @@ private void recorreYcorta(File f) throws IOException, Exception {
 										String P2y1 = (coordenadas[6]);
 										String P2x2 = (coordenadas[7]);
 										String P2y2 = (coordenadas[8]);
+										
+																				
 										//RutaOrigen = (coordenadas[9]).replace("\\", "/");
 										//RutaDestino = RutaDestino.replace("\\", "/");
 										RutaOrigen = RutaOrigen + "/";

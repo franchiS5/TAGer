@@ -74,16 +74,17 @@ private void cortatiff(BufferedImage buffimage) throws IOException, Exception {
 	if(Integer.parseInt(x) < 0) {
 		x= "0";
 	}
-	if(Integer.parseInt(y) < 0){
+	if(Integer.parseInt(y) < 0) {
 		y= "0";
 	}
+	
 	if(Integer.parseInt(xsize) > buffimage.getWidth()){
 		newXsize = Integer.toString(buffimage.getWidth());
 		xsize = newXsize;
 	}
 	if(Integer.parseInt(ysize) > buffimage.getHeight()){
 		newYsize = Integer.toString(buffimage.getHeight());
-		xsize = newYsize;
+		ysize = newYsize;
 	}
 	if(Integer.parseInt(x) + Integer.parseInt(xsize) > buffimage.getWidth() ){
 		newXsize = Integer.toString(buffimage.getWidth() - Integer.parseInt(x));
