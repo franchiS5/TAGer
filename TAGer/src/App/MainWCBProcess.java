@@ -41,7 +41,7 @@ public class MainWCBProcess extends SwingWorker<Void, Void> {																		/
 	
 	
 public MainWCBProcess(String ruta, String Destino, JProgressBar progreso, JTextArea etiqueta, boolean marco,  double valormarco, int totalimagewcb, JLabel labelTotalWCB, JLabel labelTotalIMG,
-		String EXIFCopyrightWCB, String EXIFSoftwareWCB, String EXIFFabricanteWCB, String EXIFModeloWCB) {
+		String EXIFCopyrightWCB, String EXIFSoftwareWCB, String EXIFFabricanteWCB, String EXIFModeloWCB, boolean Mantenernombre) {
 
 	RutaOrigen = ruta;
 	RutaDestino = Destino;
@@ -123,10 +123,19 @@ private void recorreYcorta(File f) throws IOException, Exception {
 										
 										//AQUI CREAMOS EL HASHMAP CON LOS VALORES DE LOS EXIF A MODIFICAR
 										LinkedHashMap<Integer, String> tablaexif = new LinkedHashMap<Integer, String>();
-										tablaexif.put(271, EXIFFabricanteWCB);
-										tablaexif.put(272, EXIFModeloWCB);
-										tablaexif.put(305, EXIFSoftwareWCB);
-										tablaexif.put(33432, EXIFCopyrightWCB);
+										if (EXIFFabricanteWCB.length() != 0){
+											tablaexif.put(271, EXIFFabricanteWCB);	
+										}
+										if (EXIFModeloWCB.length() != 0){
+											tablaexif.put(272, EXIFModeloWCB);
+										}
+										if (EXIFSoftwareWCB.length() != 0){
+											tablaexif.put(305, EXIFSoftwareWCB);
+										}
+										if (EXIFCopyrightWCB.length() != 0){
+											tablaexif.put(33432, EXIFCopyrightWCB);
+										}
+										
 										
 										
 										//IIOMetadata newIIOMetadata = MetadataXMLProcess.MetadataChange(fileimagen, tablaexif);
@@ -136,7 +145,7 @@ private void recorreYcorta(File f) throws IOException, Exception {
 										
 										//TIENE SOLAMENTE P1
 										if (Integer.parseInt(P2x2) == 0 && Integer.parseInt(P2y2) == 0) {					
-										TIFFCrop croptiffP1 = new TIFFCrop(fileimagen, buffimage, DestinoCalculado, P1x1, P1y1, P1x2, P1y2, imagenSalida, marco, valormarco);		//CORTA PAG1
+										TIFFCrop croptiffP1 = new TIFFCrop(fileimagen, buffimage, DestinoCalculado, P1x1, P1y1, P1x2, P1y2, imagenSalida, marco, valormarco,tablaexif);		//CORTA PAG1
 										croptiffP1.doInBackground();
 										
 										imagenSalida++;
@@ -144,14 +153,14 @@ private void recorreYcorta(File f) throws IOException, Exception {
 										porcent=new Double(contador * 100 / totalimagewcb).intValue();
 										progreso.setValue(porcent);
 										}else{ // TIENE P1 Y P2
-											TIFFCrop croptiffP1 = new TIFFCrop(fileimagen, buffimage, DestinoCalculado, P1x1, P1y1, P1x2, P1y2, imagenSalida, marco, valormarco);		//CORTA PAG 1
+											TIFFCrop croptiffP1 = new TIFFCrop(fileimagen, buffimage, DestinoCalculado, P1x1, P1y1, P1x2, P1y2, imagenSalida, marco, valormarco, tablaexif);		//CORTA PAG 1
 											croptiffP1.doInBackground();
 											imagenSalida++;
 											contador++;																																				//SOLO SUMAMOS UNA VEZ A CONTADOR
 											porcent=new Double(contador * 100 / totalimagewcb).intValue();
 											progreso.setValue(porcent);
 											
-											TIFFCrop croptiffP2 = new TIFFCrop(fileimagen, buffimage, DestinoCalculado, P2x1, P2y1, P2x2, P2y2, imagenSalida, marco, valormarco);		//CORTA PAG2
+											TIFFCrop croptiffP2 = new TIFFCrop(fileimagen, buffimage, DestinoCalculado, P2x1, P2y1, P2x2, P2y2, imagenSalida, marco, valormarco, tablaexif);		//CORTA PAG2
 											croptiffP2.doInBackground();
 											imagenSalida++;
 											porcent=new Double(contador * 100 / totalimagewcb).intValue();

@@ -94,7 +94,7 @@ public class MainWindow extends JFrame {
 	 */
 	public MainWindow() {
 		
-		setTitle("TAGer v. 1.6.1 (Vinfra S.A. All rights reserved)");
+		setTitle("TAGer v. 1.7 (Vinfra S.A. All rights reserved)");
 		setResizable(false);
 		setMaximumSize(new Dimension(800, 600));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -497,7 +497,6 @@ public class MainWindow extends JFrame {
 		panel_1.add(labelModeloWCB);
 		
 		JTextFieldCopyrightWCB = new JTextField();
-		JTextFieldCopyrightWCB.setEnabled(false);
 		JTextFieldCopyrightWCB.setBounds(786, 130, 231, 20);
 		panel_1.add(JTextFieldCopyrightWCB);
 		JTextFieldCopyrightWCB.setColumns(10);
@@ -588,7 +587,8 @@ public class MainWindow extends JFrame {
 		btnEjecutarWCB.setBounds(826, 563, 99, 25);
 		panel_1.add(btnEjecutarWCB);
 		
-		JCheckBox chckbxMantenerNombreImgenes = new JCheckBox("Mantener nombre im\u00E1genes");
+		JCheckBox chckbxMantenerNombreImgenes = new JCheckBox("Mantener nombre de imagen");
+		chckbxMantenerNombreImgenes.setEnabled(false);
 		chckbxMantenerNombreImgenes.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		chckbxMantenerNombreImgenes.setBounds(798, 62, 219, 19);
 		panel_1.add(chckbxMantenerNombreImgenes);
@@ -629,7 +629,7 @@ public class MainWindow extends JFrame {
 					if(err != 1 && noborderdesire == 1){
 						MainWCBProcess corta = new MainWCBProcess(JTextFieldInputWCB.getText(), JTextFieldOutputWCB.getText(), progressBarWCB, JTextAreaWCB, 
 								ChkboxMarcoWCB.isSelected(), (Double) spinner.getValue(), WCBFilesCalculate.totalimagecount(JTextFieldInputWCB.getText()), labelTotalWCB, labelTotalIMG, JTextFieldCopyrightWCB.getText(),
-								JTextFieldSoftwareWCB.getText(), JTextFieldFabricanteWCB.getText(), JTextFieldModeloWCB.getText());
+								JTextFieldSoftwareWCB.getText(), JTextFieldFabricanteWCB.getText(), JTextFieldModeloWCB.getText(), chckbxMantenerNombreImgenes.isSelected());
 
 						corta.execute();
 					}

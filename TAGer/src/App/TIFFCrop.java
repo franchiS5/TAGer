@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteOrder;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 
 import javax.imageio.IIOImage;
@@ -20,12 +21,19 @@ import javax.imageio.spi.ImageWriterSpi;
 import javax.imageio.stream.ImageInputStream;
 import javax.imageio.stream.ImageOutputStream;
 import javax.swing.SwingWorker;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.imgscalr.Scalr;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
+import com.sun.media.imageio.plugins.tiff.TIFFImageWriteParam;
 import com.sun.media.imageioimpl.plugins.tiff.TIFFImageWriter;
 import com.sun.media.imageioimpl.plugins.tiff.TIFFImageWriterSpi;
-import com.sun.media.imageio.plugins.tiff.TIFFImageWriteParam;
 
 
 
@@ -43,12 +51,12 @@ public class TIFFCrop extends SwingWorker<Void, Void> {
 	private BufferedImage buffimage;
 	private File f;
 	//private IIOMetadata imageMetadata;
-	
+	private LinkedHashMap <Integer,String> tablaexif;
 	
 	
 
 public TIFFCrop(File f, BufferedImage buffimage, String RutaDestino, String x,String y, String xsize, String ysize, int imagenSalida,
-		boolean marco, double valormarco) {
+		boolean marco, double valormarco, LinkedHashMap <Integer,String> tablaexif) {
 
 	
 	this.RutaDestino = RutaDestino;
@@ -61,6 +69,7 @@ public TIFFCrop(File f, BufferedImage buffimage, String RutaDestino, String x,St
 	this.valormarco = valormarco;
 	this.buffimage = buffimage;
 	this.f = f;
+	this.tablaexif=tablaexif;
 	//this.imageMetadata = imageMetadata;
 	
 }
@@ -134,25 +143,67 @@ private void cortatiff(BufferedImage buffimage) throws IOException, Exception {
 	        IIOMetadataNode tiffRootNode = (IIOMetadataNode) imageMetadata.getAsTree(formatonombres);
 	        
 	        
-	        /* AQUI DEBEMOS MODIFICAR LOS METADATOS DEL NODO QUE HEMOS EXTRAIDO DE LA IMAGEN
-	         * 
-	         * NodeList miLista=tiffRootNode.getElementsByTagName("TIFFField");
-	         * for(int i=0;i<miLista.getLength();i++){	
-	         * if (miLista.item(i).getAttributes().getNamedItem("number").getNodeValue().equals("272")){
-	         * System.out.println("+" + miLista.item(i).getChildNodes().item(0).getChildNodes().item(0).getAttributes().item(0).getNodeValue());
-	         * miLista.item(i).getChildNodes().item(0).getChildNodes().item(0).getAttributes().item(0).setNodeValue("Maquinita");
-	         * System.out.println("+" + miLista.item(i).getChildNodes().item(0).getChildNodes().item(0).getAttributes().item(0).getNodeValue());
-	         * }else{
-	         * System.out.println("+++" + miLista.item(i).getAttributes().getNamedItem("number").getNodeValue());
-	         * }
-	         * }
-	         *
-	         *Transformer transformer = TransformerFactory.newInstance().newTransformer();
-	         *transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-	         *DOMSource source = new DOMSource(tiffRootNode);
-	         *StreamResult console = new StreamResult(new File(RutaOrigen + imagenSalida + ".xml"));
-	         *transformer.transform(source, console);
-	         */
+	        // AQUI DEBEMOS MODIFICAR LOS METADATOS DEL NODO QUE HEMOS EXTRAIDO DE LA IMAGEN
+	          
+	          NodeList miLista=tiffRootNode.getElementsByTagName("TIFFField");
+	          
+	          if (tablaexif.containsKey(33432))
+	          {
+	        	  
+	          int ind=0;
+	          boolean encontrado=false;
+	          while(ind<miLista.getLength() && !encontrado)
+	          {
+	        	  if (miLista.item(ind).getAttributes().getNamedItem("number").getNodeValue().equals("33432")){
+	        		  encontrado=true;
+	        		  break;
+	        	  }
+	        	  else
+	        	  {
+	        		  if (Integer.parseInt(miLista.item(ind).getAttributes().getNamedItem("number").getNodeValue())>33432){
+	        			  System.out.println(Integer.parseInt(miLista.item(ind).getAttributes().getNamedItem("number").getNodeValue()));
+	        			  break;
+	        		  }
+	        	  }
+	        	  ind++;
+	          }
+	          
+	          if (encontrado)
+	          {
+	        	  miLista.item(ind).getChildNodes().item(0).getChildNodes().item(0).getAttributes().item(0).setNodeValue(tablaexif.get(33432));
+	          }
+	          else if(ind >= miLista.getLength())
+	          {
+	        	  IIOMetadataNode newChild = getNodoCopy(tablaexif.get(33432));
+	        	  tiffRootNode.item(0).appendChild(newChild);
+	          }
+	          else
+	          {
+	        	  IIOMetadataNode newChild = getNodoCopy(tablaexif.get(33432));
+	              Node refChild =miLista.item(ind);
+	              
+	              
+	        	  tiffRootNode.insertBefore(newChild, refChild);
+	          }
+	          }
+	          
+	          /*
+	          for(int i=0;i<miLista.getLength();i++){	
+	          if (miLista.item(i).getAttributes().getNamedItem("number").getNodeValue().equals("33432")){
+	          System.out.println("+" + miLista.item(i).getChildNodes().item(0).getChildNodes().item(0).getAttributes().item(0).getNodeValue());
+	          miLista.item(i).getChildNodes().item(0).getChildNodes().item(0).getAttributes().item(0).setNodeValue("Maquinita");
+	          System.out.println("+" + miLista.item(i).getChildNodes().item(0).getChildNodes().item(0).getAttributes().item(0).getNodeValue());
+	          }else{
+	          System.out.println("+++" + miLista.item(i).getAttributes().getNamedItem("number").getNodeValue());
+	          }
+	          }
+	         
+	         Transformer transformer = TransformerFactory.newInstance().newTransformer();
+	         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+	         DOMSource source = new DOMSource(tiffRootNode);
+	         StreamResult console = new StreamResult(new File(imagenSalida + ".xml"));
+	         transformer.transform(source, console);*/
+	         
 	        
 	           	   
 	    	 
@@ -208,6 +259,20 @@ private void cortatiff(BufferedImage buffimage) throws IOException, Exception {
 			} finally {
 
 			}
+}
+
+public IIOMetadataNode getNodoCopy(String copyright)
+{
+	IIOMetadataNode NodoCopyright = new IIOMetadataNode("TIFFField");
+	NodoCopyright.setAttribute("name", "Copyright");
+	NodoCopyright.setAttribute("number", "33432");
+	IIOMetadataNode nodoAsciis = new IIOMetadataNode("TIFFAsciis");
+	IIOMetadataNode nodoAscii = new IIOMetadataNode("TIFFAscii");
+	nodoAscii.setAttribute("value", copyright);
+	nodoAsciis.appendChild(nodoAscii);
+	NodoCopyright.appendChild(nodoAsciis);
+	
+	return NodoCopyright;
 }
 
 protected Void doInBackground() throws Exception {
