@@ -37,6 +37,7 @@ public class MainWCBProcess extends SwingWorker<Void, Void> {																		/
 	private String EXIFSoftwareWCB;
 	private String EXIFFabricanteWCB;
 	private String EXIFModeloWCB;
+	private boolean Mantenernombre;
 	
 	
 	
@@ -56,6 +57,7 @@ public MainWCBProcess(String ruta, String Destino, JProgressBar progreso, JTextA
 	this.EXIFSoftwareWCB = EXIFSoftwareWCB;
 	this.EXIFFabricanteWCB = EXIFFabricanteWCB;
 	this.EXIFModeloWCB = EXIFModeloWCB;
+	this.Mantenernombre = Mantenernombre;
 	contados = false;
 	
 		
@@ -141,32 +143,59 @@ private void recorreYcorta(File f) throws IOException, Exception {
 										//IIOMetadata newIIOMetadata = MetadataXMLProcess.MetadataChange(fileimagen, tablaexif);
 										
 										
+										if(Mantenernombre != true){
 										
+										//TIENE SOLAMENTE P1 Y NO MANTENEMOS NOMBRE DE IMAGEN
 										
-										//TIENE SOLAMENTE P1
 										if (Integer.parseInt(P2x2) == 0 && Integer.parseInt(P2y2) == 0) {					
-										TIFFCrop croptiffP1 = new TIFFCrop(fileimagen, buffimage, DestinoCalculado, P1x1, P1y1, P1x2, P1y2, imagenSalida, marco, valormarco,tablaexif);		//CORTA PAG1
+										TIFFCrop croptiffP1 = new TIFFCrop(fileimagen, buffimage, DestinoCalculado, P1x1, P1y1, P1x2, P1y2, Integer.toString(imagenSalida), marco, valormarco,tablaexif, Mantenernombre);		//CORTA PAG1
 										croptiffP1.doInBackground();
 										
 										imagenSalida++;
 										contador++;
 										porcent=new Double(contador * 100 / totalimagewcb).intValue();
 										progreso.setValue(porcent);
-										}else{ // TIENE P1 Y P2
-											TIFFCrop croptiffP1 = new TIFFCrop(fileimagen, buffimage, DestinoCalculado, P1x1, P1y1, P1x2, P1y2, imagenSalida, marco, valormarco, tablaexif);		//CORTA PAG 1
+										}else{ // TIENE P1 Y P2 Y NO MANTENEMOS NOMBRE DE IMAGEN
+											TIFFCrop croptiffP1 = new TIFFCrop(fileimagen, buffimage, DestinoCalculado, P1x1, P1y1, P1x2, P1y2, Integer.toString(imagenSalida), marco, valormarco, tablaexif, Mantenernombre);		//CORTA PAG 1
 											croptiffP1.doInBackground();
 											imagenSalida++;
 											contador++;																																				//SOLO SUMAMOS UNA VEZ A CONTADOR
 											porcent=new Double(contador * 100 / totalimagewcb).intValue();
 											progreso.setValue(porcent);
 											
-											TIFFCrop croptiffP2 = new TIFFCrop(fileimagen, buffimage, DestinoCalculado, P2x1, P2y1, P2x2, P2y2, imagenSalida, marco, valormarco, tablaexif);		//CORTA PAG2
+											TIFFCrop croptiffP2 = new TIFFCrop(fileimagen, buffimage, DestinoCalculado, P2x1, P2y1, P2x2, P2y2, Integer.toString(imagenSalida), marco, valormarco, tablaexif, Mantenernombre);		//CORTA PAG2
 											croptiffP2.doInBackground();
 											imagenSalida++;
 											porcent=new Double(contador * 100 / totalimagewcb).intValue();
 											progreso.setValue(porcent);
 											
 										}
+									}else{
+										if (Integer.parseInt(P2x2) == 0 && Integer.parseInt(P2y2) == 0) {					
+											TIFFCrop croptiffP1 = new TIFFCrop(fileimagen, buffimage, DestinoCalculado, P1x1, P1y1, P1x2, P1y2, nombreimagenIN, marco, valormarco,tablaexif, Mantenernombre);		//CORTA PAG1
+											croptiffP1.doInBackground();
+											
+											
+											contador++;
+											porcent=new Double(contador * 100 / totalimagewcb).intValue();
+											progreso.setValue(porcent);
+											
+										}else{ // TIENE P1 Y P2 Y NO MANTENEMOS NOMBRE DE IMAGEN
+												TIFFCrop croptiffP1 = new TIFFCrop(fileimagen, buffimage, DestinoCalculado, P1x1, P1y1, P1x2, P1y2, nombreimagenIN, marco, valormarco, tablaexif, Mantenernombre);		//CORTA PAG 1
+												croptiffP1.doInBackground();
+												
+												contador++;																																				//SOLO SUMAMOS UNA VEZ A CONTADOR
+												porcent=new Double(contador * 100 / totalimagewcb).intValue();
+												progreso.setValue(porcent);
+												
+												TIFFCrop croptiffP2 = new TIFFCrop(fileimagen, buffimage, DestinoCalculado, P2x1, P2y1, P2x2, P2y2, nombreimagenIN, marco, valormarco, tablaexif, Mantenernombre);		//CORTA PAG2
+												croptiffP2.doInBackground();
+												
+												porcent=new Double(contador * 100 / totalimagewcb).intValue();
+												progreso.setValue(porcent);
+												
+											}
+									}
 								}
 									br.close();
 									fr.close();

@@ -45,18 +45,19 @@ public class TIFFCrop extends SwingWorker<Void, Void> {
 	private String y;
 	private String xsize;
 	private String ysize;
-	private int imagenSalida;
+	private String imagenSalida;
 	private boolean marco;
 	private double valormarco;
 	private BufferedImage buffimage;
 	private File f;
 	//private IIOMetadata imageMetadata;
 	private LinkedHashMap <Integer,String> tablaexif;
+	private boolean Mantenernombre;
 	
 	
 
-public TIFFCrop(File f, BufferedImage buffimage, String RutaDestino, String x,String y, String xsize, String ysize, int imagenSalida,
-		boolean marco, double valormarco, LinkedHashMap <Integer,String> tablaexif) {
+public TIFFCrop(File f, BufferedImage buffimage, String RutaDestino, String x,String y, String xsize, String ysize, String imagenSalida,
+		boolean marco, double valormarco, LinkedHashMap <Integer,String> tablaexif, boolean Mantenernombre) {
 
 	
 	this.RutaDestino = RutaDestino;
@@ -71,6 +72,7 @@ public TIFFCrop(File f, BufferedImage buffimage, String RutaDestino, String x,St
 	this.f = f;
 	this.tablaexif=tablaexif;
 	//this.imageMetadata = imageMetadata;
+	this.Mantenernombre= Mantenernombre;
 	
 }
 
@@ -219,15 +221,19 @@ private void cortatiff(BufferedImage buffimage) throws IOException, Exception {
 			tifparam.setTilingMode(TIFFImageWriteParam.MODE_DISABLED);
 			tifparam.setSourceSubsampling(1, 1, 0, 0);
 			
+			if(Mantenernombre != true){			//DETERMINAMOS SI DEBEMOS MANTENER EL NOMBRE ORIGINAL DE LA IMAGEN PARA NO AÑADIR CEROS DELANTE
+				
 			File fOutputFile = new File(RutaDestino); // + imagenSalida + ".tif");
 			
 			if (!fOutputFile.exists()){
 				
 				fOutputFile.mkdirs();
-				fOutputFile = new File (RutaDestino + String.format("%04d", imagenSalida) + ".tif");
+				fOutputFile = new File (RutaDestino + String.format("%04d", Integer.parseInt(imagenSalida)) + ".tif");
 			}else{
-				fOutputFile = new File (RutaDestino + String.format("%04d", imagenSalida) + ".tif");
+				fOutputFile = new File (RutaDestino + String.format("%04d", Integer.parseInt(imagenSalida)) + ".tif");
 			}
+			
+			
 			
 			OutputStream fos = new BufferedOutputStream(new FileOutputStream(fOutputFile));
 			ImageOutputStream ios = ImageIO.createImageOutputStream(fos);
@@ -244,11 +250,50 @@ private void cortatiff(BufferedImage buffimage) throws IOException, Exception {
 				croppedimage.flush();
 				}
 			
+			
 			ios.flush();
 			tiffwriter.dispose();
 			reader.dispose();
 			ios.close();
 			fos.close();
+			
+			} else {	//NO AÑADIMOS CEROS DELANTE DEL NOMBRE DE LA IMAGEN YA QUE VA A SER LA ORIGINAL
+				
+				File fOutputFile = new File(RutaDestino); // + imagenSalida + ".tif");
+				
+				if (!fOutputFile.exists()){
+					
+					fOutputFile.mkdirs();
+					fOutputFile = new File (RutaDestino + imagenSalida);
+				}else{
+					fOutputFile = new File (RutaDestino + imagenSalida);
+				}
+				
+				
+				
+				OutputStream fos = new BufferedOutputStream(new FileOutputStream(fOutputFile));
+				ImageOutputStream ios = ImageIO.createImageOutputStream(fos);
+				ios.setBitOffset(0);
+				ios.setByteOrder(ByteOrder.LITTLE_ENDIAN);
+				tiffwriter.setOutput(ios);
+				imageMetadata.setFromTree(formatonombres, tiffRootNode);
+				
+				if (marco == true){
+					tiffwriter.write(null, new IIOImage(croppedandborderedimage, null, imageMetadata), tifparam);
+					croppedandborderedimage.flush();
+				}else{
+					tiffwriter.write(null, new IIOImage(croppedimage, null, imageMetadata), tifparam);
+					croppedimage.flush();
+					}
+				
+				
+				ios.flush();
+				tiffwriter.dispose();
+				reader.dispose();
+				ios.close();
+				fos.close();
+				
+			}
 			
 			
 			

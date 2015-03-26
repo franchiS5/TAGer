@@ -588,7 +588,6 @@ public class MainWindow extends JFrame {
 		panel_1.add(btnEjecutarWCB);
 		
 		JCheckBox chckbxMantenerNombreImgenes = new JCheckBox("Mantener nombre de imagen");
-		chckbxMantenerNombreImgenes.setEnabled(false);
 		chckbxMantenerNombreImgenes.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		chckbxMantenerNombreImgenes.setBounds(798, 62, 219, 19);
 		panel_1.add(chckbxMantenerNombreImgenes);
