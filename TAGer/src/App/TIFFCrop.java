@@ -147,7 +147,8 @@ private void cortatiff(BufferedImage buffimage) throws IOException, Exception {
 	        
 	        // AQUI DEBEMOS MODIFICAR LOS METADATOS DEL NODO QUE HEMOS EXTRAIDO DE LA IMAGEN
 	          
-	          NodeList miLista=tiffRootNode.getElementsByTagName("TIFFField");
+	        tiffRootNode=MetadataXMLProcess.metaexif(tiffRootNode, tablaexif);
+	          /*NodeList miLista=tiffRootNode.getElementsByTagName("TIFFField");
 	          
 	          if (tablaexif.containsKey(33432))
 	          {
@@ -187,7 +188,7 @@ private void cortatiff(BufferedImage buffimage) throws IOException, Exception {
 	              
 	        	  tiffRootNode.insertBefore(newChild, refChild);
 	          }
-	          }
+	          }*/
 	          
 	          /*
 	          for(int i=0;i<miLista.getLength();i++){	
@@ -198,13 +199,13 @@ private void cortatiff(BufferedImage buffimage) throws IOException, Exception {
 	          }else{
 	          System.out.println("+++" + miLista.item(i).getAttributes().getNamedItem("number").getNodeValue());
 	          }
-	          }
+	          }*/
 	         
 	         Transformer transformer = TransformerFactory.newInstance().newTransformer();
 	         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 	         DOMSource source = new DOMSource(tiffRootNode);
 	         StreamResult console = new StreamResult(new File(imagenSalida + ".xml"));
-	         transformer.transform(source, console);*/
+	         transformer.transform(source, console);
 	         
 	        
 	           	   

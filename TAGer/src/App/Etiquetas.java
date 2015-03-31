@@ -17,7 +17,14 @@ public class Etiquetas {
 		subtipos.put("TIFFShorts", "TIFFShort");
 		subtipos.put("TIFFLongs", "TIFFLong");
 		nombres.put(33432, "Copyright");
+		nombres.put(305,"Software");
+		nombres.put(271, "Make");
+		nombres.put(272, "Model");
 		tipos.put(33432, "TIFFAsciis");
+		tipos.put(305, "TIFFAsciis");
+		tipos.put(271, "TIFFAsciis");
+		tipos.put(272, "TIFFAsciis");
+		
 	}
 
 	

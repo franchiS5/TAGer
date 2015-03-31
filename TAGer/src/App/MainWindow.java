@@ -94,7 +94,7 @@ public class MainWindow extends JFrame {
 	 */
 	public MainWindow() {
 		
-		setTitle("TAGer v. 1.8 (Vinfra S.A. All rights reserved)");
+		setTitle("TAGer v. 1.9 (Vinfra S.A. All rights reserved)");
 		setResizable(false);
 		setMaximumSize(new Dimension(800, 600));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -440,7 +440,7 @@ public class MainWindow extends JFrame {
 		lblTotalFicherosWCB.setBounds(10, 549, 122, 16);
 		panel_1.add(lblTotalFicherosWCB);
 		
-		JLabel labelTotalWCB = new JLabel("0");
+		final JLabel labelTotalWCB = new JLabel("0");
 		labelTotalWCB.setFont(new Font("Tahoma", Font.BOLD, 12));
 		labelTotalWCB.setForeground(new Color(255, 0, 102));
 		labelTotalWCB.setBounds(140, 549, 37, 16);
@@ -452,7 +452,7 @@ public class MainWindow extends JFrame {
 		lblNewLabel_1.setBounds(10, 572, 122, 16);
 		panel_1.add(lblNewLabel_1);
 		
-		JLabel labelTotalIMG = new JLabel("0");
+		final JLabel labelTotalIMG = new JLabel("0");
 		labelTotalIMG.setFont(new Font("Tahoma", Font.BOLD, 12));
 		labelTotalIMG.setForeground(new Color(255, 0, 102));
 		labelTotalIMG.setHorizontalAlignment(SwingConstants.LEFT);
@@ -502,19 +502,16 @@ public class MainWindow extends JFrame {
 		JTextFieldCopyrightWCB.setColumns(10);
 		
 		JTextFieldSoftwareWCB = new JTextField();
-		JTextFieldSoftwareWCB.setEnabled(false);
 		JTextFieldSoftwareWCB.setBounds(786, 164, 231, 20);
 		panel_1.add(JTextFieldSoftwareWCB);
 		JTextFieldSoftwareWCB.setColumns(10);
 		
 		JTextFieldFabricanteWCB = new JTextField();
-		JTextFieldFabricanteWCB.setEnabled(false);
 		JTextFieldFabricanteWCB.setBounds(786, 199, 231, 20);
 		panel_1.add(JTextFieldFabricanteWCB);
 		JTextFieldFabricanteWCB.setColumns(10);
 		
 		JTextFieldModeloWCB = new JTextField();
-		JTextFieldModeloWCB.setEnabled(false);
 		JTextFieldModeloWCB.setBounds(786, 232, 231, 20);
 		panel_1.add(JTextFieldModeloWCB);
 		JTextFieldModeloWCB.setColumns(10);
@@ -527,6 +524,10 @@ public class MainWindow extends JFrame {
 		panel_1.add(lblExif_1);
 		
 		final JButton JButton5 = new JButton("Ejecutar");
+		JButton5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		JButton5.setBounds(826, 563, 99, 25);
 		panel.add(JButton5);
 		JButton5.setEnabled(false);
@@ -587,7 +588,7 @@ public class MainWindow extends JFrame {
 		btnEjecutarWCB.setBounds(826, 563, 99, 25);
 		panel_1.add(btnEjecutarWCB);
 		
-		JCheckBox chckbxMantenerNombreImgenes = new JCheckBox("Mantener nombre de imagen");
+		final JCheckBox chckbxMantenerNombreImgenes = new JCheckBox("Mantener nombre de imagen");
 		chckbxMantenerNombreImgenes.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		chckbxMantenerNombreImgenes.setBounds(798, 62, 219, 19);
 		panel_1.add(chckbxMantenerNombreImgenes);
