@@ -145,72 +145,12 @@ private void cortatiff(BufferedImage buffimage) throws IOException, Exception {
 	        IIOMetadataNode tiffRootNode = (IIOMetadataNode) imageMetadata.getAsTree(formatonombres);
 	        
 	        
-	        // AQUI DEBEMOS MODIFICAR LOS METADATOS DEL NODO QUE HEMOS EXTRAIDO DE LA IMAGEN
+	        // LLAMADA A LA CLASE QUE MODIFICA EL tiffRootNode de la imagen
 	          
 	        tiffRootNode=MetadataXMLProcess.metaexif(tiffRootNode, tablaexif);
-	          /*NodeList miLista=tiffRootNode.getElementsByTagName("TIFFField");
-	          
-	          if (tablaexif.containsKey(33432))
-	          {
-	        	  
-	          int ind=0;
-	          boolean encontrado=false;
-	          while(ind<miLista.getLength() && !encontrado)
-	          {
-	        	  if (miLista.item(ind).getAttributes().getNamedItem("number").getNodeValue().equals("33432")){
-	        		  encontrado=true;
-	        		  break;
-	        	  }
-	        	  else
-	        	  {
-	        		  if (Integer.parseInt(miLista.item(ind).getAttributes().getNamedItem("number").getNodeValue())>33432){
-	        			  System.out.println(Integer.parseInt(miLista.item(ind).getAttributes().getNamedItem("number").getNodeValue()));
-	        			  break;
-	        		  }
-	        	  }
-	        	  ind++;
-	          }
-	          
-	          if (encontrado)
-	          {
-	        	  miLista.item(ind).getChildNodes().item(0).getChildNodes().item(0).getAttributes().item(0).setNodeValue(tablaexif.get(33432));
-	          }
-	          else if(ind >= miLista.getLength())
-	          {
-	        	  IIOMetadataNode newChild = getNodoCopy(tablaexif.get(33432));
-	        	  tiffRootNode.item(0).appendChild(newChild);
-	          }
-	          else
-	          {
-	        	  IIOMetadataNode newChild = getNodoCopy(tablaexif.get(33432));
-	              Node refChild =miLista.item(ind);
-	              
-	              
-	        	  tiffRootNode.insertBefore(newChild, refChild);
-	          }
-	          }*/
-	          
-	          /*
-	          for(int i=0;i<miLista.getLength();i++){	
-	          if (miLista.item(i).getAttributes().getNamedItem("number").getNodeValue().equals("33432")){
-	          System.out.println("+" + miLista.item(i).getChildNodes().item(0).getChildNodes().item(0).getAttributes().item(0).getNodeValue());
-	          miLista.item(i).getChildNodes().item(0).getChildNodes().item(0).getAttributes().item(0).setNodeValue("Maquinita");
-	          System.out.println("+" + miLista.item(i).getChildNodes().item(0).getChildNodes().item(0).getAttributes().item(0).getNodeValue());
-	          }else{
-	          System.out.println("+++" + miLista.item(i).getAttributes().getNamedItem("number").getNodeValue());
-	          }
-	          }*/
-	         
-	         Transformer transformer = TransformerFactory.newInstance().newTransformer();
-	         transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-	         DOMSource source = new DOMSource(tiffRootNode);
-	         StreamResult console = new StreamResult(new File(imagenSalida + ".xml"));
-	         transformer.transform(source, console);
 	         
 	        
-	           	   
-	    	 
-			// AQUI EMPEZAMOS A GUARDAR LA IMAGEN DE SALIDA
+	        // AQUI EMPEZAMOS A GUARDAR LA IMAGEN DE SALIDA
 			
 			
 			ImageWriterSpi tiffspi = new TIFFImageWriterSpi();							
@@ -233,7 +173,6 @@ private void cortatiff(BufferedImage buffimage) throws IOException, Exception {
 			}else{
 				fOutputFile = new File (RutaDestino + String.format("%04d", Integer.parseInt(imagenSalida)) + ".tif");
 			}
-			
 			
 			
 			OutputStream fos = new BufferedOutputStream(new FileOutputStream(fOutputFile));

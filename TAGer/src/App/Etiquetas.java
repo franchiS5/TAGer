@@ -20,10 +20,12 @@ public class Etiquetas {
 		nombres.put(305,"Software");
 		nombres.put(271, "Make");
 		nombres.put(272, "Model");
+		nombres.put(306, "DateTime");
 		tipos.put(33432, "TIFFAsciis");
 		tipos.put(305, "TIFFAsciis");
 		tipos.put(271, "TIFFAsciis");
 		tipos.put(272, "TIFFAsciis");
+		tipos.put(306,  "TIFFAsciis");
 		
 	}
 

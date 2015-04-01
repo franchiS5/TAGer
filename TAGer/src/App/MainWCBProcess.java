@@ -87,7 +87,7 @@ private void recorreYcorta(File f) throws IOException, Exception {
 								int imagenSalida = 1;
 								FileReader fr = new FileReader(fichero);
 								BufferedReader br = new BufferedReader(fr);
-								RutaOrigen=br.readLine();																				// Saltamos la primera linea, no nos aporta nada que no haya en las siguientes
+								RutaOrigen=br.readLine();																	// Saltamos la primera linea, no nos aporta nada que no haya en las siguientes
 								RutaOrigen = RutaOrigen.replace("\\", "/");
 								RutaDestino = RutaDestino.replace("\\", "/");
 								String DestinoCalculado = WCBPath.CreaRuta(RutaOrigen, RutaDestino);
@@ -140,9 +140,7 @@ private void recorreYcorta(File f) throws IOException, Exception {
 										
 										
 										
-										//IIOMetadata newIIOMetadata = MetadataXMLProcess.MetadataChange(fileimagen, tablaexif);
-										
-										
+										//COMPROBAMOS SI DEBEMOS MANTENER EL NOMBRE DE LA IMAGEN
 										if(Mantenernombre != true){
 										
 										//TIENE SOLAMENTE P1 Y NO MANTENEMOS NOMBRE DE IMAGEN

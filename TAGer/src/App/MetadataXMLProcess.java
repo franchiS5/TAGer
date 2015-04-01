@@ -68,47 +68,11 @@ static IIOMetadataNode metaexif (IIOMetadataNode tiffRootNode, LinkedHashMap<Int
 				tiffRootNode.insertBefore(newChild, miLista.item(x)); 
 			}
 		}
-		System.out.println("Probadolio");
 	}
-	   
-	   
-	    
-	    /*for(int i=0;i<miLista.getLength();i++){	    	   
-		   if (miLista.item(i).getAttributes().getNamedItem("number").getNodeValue().equals("272")){
-			   miLista.item(i).getChildNodes().item(0).getChildNodes().item(0).getAttributes().item(0).setNodeValue("Maquinita");
-			}else{
-			   System.out.println("+++" + miLista.item(i).getAttributes().getNamedItem("number").getNodeValue());
-		   }
-	   }
-	   
-	   */
-	   Transformer transformer = null;
-	   
-	   try {
-			transformer = TransformerFactory.newInstance().newTransformer();
-	   } catch (TransformerConfigurationException e1) {
-			// TODO Bloque catch generado automaticamente
-		e1.printStackTrace();
-	   } catch (TransformerFactoryConfigurationError e1) {
-			// TODO Bloque catch generado automaticamente
-			e1.printStackTrace();
-	   }
-	   
-	   transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-	   DOMSource source = new DOMSource(tiffRootNode);
-	   StreamResult console = new StreamResult(new File("D:/PRUEBA/salida.xml"));
-	   
-	   try {
-		   transformer.transform(source, console);
-	   } catch (TransformerException e) {
-			// TODO Bloque catch generado automáticamente	
-		   e.printStackTrace();
-	   }
-		 
-	   System.out.println("\nXML DOM Created Successfully..");
-	
-return tiffRootNode;
+	return tiffRootNode;
 }
+
+
 
 static IIOMetadataNode crearNodo(int codigo,String valor)
 {
@@ -124,6 +88,5 @@ static IIOMetadataNode crearNodo(int codigo,String valor)
 	nuevo.appendChild(tipo);
 	
 	return nuevo;
-	
 }
 }
