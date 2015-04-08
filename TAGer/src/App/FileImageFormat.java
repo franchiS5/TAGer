@@ -4,7 +4,7 @@ package App;
 public class FileImageFormat {
 	
 	// El método getType debe devolvernos un String con el Tipo de Fichero TIFF, JPEG, PDF, XML
-	// Debe recibir un tipo File del fichero que vamos a analizar
+	// Debe recibir un tipo File del fichero que vamos a analizar.
 	
 public FileImageFormat (String ruta){
 	}

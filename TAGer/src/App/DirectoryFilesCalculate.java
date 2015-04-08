@@ -2,7 +2,7 @@ package App;
 
 import java.io.File;
 
-public class DirectoryFilesCalculate {												// Esta clase nos devuelve total ficheros a los que metemos metadatos en  Tab EXIF//IPTC
+public class DirectoryFilesCalculate {												// Esta clase nos devuelve total ficheros a los que metemos metadatos en  Tab EXIF//IPTC.
 
 	static int total;
 

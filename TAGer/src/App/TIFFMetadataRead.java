@@ -32,7 +32,7 @@ static ExifIFD0Directory getExifFile (File ficheroTiffWCB) throws IOException
 	if (ficheroTiffWCB.toString().endsWith(".tif"))													//Comprobamos que es un .tif
 	{
 		ExifIFD0Directory exifdirectory = tiffMetadata.getDirectory(ExifIFD0Directory.class);		//Creamos el objeto exifdirectory del objeto tiffMetadata
-			if( exifdirectory != null )																//Comprobamos que no sea null
+			if( exifdirectory != null )																//Comprobamos que no sea null.
 			{
 				
 			} else{

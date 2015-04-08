@@ -184,7 +184,7 @@ public class MainWindow extends JFrame {
 				
 				int status = directorio.showOpenDialog(null);
 					
-				// PASAMOS EL VALOR DEL DIRECTORIO SELECIONADO A jTextFieldInputWCB
+				// PASAMOS EL VALOR DEL DIRECTORIO SELECIONADO A jTextFieldInputWCB.
 				if (status == JFileChooser.APPROVE_OPTION){
 					jTextRuta.setText( directorio.getSelectedFile().toString());	
 				}	

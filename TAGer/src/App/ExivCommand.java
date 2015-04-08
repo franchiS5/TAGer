@@ -134,6 +134,7 @@ private void recorrer(File f){
             	}
         }else{
         	JOptionPane.showMessageDialog(null,"Debe seleccionar al menos una opcion");
+        	
         }
 }
 	

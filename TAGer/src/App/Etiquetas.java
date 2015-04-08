@@ -27,6 +27,7 @@ public class Etiquetas {
 		tipos.put(272, "TIFFAsciis");
 		tipos.put(306,  "TIFFAsciis");
 		
+		
 	}
 
 	

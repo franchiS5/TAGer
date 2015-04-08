@@ -30,7 +30,7 @@ static void imagecount(File ficheroswcb) {
 								try {
 									FileReader frwcb = new FileReader(fichero);
 									BufferedReader brwcb = new BufferedReader(frwcb);
-									brwcb.readLine();										// Saltamos una linea para no contar la primera que es la ruta
+									brwcb.readLine();										// Saltamos una linea para no contar la primera que es la ruta.
 										while ((brwcb.readLine()) != null) {
 											totalimagewcb++;
 										}

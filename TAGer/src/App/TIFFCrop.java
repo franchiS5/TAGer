@@ -150,7 +150,7 @@ private void cortatiff(BufferedImage buffimage) throws IOException, Exception {
 	        tiffRootNode=MetadataXMLProcess.metaexif(tiffRootNode, tablaexif);
 	         
 	        
-	        // AQUI EMPEZAMOS A GUARDAR LA IMAGEN DE SALIDA
+	        // AQUI EMPEZAMOS A GUARDAR LA IMAGEN DE SALIDA.
 			
 			
 			ImageWriterSpi tiffspi = new TIFFImageWriterSpi();							

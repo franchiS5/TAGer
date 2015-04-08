@@ -81,7 +81,7 @@ private void recorreYcorta(File f) throws IOException, Exception {
 					
 				if (fichero.isFile()) {
 					String nombre = fichero.getName().toLowerCase();
-					if (nombre.endsWith(".wcb")) {																			// Controlamos que el fichero sea .WCB
+					if (nombre.endsWith(".wcb")) {																			// Controlamos que el fichero sea .WCB.
 						try {
 							try {
 								int imagenSalida = 1;

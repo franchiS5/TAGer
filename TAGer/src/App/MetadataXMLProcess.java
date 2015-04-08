@@ -64,7 +64,7 @@ static IIOMetadataNode metaexif (IIOMetadataNode tiffRootNode, LinkedHashMap<Int
 				//Añadir nodo
 				tiffRootNode.getChildNodes().item(0).appendChild(newChild);
 			}else{
-				//Insertar nodo
+				//Insertar nodo.
 				tiffRootNode.insertBefore(newChild, miLista.item(x)); 
 			}
 		}

@@ -8,7 +8,7 @@ static String RutaDestino;
 public static void RutaDestino(String RutaOrigen,  String RutaDestino) {
 	
 	CreaRuta(RutaOrigen, RutaDestino);
-	//return RutaDestino;
+	//return RutaDestino;.
 	
 }
 
